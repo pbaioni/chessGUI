@@ -103,7 +103,7 @@ function clear () {
 }
 
 function showPawnStructure () {
-
+  getOnlyPawns(game.fen()).then(fenWithoutPieces => board.position(fenWithoutPieces)); ;
 }
 
 $('#startBtn').on('click', start)
