@@ -66,9 +66,9 @@ function updateStatus () {
     }
   }
 
-  $status.html(status)
-  $fen.html(game.fen())
-  $pgn.html(game.pgn())
+  $status.html('Status: ' + status)
+  $fen.html('FEN: ' + game.fen())
+  $pgn.html('PGN: ' + game.pgn())
 }
 
 var config = {
@@ -102,5 +102,10 @@ function clear () {
     game = new Chess()
 }
 
+function showPawnStructure () {
+
+}
+
 $('#startBtn').on('click', start)
 $('#clearBtn').on('click', clear)
+$('#onlyPawnsBtn').on('click', showPawnStructure)
