@@ -70,7 +70,7 @@ function updateStatus () {
   $fen.html('FEN: ' + game.fen())
   $pgn.html('PGN: ' + game.pgn())
 
-  drawCircle(100, 100, 50);
+  drawCircle(200, 200, 39);
   drawArrowToCanvas(null);
 }
 

@@ -9,8 +9,8 @@ context = canvas.getContext('2d');
 setContextStyle(context);
 
 // initialise vars
-initialPoint = { x: 200, y: 200 };
-finalPoint = { x: 0, y: 0 };
+initialPoint = { x: 320, y: 160 };
+finalPoint = { x: 480, y: 320 };
 arrowWidth = 15;
 
 function setContextStyle(context) {
@@ -79,7 +79,7 @@ function drawArrowHead(context, fromx, fromy, tox, toy, r) {
 function drawCircle(x, y, r) {
     console.log('draw circle');
     context.beginPath();
-    context.lineWidth = 5;
+    context.lineWidth = 3;
     context.arc(x, y, r, 0, 2 * Math.PI);
     context.stroke();
 }
