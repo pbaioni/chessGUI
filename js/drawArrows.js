@@ -9,8 +9,8 @@ context = canvas.getContext('2d');
 setContextStyle(context);
 
 // initialise vars
-initialPoint = { x: 100, y: 100 };
-finalPoint = { x: 200, y: 200 };
+initialPoint = { x: 200, y: 200 };
+finalPoint = { x: 0, y: 0 };
 arrowWidth = 15;
 
 function setContextStyle(context) {
@@ -39,7 +39,7 @@ function drawArrowToCanvas() {
     // draw line
     context.beginPath();
     context.lineCap = "round";
-    context.lineWidth = 8;
+    context.lineWidth = 10;
     context.moveTo(initialPoint.x, initialPoint.y);
     context.lineTo(finalPoint.x - xFactor, finalPoint.y - yFactor);
     context.stroke();
@@ -79,7 +79,7 @@ function drawArrowHead(context, fromx, fromy, tox, toy, r) {
 function drawCircle(x, y, r) {
     console.log('draw circle');
     context.beginPath();
-    context.lineWidth = 3;
+    context.lineWidth = 5;
     context.arc(x, y, r, 0, 2 * Math.PI);
     context.stroke();
 }
