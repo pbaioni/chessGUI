@@ -69,6 +69,9 @@ function updateStatus () {
   $status.html('Status: ' + status)
   $fen.html('FEN: ' + game.fen())
   $pgn.html('PGN: ' + game.pgn())
+
+  drawCircle(100, 100, 50);
+  drawArrowToCanvas(null);
 }
 
 var config = {

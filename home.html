@@ -2,13 +2,19 @@
 <html>
   <head>
     <title>ChessGUI</title>
-    <link rel="stylesheet" href="css/chessboard-1.0.0.min.css">
     <script src="js/jquery.min.js"></script>
+
     <script src="js/chessboard-1.0.0.min.js"></script>
+    <link rel="stylesheet" href="css/chessboard-1.0.0.min.css">
+    <link rel="stylesheet" href="css/style.css">
     <script src="js/chess.js"></script>
   </head>
   <body>
-    <div id="board" style="width: 600px"></div>
+    <div id="board_wrapper">
+      <canvas id="canvas" width="400" height="400" ></canvas>
+      <div id="board" style="width: 404px; height: 404px;"></div>
+  </div>
+  <div id="footer">
     <div id="buttons">
     <button id="startBtn">Start Position</button>
     <button id="clearBtn">Clear Board</button>
@@ -17,6 +23,8 @@
   <div id="status"></div>
   <div id="fen"></div>
   <div id="pgn"></div>
+</div>
+  <script src="js/drawArrows.js"></script>
     <script src="js/main.js"></script>
     <script src="js/serverService.js"></script>
   </body>
