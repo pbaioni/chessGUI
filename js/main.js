@@ -70,8 +70,8 @@ function updateStatus () {
   $fen.html('FEN: ' + game.fen())
   $pgn.html('PGN: ' + game.pgn())
 
-  drawCircle(200, 200, 39);
-  drawArrowToCanvas(null);
+  drawCircle('rgb(50, 50, 50, 0.2)', 4, {x: 200, y:200}, 40);
+  drawArrowToCanvas('rgb(50, 50, 50, 0.4)', 10, 15, {x: 200, y:200}, {x: 400, y:400} );
 }
 
 var config = {
