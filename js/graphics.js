@@ -1,5 +1,21 @@
 var  canvas, context
 
+function createColor(colourName, shade){
+//shade: 1=lightest 5=darkest
+var colour, red, green, blue;
+switch(colourName) {
+    case 'white': red=255; green=255; blue=255; break;
+    case 'black': red=0; green=0; blue=0; break;
+    case 'yellow': red=255; green=255; blue=(5-shade)*51; break;
+    case 'blue': red=(5-shade)*51; green=(5-shade)*51; blue=255; break;
+    case 'green': red=(5-shade)*51; green=255; blue=(5-shade)*51; break;
+    case 'red': red=255; green=(5-shade)*51; blue=(5-shade)*51; break;
+    default:
+        red=255; green=255; blue=255; break;
+  }
+  return 'rgb('+red+', '+green+', '+blue+')';
+}
+
 // graphical canvas
 canvas = document.getElementById('canvas');
 context = canvas.getContext('2d');
@@ -71,6 +87,14 @@ function drawCircle(colour, lineWidth, center, radius) {
     context.lineWidth = lineWidth;
     context.arc(center.x, center.y, radius-radiusReduction, 0, 2 * Math.PI);
     context.stroke();
+}
+
+function setSquareBackground(square, colour) {
+
+}
+
+function setSquareHighlight(square, colour) {
+
 }
 
 
