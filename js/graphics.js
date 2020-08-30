@@ -2,6 +2,7 @@ var  arrowCanvas, arrowContext, contourCanvas, contourContext, circleCanvas, cir
 var squareClass = 'square-55d63'
 var boardSize=640
 var contourWidth = 4
+var circleWidth = 4
 
 // arrows layer
 arrowCanvas = document.getElementById('arrowCanvas');
@@ -97,12 +98,14 @@ function eraseArrows(){
     arrowContext.clearRect(0, 0, arrowCanvas.width, arrowCanvas.height);
 }
 
-function drawCircle(colour, lineWidth, center, radius) {
-    radiusReduction = lineWidth/2;
+function drawCircle(square, colour) {
+    var pos = $board.find('.square-' + square).position();
+    var center = {x: pos.left + (boardSize/(8*2)) - circleWidth/2, y: pos.top + (boardSize/(8*2)) - circleWidth/2, }
+    radius= (boardSize/(8*2)) - circleWidth/2;
     circleContext.strokeStyle = colour;
     circleContext.beginPath();
-    circleContext.lineWidth = lineWidth;
-    circleContext.arc(center.x, center.y, radius-radiusReduction, 0, 2 * Math.PI);
+    circleContext.lineWidth = circleWidth;
+    circleContext.arc(center.x, center.y, radius, 0, 2 * Math.PI);
     circleContext.stroke();
 }
 

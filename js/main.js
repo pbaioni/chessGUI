@@ -111,13 +111,13 @@ function showPawnStructure () {
 }
 
 function testMethods(){
-  drawCircle(createColor('yellow', 4, 0.8), 5, {x: 200, y:200}, 40);
+  drawCircle('h6', createColor('yellow', 4, 0.8), 5);
   drawArrow(createColor('green', 5, 0.4), 10, {x: 520, y:600}, {x: 440, y:440} );
   //setSquareHighlight('e1', 'white');
   //setSquareHighlight('a2', 'blue');
   //removeHighlights('white');
   drawSquareContour('g5', 'white');
-  drawSquareContour('a8', 'cyan');
+  drawSquareContour('a8', createColor('blue', 2, 0.6));
   drawSquareContour('b8', 'yellow');
 }
 
