@@ -111,11 +111,11 @@ function showPawnStructure () {
 }
 
 function testMethods(){
-  drawCircle(createColor('yellow', 4), 5, {x: 200, y:200}, 40);
-  drawArrow(createColor('green', 1), 10, {x: 520, y:600}, {x: 440, y:440} );
+  drawCircle(createColor('yellow', 4, 0.8), 5, {x: 200, y:200}, 40);
+  drawArrow(createColor('green', 5, 0.4), 10, {x: 520, y:600}, {x: 440, y:440} );
   setSquareHighlight('e1', 'white');
   setSquareHighlight('a2', 'blue');
-  //removeHighlights();
+  removeHighlights('white');
 }
 
 $('#startBtn').on('click', start)
