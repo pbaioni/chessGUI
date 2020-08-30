@@ -116,6 +116,9 @@ function testMethods(){
   setSquareHighlight('e1', 'white');
   setSquareHighlight('a2', 'blue');
   removeHighlights('white');
+  drawSquareContour('g5', 'white');
+  drawSquareContour('a8', 'cyan');
+  drawSquareContour('b8', 'yellow');
 }
 
 $('#startBtn').on('click', start)

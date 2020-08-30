@@ -1,5 +1,7 @@
 var  canvas, context
 var squareClass = 'square-55d63'
+var boardSize=640
+var contourWidth = 4
 
 // graphical canvas
 canvas = document.getElementById('canvas');
@@ -90,8 +92,19 @@ function drawCircle(colour, lineWidth, center, radius) {
     context.stroke();
 }
 
-function setSquareBackground(square, colour) {
-
+function drawSquareContour(square, colour) {
+    var pos = $board.find('.square-' + square).position();
+    context.strokeStyle = colour;
+    context.lineWidth = contourWidth;
+    var length = boardSize/8 - contourWidth;
+    context.beginPath();
+    console.log(pos.left, pos.top);
+    context.moveTo(pos.left, pos.top);
+    context.lineTo(pos.left, pos.top+length);
+    context.lineTo(pos.left+length, pos.top+length);
+    context.lineTo(pos.left+length, pos.top);
+    context.closePath();
+    context.stroke();
 }
 
 function setSquareHighlight(square, highlightColour) {
