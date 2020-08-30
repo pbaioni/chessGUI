@@ -24,7 +24,7 @@ h1 {
 
 
 
-#canvas {
+#arrowCanvas, #contourCanvas, #circleCanvas {
     position: absolute; 
     top: 12px; 
     left: 12px;

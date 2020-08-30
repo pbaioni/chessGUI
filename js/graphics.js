@@ -1,12 +1,22 @@
-var  canvas, context
+var  arrowCanvas, arrowContext, contourCanvas, contourContext, circleCanvas, circleContext
 var squareClass = 'square-55d63'
 var boardSize=640
 var contourWidth = 4
 
-// graphical canvas
-canvas = document.getElementById('canvas');
-context = canvas.getContext('2d');
-context.lineJoin = 'butt';
+// arrows layer
+arrowCanvas = document.getElementById('arrowCanvas');
+arrowContext = arrowCanvas.getContext('2d');
+arrowContext.lineJoin = 'butt';
+
+// contours layer
+contourCanvas = document.getElementById('contourCanvas');
+contourContext = contourCanvas.getContext('2d');
+contourContext.lineJoin = 'butt';
+
+// circles layer
+circleCanvas = document.getElementById('circleCanvas');
+circleContext = circleCanvas.getContext('2d');
+circleContext.lineJoin = 'butt';
 
 function createColor(colourName, shade, alpha){
 //shade: 1=lightest 5=darkest
@@ -27,7 +37,7 @@ switch(colourName) {
 function drawArrow(colour, lineWidth, from, to) {
 
     //setting arrow colour
-    context.strokeStyle = context.fillStyle = colour;
+    arrowContext.strokeStyle = arrowContext.fillStyle = colour;
 
     // offset to allow the arrow head hitting the center of the square
     var xFactor, yFactor;
@@ -47,12 +57,12 @@ function drawArrow(colour, lineWidth, from, to) {
     }
 
     // draw arrow line
-    context.beginPath();
-    context.lineCap = "round";
-    context.lineWidth = lineWidth;
-    context.moveTo(from.x, from.y);
-    context.lineTo(to.x - xFactor, to.y - yFactor);
-    context.stroke();
+    arrowContext.beginPath();
+    arrowContext.lineCap = "round";
+    arrowContext.lineWidth = lineWidth;
+    arrowContext.moveTo(from.x, from.y);
+    arrowContext.lineTo(to.x - xFactor, to.y - yFactor);
+    arrowContext.stroke();
 
     // draw arrow head
     //offsetting final point
@@ -60,51 +70,68 @@ function drawArrow(colour, lineWidth, from, to) {
     to.y = to.y - yFactor;
 	var angle, x, y;
 	
-	context.beginPath();
+	arrowContext.beginPath();
 	
 	angle = Math.atan2(to.y-from.y,to.x-from.x)
 	x = lineWidth*Math.cos(angle) + to.x;
 	y = lineWidth*Math.sin(angle) + to.y;
 
-	context.moveTo(x, y);
+	arrowContext.moveTo(x, y);
 	
 	angle += (1/3)*(2*Math.PI)
 	x = lineWidth*Math.cos(angle) + to.x;
 	y = lineWidth*Math.sin(angle) + to.y;
 	
-	context.lineTo(x, y);
+	arrowContext.lineTo(x, y);
 	
 	angle += (1/3)*(2*Math.PI)
 	x = lineWidth*Math.cos(angle) + to.x;
 	y = lineWidth*Math.sin(angle) + to.y;
 	
-	context.lineTo(x, y);
-	context.closePath();
-	context.fill();
+	arrowContext.lineTo(x, y);
+	arrowContext.closePath();
+	arrowContext.fill();
+}
+
+function eraseArrows(){
+    arrowContext.clearRect(0, 0, arrowCanvas.width, arrowCanvas.height);
 }
 
 function drawCircle(colour, lineWidth, center, radius) {
     radiusReduction = lineWidth/2;
-    context.strokeStyle = colour;
-    context.beginPath();
-    context.lineWidth = lineWidth;
-    context.arc(center.x, center.y, radius-radiusReduction, 0, 2 * Math.PI);
-    context.stroke();
+    circleContext.strokeStyle = colour;
+    circleContext.beginPath();
+    circleContext.lineWidth = lineWidth;
+    circleContext.arc(center.x, center.y, radius-radiusReduction, 0, 2 * Math.PI);
+    circleContext.stroke();
+}
+
+function eraseCircles(){
+    circleContext.clearRect(0, 0, circleCanvas.width, circleCanvas.height);
 }
 
 function drawSquareContour(square, colour) {
     var pos = $board.find('.square-' + square).position();
-    context.strokeStyle = colour;
-    context.lineWidth = contourWidth;
+    contourContext.strokeStyle = colour;
+    contourContext.lineWidth = contourWidth;
     var length = boardSize/8 - contourWidth;
-    context.beginPath();
-    console.log(pos.left, pos.top);
-    context.moveTo(pos.left, pos.top);
-    context.lineTo(pos.left, pos.top+length);
-    context.lineTo(pos.left+length, pos.top+length);
-    context.lineTo(pos.left+length, pos.top);
-    context.closePath();
-    context.stroke();
+    contourContext.beginPath();
+    contourContext.moveTo(pos.left, pos.top);
+    contourContext.lineTo(pos.left, pos.top+length);
+    contourContext.lineTo(pos.left+length, pos.top+length);
+    contourContext.lineTo(pos.left+length, pos.top);
+    contourContext.closePath();
+    contourContext.stroke();
+}
+
+function eraseContours(){
+    contourContext.clearRect(0, 0, contourCanvas.width, contourCanvas.height);
+}
+
+function eraseDrawings(){
+    eraseArrows()
+    eraseCircles()
+    eraseContours()
 }
 
 function setSquareHighlight(square, highlightColour) {
