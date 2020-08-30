@@ -32,7 +32,22 @@
   color: #f0d9b5;
 }
 
-.highlight1-32417, .highlight2-9c5d2 {
+.highlight-white{
+  box-shadow: inset 0 0 3px 3px white;
+}
+.highlight-black{
+  box-shadow: inset 0 0 3px 3px black;
+}
+.highlight-red{
+  box-shadow: inset 0 0 3px 3px red;
+}
+.highlight-green{
+  box-shadow: inset 0 0 3px 3px green;
+}
+.highlight-blue{
+  box-shadow: inset 0 0 3px 3px blue;
+}
+.highlight1-yellow {
   box-shadow: inset 0 0 3px 3px yellow;
 }
 

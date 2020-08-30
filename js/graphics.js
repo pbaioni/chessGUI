@@ -1,4 +1,10 @@
 var  canvas, context
+var squareClass = 'square-55d63'
+
+// graphical canvas
+canvas = document.getElementById('canvas');
+context = canvas.getContext('2d');
+context.lineJoin = 'butt';
 
 function createColor(colourName, shade){
 //shade: 1=lightest 5=darkest
@@ -15,11 +21,6 @@ switch(colourName) {
   }
   return 'rgb('+red+', '+green+', '+blue+')';
 }
-
-// graphical canvas
-canvas = document.getElementById('canvas');
-context = canvas.getContext('2d');
-context.lineJoin = 'butt';
 
 function drawArrow(colour, lineWidth, from, to) {
 
@@ -93,7 +94,16 @@ function setSquareBackground(square, colour) {
 
 }
 
-function setSquareHighlight(square, colour) {
+function setSquareHighlight(square, highlightColour) {
+    $board.find('.square-' + square).addClass('highlight-' + highlightColour)
+}
+
+function removeHighlights() {
+    var colors = new Array('white', 'black', 'red', 'green', 'blue', 'yellow');
+    colors.forEach(element => {
+        $board.find('.' + squareClass)
+        .removeClass('highlight-'+element);
+    });
 
 }
 

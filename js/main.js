@@ -2,6 +2,7 @@
 // https://github.com/jhlywa/chess.js
 
 var board = null
+var $board = $('#board')
 var game = new Chess()
 var $status = $('#status')
 var $fen = $('#fen')
@@ -19,6 +20,7 @@ function onDragStart (source, piece, position, orientation) {
 }
 
 function onDrop (source, target) {
+  console.log(source);
   // see if the move is legal
   var move = game.move({
     from: source,
@@ -70,8 +72,7 @@ function updateStatus () {
   $fen.html('FEN: ' + game.fen())
   $pgn.html('PGN: ' + game.pgn())
 
-  drawCircle(createColor('yellow', 4), 5, {x: 200, y:200}, 40);
-  drawArrow(createColor('red', 1), 10, {x: 520, y:600}, {x: 440, y:440} );
+  testMethods()
 }
 
 var config = {
@@ -107,6 +108,14 @@ function clear () {
 
 function showPawnStructure () {
   getOnlyPawns(game.fen()).then(fenWithoutPieces => board.position(fenWithoutPieces)); ;
+}
+
+function testMethods(){
+  drawCircle(createColor('yellow', 4), 5, {x: 200, y:200}, 40);
+  drawArrow(createColor('green', 1), 10, {x: 520, y:600}, {x: 440, y:440} );
+  setSquareHighlight('e1', 'white');
+  setSquareHighlight('a2', 'blue');
+  //removeHighlights();
 }
 
 $('#startBtn').on('click', start)
