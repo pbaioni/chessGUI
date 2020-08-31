@@ -1,5 +1,5 @@
 
-//Actions on mouse events
+//Actions on mouse or keyboard events
 
 function onDragStart (source, piece, position, orientation) {
   // do not pick up pieces if the game is over
@@ -42,6 +42,17 @@ function onSnapEnd () {
   board.position(game.fen())
 }
 
+function back(){
+  eraseDrawings()
+  game.undo();
+  board.position(game.fen());
+  getAnalysis(null, null, game.fen()).then(analysis => displayAnalysis(analysis));
+}
+
+function forward(){
+  console.log('forward')
+}
+
 //printing some informations about the game to the player
 function updateStatus () {
   var status = ''
@@ -79,7 +90,7 @@ function updateStatus () {
 $('#startBtn').on('click', start)
 function start () {
     board.start()
-    game = new Chess()
+    game.reset()
     eraseDrawings()
     getAnalysis(null, null, game.fen()).then(analysis => displayAnalysis(analysis))
 }
@@ -145,3 +156,11 @@ var config = {
 //create chessboard
 board = Chessboard('board', config)
 updateStatus()
+
+document.onkeydown = function(evt) {
+    //evt = evt || window.event;
+    //alert("keydown: " + evt.keyCode);
+    if(evt.keyCode == 37){back();};
+    if(evt.keyCode == 39){forward();};
+};
+
