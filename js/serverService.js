@@ -20,7 +20,7 @@ async function getOnlyPawns(fen){
     return fenWithoutPawns;
 }
 
-async function getanalysis(previousFen, move, fen){
+async function getAnalysis(previousFen, move, fen){
   var analysis = null
   var url = 'http://localhost:9001/board/analysis';
   var parameters= {};

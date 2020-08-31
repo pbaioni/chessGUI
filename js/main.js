@@ -1,13 +1,5 @@
-// NOTE: this example uses the chess.js library:
-// https://github.com/jhlywa/chess.js
 
-var board = null
-var $board = $('#board')
-var game = new Chess()
-var $status = $('#status')
-var $evaluation = $('#evaluation')
-var $bestmove = $('#bestmove')
-var $pgn = $('#pgn')
+//Actions on mouse events
 
 function onDragStart (source, piece, position, orientation) {
   // do not pick up pieces if the game is over
@@ -32,11 +24,14 @@ function onDrop (source, target) {
   // illegal move
   if (move === null) return 'snapback'
 
-  //asking for position evaluation (analysis)
+  //asking for position evaluation (server analysis)
   var move = source + target;
   var fen = game.fen();
+  //cleaning infos
   clearEval()
-  getanalysis(previousFen, move, fen).then(analysis => displayAnalysis(analysis));
+  eraseArrows()
+  //asking server
+  getAnalysis(previousFen, move, fen).then(analysis => displayAnalysis(analysis));
 
   updateStatus()
 }
@@ -47,6 +42,7 @@ function onSnapEnd () {
   board.position(game.fen())
 }
 
+//printing some informations about the game to the player
 function updateStatus () {
   var status = ''
 
@@ -76,50 +72,39 @@ function updateStatus () {
   }
 
   $status.html('Status: ' + status)
-
-  //testMethods()
 }
 
-var config = {
-    orientation: 'white',
-    draggable: true,
-    position: 'start',
-    appearSpeed: 'fast',
-    moveSpeed: 'fast',
-    snapbackSpeed: 50,
-    snapSpeed: 50,
-    trashSpeed: 'fast',
-    sparePieces: false,
-    pieceTheme: 'img/chesspieces/wikipedia/{piece}.png',
-    showNotation: false,
-    showerrors: true,
-    onDragStart: onDragStart,
-    onDrop: onDrop,
-    onSnapEnd: onSnapEnd
-}
-board = Chessboard('board', config)
 
-updateStatus()
-
+//start position button and function
+$('#startBtn').on('click', start)
 function start () {
     board.start()
     game = new Chess()
-    getanalysis(null, null, game.fen()).then(analysis => displayAnalysis(analysis))
+    eraseDrawings()
+    getAnalysis(null, null, game.fen()).then(analysis => displayAnalysis(analysis))
 }
 
+//clear board button and function
+$('#clearBtn').on('click', clear)
 function clear () {
     board.clear()
     game = new Chess()
 }
 
+//button and function to show only the pawn structure on the board
+$('#onlyPawnsBtn').on('click', showPawnStructure)
 function showPawnStructure () {
   getOnlyPawns(game.fen()).then(fenWithoutPieces => board.position(fenWithoutPieces));
 }
 
+//server analysis treatment
 function displayAnalysis(analysis){
   console.log(analysis)
   $evaluation.html('Evaluation: ' + analysis.evaluation/100)
   $bestmove.html('Best move: ' + analysis.bestMove)
+  analysis.moveEvaluations.forEach(element => {
+    paintMove(element.move, element.centipawnLoss);
+  });
 }
 
 function clearEval(){
@@ -127,22 +112,36 @@ function clearEval(){
   $bestmove.html('')
 }
 
-function testMethods(){
-  //test circles
-  drawCircle('h6', createColor('yellow', 4, 0.8), 5);
-  drawCircle('f8', createColor('blue', 3, 0.6), 5);
-  //test arrows
-  drawArrow('g1', 'f3', createColor('green', 5, 0.4), 16);
-  drawArrow('e2', 'e4', createColor('green', 5, 0.4), 20);
-  drawArrow('a2', 'a3', createColor('red', 3, 0.6), 8);
-  setSquareHighlight('e1', 'white');
-  setSquareHighlight('a2', 'blue');
-  removeHighlights('white');
-  drawSquareContour('g5', 'white');
-  drawSquareContour('a8', createColor('blue', 2, 0.6));
-  drawSquareContour('b8', 'yellow');
+//********************* */
+//  SCRIPT PART 
+//********************* */
+
+var board = null
+var $board = $('#board')
+var game = new Chess()
+var $status = $('#status')
+var $evaluation = $('#evaluation')
+var $bestmove = $('#bestmove')
+var $pgn = $('#pgn')
+
+var config = {
+  orientation: 'white',
+  draggable: true,
+  position: 'start',
+  appearSpeed: 'fast',
+  moveSpeed: 'fast',
+  snapbackSpeed: 50,
+  snapSpeed: 50,
+  trashSpeed: 'fast',
+  sparePieces: false,
+  pieceTheme: 'img/chesspieces/wikipedia/{piece}.png',
+  showNotation: false,
+  showerrors: true,
+  onDragStart: onDragStart,
+  onDrop: onDrop,
+  onSnapEnd: onSnapEnd
 }
 
-$('#startBtn').on('click', start)
-$('#clearBtn').on('click', clear)
-$('#onlyPawnsBtn').on('click', showPawnStructure)
+//create chessboard
+board = Chessboard('board', config)
+updateStatus()

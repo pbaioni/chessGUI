@@ -160,5 +160,15 @@ function removeHighlights(colour) {
     }
 }
 
+function paintMove(move, centipawnloss){
+    var colour;
+    var alpha = 0.5;
+    if(centipawnloss<=20){colour = createColor('white', null, alpha);};
+    if(centipawnloss>20 & centipawnloss<50){colour = createColor('red', 1, alpha);};
+    if(centipawnloss>50){colour = createColor('red', 5, alpha);};
+
+    drawArrow(move.substring(0, 2),move.substring(2, 4), colour, 15);
+}
+
 
 
