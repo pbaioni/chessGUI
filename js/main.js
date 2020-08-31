@@ -155,6 +155,7 @@ var config = {
 
 //create chessboard
 board = Chessboard('board', config)
+start()
 updateStatus()
 
 document.onkeydown = function(evt) {
