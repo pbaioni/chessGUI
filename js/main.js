@@ -90,7 +90,7 @@ function updateStatus () {
 $('#startBtn').on('click', start)
 function start () {
     board.start()
-    game.reset()
+    game = new Chess()
     eraseDrawings()
     getAnalysis(null, null, game.fen()).then(analysis => displayAnalysis(analysis))
 }
