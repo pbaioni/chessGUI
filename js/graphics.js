@@ -163,9 +163,13 @@ function removeHighlights(colour) {
 function paintMove(move, centipawnloss){
     var colour;
     var alpha = 0.5;
-    if(centipawnloss<=20){colour = createColor('white', null, alpha);};
-    if(centipawnloss>20 & centipawnloss<50){colour = createColor('red', 1, alpha);};
-    if(centipawnloss>50){colour = createColor('red', 5, alpha);};
+    if(centipawnloss<=30){colour = createColor('white', null, alpha);};
+    if(centipawnloss>30 & centipawnloss<70){colour = createColor('red', 1, alpha);};
+    if(centipawnloss>70 & centipawnloss<120){colour = createColor('red', 2, alpha);};
+    if(centipawnloss>120 & centipawnloss<200){colour = createColor('red', 3, alpha);};
+    if(centipawnloss>200 & centipawnloss<30){colour = createColor('red', 4, alpha);};
+    if(centipawnloss>300 & centipawnloss<500){colour = createColor('red', 5, alpha);};
+    if(centipawnloss>500){colour = createColor('black', null, alpha);};
 
     drawArrow(move.substring(0, 2),move.substring(2, 4), colour, 15);
 }
