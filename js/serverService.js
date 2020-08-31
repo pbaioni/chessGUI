@@ -27,6 +27,7 @@ async function getanalysis(previousFen, move, fen){
   parameters.previousFen = previousFen;
   parameters.move = move;
   parameters.fen = fen;
+  //console.log(parameters);
   await fetch(url, {
     method: 'POST',
     headers: {

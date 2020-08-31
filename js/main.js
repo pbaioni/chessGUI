@@ -5,7 +5,8 @@ var board = null
 var $board = $('#board')
 var game = new Chess()
 var $status = $('#status')
-var $fen = $('#fen')
+var $evaluation = $('#evaluation')
+var $bestmove = $('#bestmove')
 var $pgn = $('#pgn')
 
 function onDragStart (source, piece, position, orientation) {
@@ -34,7 +35,8 @@ function onDrop (source, target) {
   //asking for position evaluation (analysis)
   var move = source + target;
   var fen = game.fen();
-  getanalysis(previousFen, move, fen).then(analysis => console.log(analysis));
+  clearEval()
+  getanalysis(previousFen, move, fen).then(analysis => displayAnalysis(analysis));
 
   updateStatus()
 }
@@ -74,8 +76,6 @@ function updateStatus () {
   }
 
   $status.html('Status: ' + status)
-  $fen.html('FEN: ' + game.fen())
-  $pgn.html('PGN: ' + game.pgn())
 
   //testMethods()
 }
@@ -104,6 +104,7 @@ updateStatus()
 function start () {
     board.start()
     game = new Chess()
+    getanalysis(null, null, game.fen()).then(analysis => displayAnalysis(analysis))
 }
 
 function clear () {
@@ -113,6 +114,17 @@ function clear () {
 
 function showPawnStructure () {
   getOnlyPawns(game.fen()).then(fenWithoutPieces => board.position(fenWithoutPieces));
+}
+
+function displayAnalysis(analysis){
+  console.log(analysis)
+  $evaluation.html('Evaluation: ' + analysis.evaluation/100)
+  $bestmove.html('Best move: ' + analysis.bestMove)
+}
+
+function clearEval(){
+  $evaluation.html('Waiting for server analysis...')
+  $bestmove.html('')
 }
 
 function testMethods(){
