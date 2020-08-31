@@ -19,3 +19,28 @@ async function getOnlyPawns(fen){
 
     return fenWithoutPawns;
 }
+
+async function getanalysis(previousFen, move, fen){
+  var analysis = null
+  var url = 'http://localhost:9001/board/analysis';
+  var parameters= {};
+  parameters.previousFen = previousFen;
+  parameters.move = move;
+  parameters.fen = fen;
+  await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(parameters),
+  })
+  .then(response => response.json())
+  .then(data => {
+    analysis = data;
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+
+  return analysis;
+}

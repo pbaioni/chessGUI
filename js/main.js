@@ -20,7 +20,7 @@ function onDragStart (source, piece, position, orientation) {
 }
 
 function onDrop (source, target) {
-  console.log(source);
+  var previousFen = game.fen();
   // see if the move is legal
   var move = game.move({
     from: source,
@@ -30,6 +30,11 @@ function onDrop (source, target) {
 
   // illegal move
   if (move === null) return 'snapback'
+
+  //asking for position evaluation (analysis)
+  var move = source + target;
+  var fen = game.fen();
+  getanalysis(previousFen, move, fen).then(analysis => console.log(analysis));
 
   updateStatus()
 }
@@ -72,7 +77,7 @@ function updateStatus () {
   $fen.html('FEN: ' + game.fen())
   $pgn.html('PGN: ' + game.pgn())
 
-  testMethods()
+  //testMethods()
 }
 
 var config = {
@@ -107,7 +112,7 @@ function clear () {
 }
 
 function showPawnStructure () {
-  getOnlyPawns(game.fen()).then(fenWithoutPieces => board.position(fenWithoutPieces)); ;
+  getOnlyPawns(game.fen()).then(fenWithoutPieces => board.position(fenWithoutPieces));
 }
 
 function testMethods(){
@@ -118,9 +123,9 @@ function testMethods(){
   drawArrow('g1', 'f3', createColor('green', 5, 0.4), 16);
   drawArrow('e2', 'e4', createColor('green', 5, 0.4), 20);
   drawArrow('a2', 'a3', createColor('red', 3, 0.6), 8);
-  //setSquareHighlight('e1', 'white');
-  //setSquareHighlight('a2', 'blue');
-  //removeHighlights('white');
+  setSquareHighlight('e1', 'white');
+  setSquareHighlight('a2', 'blue');
+  removeHighlights('white');
   drawSquareContour('g5', 'white');
   drawSquareContour('a8', createColor('blue', 2, 0.6));
   drawSquareContour('b8', 'yellow');
