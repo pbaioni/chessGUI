@@ -39,10 +39,8 @@ function drawArrow(depSquare, arrSquare, colour, lineWidth) {
     var offset = 3;
     var pos1 = $board.find('.square-' + depSquare).position();
     var from = {x: pos1.left + (boardSize/(8*2))-offset , y: pos1.top + (boardSize/(8*2))-offset }
-    console.log(depSquare + ': ' + from.x + ', ' + from.y);
     var pos2 = $board.find('.square-' + arrSquare).position();
     var to = {x: pos2.left + (boardSize/(8*2))-offset, y: pos2.top + (boardSize/(8*2))-offset }
-    console.log(arrSquare + ': ' + to.x + ', ' + to.y);
 
     //setting arrow colour
     arrowContext.strokeStyle = arrowContext.fillStyle = colour;
