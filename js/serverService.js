@@ -41,6 +41,7 @@ async function getAnalysis(previousFen, move, fen){
   })
   .catch((error) => {
     console.error('Error:', error);
+    serverNotResponding();
   });
 
   return analysis;

@@ -123,6 +123,10 @@ function clearEval(){
   $bestmove.html('')
 }
 
+function serverNotResponding(){
+  $evaluation.html('Server disconnected')
+}
+
 //********************* */
 //  SCRIPT PART 
 //********************* */
