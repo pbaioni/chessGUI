@@ -163,8 +163,6 @@ start()
 updateStatus()
 
 document.onkeydown = function(evt) {
-    //evt = evt || window.event;
-    //alert("keydown: " + evt.keyCode);
     if(evt.keyCode == 37){back();};
     if(evt.keyCode == 39){forward();};
 };
