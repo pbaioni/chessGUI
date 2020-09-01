@@ -98,6 +98,7 @@ function start () {
 //clear board button and function
 $('#clearBtn').on('click', clear)
 function clear () {
+  eraseDrawings()
     board.clear()
     game = new Chess()
 }
