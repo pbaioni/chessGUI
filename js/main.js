@@ -82,7 +82,8 @@ function updateStatus () {
     }
   }
 
-  $status.html('Status: ' + status)
+  $status.html('<h1>Status: ' + status + '</h1>')
+
 }
 
 
