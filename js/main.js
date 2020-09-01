@@ -31,7 +31,7 @@ function onDrop (source, target) {
   clearEval()
   eraseArrows()
   //asking server
-  getAnalysis(previousFen, move, fen).then(analysis => displayAnalysis(analysis));
+  if(analysis){getAnalysis(previousFen, move, fen).then(analysis => displayAnalysis(analysis));};
 
   updateStatus()
 }
@@ -46,11 +46,20 @@ function back(){
   eraseDrawings()
   game.undo();
   board.position(game.fen());
-  getAnalysis(null, null, game.fen()).then(analysis => displayAnalysis(analysis));
+  if(analysis){getAnalysis(null, null, game.fen()).then(analysis => displayAnalysis(analysis));};
 }
 
 function forward(){
   console.log('forward')
+}
+
+function enableAnalysis(checkboxElem) {
+  if (checkboxElem.checked) {
+    analysis = true;
+    getAnalysis(null, null, game.fen()).then(analysis => displayAnalysis(analysis))
+  } else {
+    analysis = false;
+  }
 }
 
 //printing some informations about the game to the player
@@ -82,10 +91,9 @@ function updateStatus () {
     }
   }
 
-  $status.html('<h1>Status: ' + status + '</h1>')
+  $status.html('<label><h1>Status: ' + status + '</h1></label>')
 
 }
-
 
 //start position button and function
 $('#startBtn').on('click', start)
@@ -93,7 +101,7 @@ function start () {
     board.start()
     game = new Chess()
     eraseDrawings()
-    getAnalysis(null, null, game.fen()).then(analysis => displayAnalysis(analysis))
+    if(analysis){getAnalysis(null, null, game.fen()).then(analysis => displayAnalysis(analysis));};
 }
 
 //clear board button and function
@@ -135,12 +143,12 @@ function serverNotResponding(){
 //********************* */
 
 var board = null
-var $board = $('#board')
 var game = new Chess()
+var analysis = false
+var $board = $('#board')
 var $status = $('#status')
 var $evaluation = document.getElementById('evaluationBar')
 var $serverMessage = $('#serverMessage')
-var $pgn = $('#pgn')
 
 var config = {
   orientation: 'white',
@@ -165,8 +173,8 @@ board = Chessboard('board', config)
 start()
 updateStatus()
 
+//bind keybord events
 document.onkeydown = function(evt) {
     if(evt.keyCode == 37){back();};
     if(evt.keyCode == 39){forward();};
 };
-

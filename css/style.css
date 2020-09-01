@@ -10,41 +10,40 @@ body {
     width: 140vh;
 	background-color: #000000;
 }
-  /*setting all the children to the same height for the section*/
-  section {
+
+section {
     display: flex;
     height: 100%;
-  }
+}
+/* Clear floats after the columns */
+section:after {
+    content: "";
+    display: table;
+    clear: both;
+}
 
-  /* Create columns that float next to each other (navs and articles)*/
-  nav {
+/* Create columns that float next to each other (navs and articles)*/
+nav {
     float: left;
     padding: 5px;
-  }
+}
 
-  .leftnav {
+.leftnav {
     width: 18%;
     text-align: center;
-  }
+}
 
-  .rightnav {
-    width: 18%;
-  }
-  
-  article {
+.rightnav {
+width: 18%;
+}
+
+article {
     float: left;
     text-align: center;
     padding: 5px;
     height: 100%;
     width: 64%;
-  }
-  
-  /* Clear floats after the columns */
-  section:after {
-    content: "";
-    display: table;
-    clear: both;
-   }
+}
 
 #footer{
     position: relative;
@@ -90,15 +89,15 @@ body {
     text-align: center;
     text-decoration: none;
     width: 80%;
-  }
+}
 
-  .progress {
-      height: 30px;
-      width: 640px;
-      transform: rotate(90deg) translateX(323px) translateY(110px);
-  }
+.progress {
+    height: 30px;
+    width: 640px;
+    transform: rotate(90deg) translateX(323px) translateY(110px);
+}
 
-  h1 {
+label {
     font-family:Verdana;
     color: #cccccc;
     font-size: 16px;
