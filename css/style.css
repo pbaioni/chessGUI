@@ -6,7 +6,7 @@ body {
 }
 
 .mainPage {
-    height: 100vh;
+    height: 98vh;
     width: 140vh;
 	background-color: #000000;
 }
@@ -81,6 +81,13 @@ body {
     padding: 10px 10px;
     text-align: center;
     text-decoration: none;
+  }
+
+  .progress {
+      height: 20px;
+      width: 640px;
+      transform: rotate(90deg) translateX(328px) translateY(110px);
+      
   }
 
   h1 {
