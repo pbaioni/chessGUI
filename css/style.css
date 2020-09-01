@@ -19,8 +19,15 @@ body {
   /* Create columns that float next to each other (navs and articles)*/
   nav {
     float: left;
-    width: 18%;
     padding: 5px;
+  }
+
+  .leftnav {
+    width: 18%;
+  }
+
+  .rightnav {
+    width: 18%;
   }
   
   article {
@@ -84,10 +91,9 @@ body {
   }
 
   .progress {
-      height: 20px;
+      height: 30px;
       width: 640px;
-      transform: rotate(90deg) translateX(328px) translateY(110px);
-      
+      transform: rotate(90deg) translateX(323px) translateY(110px);
   }
 
   h1 {
