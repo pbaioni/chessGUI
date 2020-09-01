@@ -187,4 +187,5 @@ document.onkeydown = function(evt) {
     if(evt.keyCode == 39){forward();};
 };
 
+testLink()
 setInterval(function(){testLink();}, 10000);

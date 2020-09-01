@@ -74,6 +74,25 @@ article {
     pointer-events: none
 }
 
+#serverStatus{
+    position: absolute;
+    bottom: 120px;
+    left: 10px;
+    background: red;
+    border-radius: 3px;
+    border: 2px solid white;
+    color: #fff;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 10px 10px 10px 10px;
+    outline: none;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    width: 70%;
+    height: 40px;
+}
 
 .action-button button, .blue-button {
     background: #2ba6cb;
@@ -98,28 +117,14 @@ article {
     transform: rotate(90deg) translateX(323px) translateY(110px);
 }
 
-#serverStatus{
-    position: absolute;
-    bottom: 120px;
-    left: 10px;
-    background: red;
-    border-radius: 3px;
-    border: 2px solid white;
-    color: #fff;
-    display: inline-block;
-    font-size: 14px;
-    font-weight: 600;
-    margin: 10px 10px 10px 10px;
-    outline: none;
-    padding: 10px 10px;
-    text-align: center;
-    text-decoration: none;
-    width: 70%;
-    height: 40px;
-}
-
 label {
     font-family:Verdana;
     color: #cccccc;
+    font-size: 16px;
+}
+
+.serverMessage{
+    font-family:Verdana;
+    color: yellow;
     font-size: 16px;
 }
