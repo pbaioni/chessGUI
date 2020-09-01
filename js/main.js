@@ -134,8 +134,15 @@ function clearEval(){
   $serverMessage.html('Waiting for server analysis...')
 }
 
-function serverNotResponding(){
-  $serverMessage.html('Server disconnected')
+function linkOk(status){
+  if(status){
+    $serverStatus.css("background-color", "green")
+    $serverStatus.html('Server<br>Connected')
+  }else{
+    $serverStatus.css("background-color", "red")
+    $serverStatus.html('Server<br>Disonnected')
+
+  }
 }
 
 //********************* */
@@ -149,6 +156,7 @@ var $board = $('#board')
 var $status = $('#status')
 var $evaluation = document.getElementById('evaluationBar')
 var $serverMessage = $('#serverMessage')
+var $serverStatus = $('#serverStatus')
 
 var config = {
   orientation: 'white',
@@ -178,3 +186,5 @@ document.onkeydown = function(evt) {
     if(evt.keyCode == 37){back();};
     if(evt.keyCode == 39){forward();};
 };
+
+setInterval(function(){testLink();}, 10000);

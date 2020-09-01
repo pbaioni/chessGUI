@@ -29,6 +29,7 @@ nav {
 }
 
 .leftnav {
+    position: relative;
     width: 18%;
     text-align: center;
 }
@@ -95,6 +96,26 @@ article {
     height: 30px;
     width: 640px;
     transform: rotate(90deg) translateX(323px) translateY(110px);
+}
+
+#serverStatus{
+    position: absolute;
+    bottom: 120px;
+    left: 10px;
+    background: red;
+    border-radius: 3px;
+    border: 2px solid white;
+    color: #fff;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 10px 10px 10px 10px;
+    outline: none;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    width: 70%;
+    height: 40px;
 }
 
 label {

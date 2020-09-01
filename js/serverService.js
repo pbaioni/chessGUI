@@ -41,7 +41,20 @@ async function getAnalysis(previousFen, move, fen){
   })
   .catch((error) => {
     console.error('Error:', error);
-    serverNotResponding();
+    linkOk(false);
+  });
+
+  return analysis;
+}
+
+async function testLink(){
+  
+  var url = 'http://localhost:9001/board';
+
+  await fetch(url)
+  .then(response => {if(response.status == 200){linkOk(true);}})
+  .catch((error) => {
+    linkOk(false);
   });
 
   return analysis;
