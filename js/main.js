@@ -112,8 +112,9 @@ function showPawnStructure () {
 
 //server analysis treatment
 function displayAnalysis(analysis){
+  $serverMessage.html('')
   console.log(analysis)
-  $evaluation.html('Evaluation: ' + analysis.evaluation/100)
+  $evaluation.value = 500 - analysis.evaluation;
   $bestmove.html('Best move: ' + analysis.bestMove)
   analysis.moveEvaluations.forEach(element => {
     paintMove(element.move, element.centipawnLoss);
@@ -121,12 +122,13 @@ function displayAnalysis(analysis){
 }
 
 function clearEval(){
-  $evaluation.html('Waiting for server analysis...')
+  $evaluation.value = "500";
+  $serverMessage.html('Waiting for server analysis...')
   $bestmove.html('')
 }
 
 function serverNotResponding(){
-  $evaluation.html('Server disconnected')
+  $serverMessage.html('Server disconnected')
   $bestmove.html('')
 }
 
@@ -138,7 +140,8 @@ var board = null
 var $board = $('#board')
 var game = new Chess()
 var $status = $('#status')
-var $evaluation = $('#evaluation')
+var $evaluation = document.getElementById('evaluationBar')
+var $serverMessage = $('#serverMessage')
 var $bestmove = $('#bestmove')
 var $pgn = $('#pgn')
 
