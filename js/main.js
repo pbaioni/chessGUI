@@ -125,7 +125,11 @@ function displayAnalysis(analysis){
   console.log(analysis)
   $evaluation.value = 500 - analysis.evaluation;
   analysis.moveEvaluations.forEach(element => {
-    paintMove(element.move, element.centipawnLoss);
+    if (game.turn() === 'b') {
+      paintMoveAbsolute(element.move, element.evaluation*(-1));
+    }else{
+    paintMoveAbsolute(element.move, element.evaluation);
+    }
   });
 }
 
