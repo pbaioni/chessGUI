@@ -105,6 +105,7 @@ function clear () {
 //button and function to show only the pawn structure on the board
 $('#onlyPawnsBtn').on('click', showPawnStructure)
 function showPawnStructure () {
+  eraseDrawings()
   getOnlyPawns(game.fen()).then(fenWithoutPieces => board.position(fenWithoutPieces));
 }
 
