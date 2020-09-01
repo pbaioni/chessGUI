@@ -115,7 +115,6 @@ function displayAnalysis(analysis){
   $serverMessage.html('')
   console.log(analysis)
   $evaluation.value = 500 - analysis.evaluation;
-  $bestmove.html('Best move: ' + analysis.bestMove)
   analysis.moveEvaluations.forEach(element => {
     paintMove(element.move, element.centipawnLoss);
   });
@@ -124,12 +123,10 @@ function displayAnalysis(analysis){
 function clearEval(){
   $evaluation.value = "500";
   $serverMessage.html('Waiting for server analysis...')
-  $bestmove.html('')
 }
 
 function serverNotResponding(){
   $serverMessage.html('Server disconnected')
-  $bestmove.html('')
 }
 
 //********************* */
@@ -142,7 +139,6 @@ var game = new Chess()
 var $status = $('#status')
 var $evaluation = document.getElementById('evaluationBar')
 var $serverMessage = $('#serverMessage')
-var $bestmove = $('#bestmove')
 var $pgn = $('#pgn')
 
 var config = {
