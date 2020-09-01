@@ -13,6 +13,7 @@ body {
   /*setting all the children to the same height for the section*/
   section {
     display: flex;
+    height: 100%;
   }
 
   /* Create columns that float next to each other (navs and articles)*/
@@ -37,10 +38,11 @@ body {
     clear: both;
    }
 
-h1 {
-    font-family:Verdana;
-    color: blue;
-    font-size: 36px;
+#footer{
+    position: relative;
+    top: 660px;
+    left: 15px;
+
 }
 
 #board_wrapper{
@@ -64,11 +66,6 @@ h1 {
     pointer-events: none
 }
 
-#footer{
-    position: relative;
-    top: 660px;
-    left: 15px;
-}
 
 .action-button button, .blue-button {
     background: #2ba6cb;
@@ -85,3 +82,9 @@ h1 {
     text-align: center;
     text-decoration: none;
   }
+
+  h1 {
+    font-family:Verdana;
+    color: blue;
+    font-size: 36px;
+}
