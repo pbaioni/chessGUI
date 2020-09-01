@@ -1,8 +1,41 @@
 body {
 	font-family: Verdana, sans-serif;
 	color: #333;
-	margin:0px;
+    margin:0px;
+    background: black;
 }
+
+.mainPage {
+    height: 100vh;
+    width: 140vh;
+	background-color: #000000;
+}
+  /*setting all the children to the same height for the section*/
+  section {
+    display: flex;
+  }
+
+  /* Create columns that float next to each other (navs and articles)*/
+  nav {
+    float: left;
+    width: 18%;
+    padding: 5px;
+  }
+  
+  article {
+    float: left;
+    text-align: center;
+    padding: 5px;
+    height: 100%;
+    width: 64%;
+  }
+  
+  /* Clear floats after the columns */
+  section:after {
+    content: "";
+    display: table;
+    clear: both;
+   }
 
 h1 {
     font-family:Verdana;
@@ -36,3 +69,19 @@ h1 {
     top: 660px;
     left: 15px;
 }
+
+.action-button button, .blue-button {
+    background: #2ba6cb;
+    border-radius: 3px;
+    border: 1px solid #1e728c;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 10px 10px 10px 10px;
+    outline: none;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+  }
