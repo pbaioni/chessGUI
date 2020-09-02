@@ -31,7 +31,7 @@ function onDrop (source, target) {
   clearEval()
   eraseArrows()
   //asking server
-  if(analysis){getAnalysis(previousFen, move, fen).then(analysis => displayAnalysis(analysis));};
+  if(analysis){setAnalysisPending(); getAnalysis(previousFen, move, fen).then(analysis => displayAnalysis(analysis));};
 
   updateStatus()
 }
@@ -57,6 +57,7 @@ function enableAnalysis(checkboxElem) {
   if (checkboxElem.checked) {
     analysis = true;
     clearEval()
+    setAnalysisPending();
     getAnalysis(null, null, game.fen()).then(analysis => displayAnalysis(analysis))
   } else {
     analysis = false;
@@ -122,31 +123,38 @@ function showPawnStructure () {
 
 //server analysis treatment
 function displayAnalysis(analysis){
-  $serverMessage.html('')
+  analysisPending = false;
+  linkOk(true);
   console.log(analysis)
   $evaluation.value = 500 - analysis.evaluation;
   analysis.moveEvaluations.forEach(element => {
     if (game.turn() === 'b') {
       paintMoveAbsolute(element.move, element.evaluation*(-1));
     }else{
-    paintMoveAbsolute(element.move, element.evaluation);
+      paintMoveAbsolute(element.move, element.evaluation);
     }
   });
 }
 
 function clearEval(){
   $evaluation.value = "500";
-  $serverMessage.html('Waiting for server analysis...')
+}
+
+function setAnalysisPending(){
+  analysisPending = true;
+  $serverStatus.css("background-color", "orange")
+  $serverStatus.html('Waiting for<br>Analysis')
 }
 
 function linkOk(status){
-  if(status){
+  if(status & !analysisPending){
     $serverStatus.css("background-color", "green")
     $serverStatus.html('Server<br>Connected')
-  }else{
+  }
+
+  if(!status) {
     $serverStatus.css("background-color", "red")
     $serverStatus.html('Server<br>Disonnected')
-
   }
 }
 
@@ -160,8 +168,8 @@ var analysis = false
 var $board = $('#board')
 var $status = $('#status')
 var $evaluation = document.getElementById('evaluationBar')
-var $serverMessage = $('#serverMessage')
 var $serverStatus = $('#serverStatus')
+var analysisPending = false
 
 var config = {
   orientation: 'white',
