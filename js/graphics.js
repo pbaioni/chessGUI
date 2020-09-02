@@ -25,8 +25,9 @@ var colour, red, green, blue;
 switch(colourName) {
     case 'white': red=255; green=255; blue=255; break;
     case 'black': red=0; green=0; blue=0; break;
-    case 'cyan': red=0; green=255; blue=255; break;
+    case 'cyan': red=(5-shade)*51; green=255; blue=255; break;
     case 'yellow': red=255; green=255; blue=(5-shade)*51; break;
+    case 'orange': red=255; green=255-(shade*25); blue=(5-shade)*51; break;
     case 'blue': red=(5-shade)*51; green=(5-shade)*51; blue=255; break;
     case 'green': red=(5-shade)*51; green=255; blue=(5-shade)*51; break;
     case 'red': red=255; green=(5-shade)*51; blue=(5-shade)*51; break;
@@ -180,11 +181,11 @@ function paintMoveAbsolute(move, evaluation){
     var alpha = 0.5;
     if(evaluation<=-500){colour = createColor('black', null, alpha);};
     if(evaluation>-500 & evaluation<=-350){colour = createColor('red', 5, alpha);};
-    if(evaluation>-350 & evaluation<=-250){colour = createColor('red', 4, alpha);};
-    if(evaluation>-250 & evaluation<=-180){colour = createColor('red', 3, alpha);};
-    if(evaluation>-180 & evaluation<=-120){colour = createColor('red', 2, alpha);};
-    if(evaluation>-120 & evaluation<=-80){colour = createColor('red', 1, alpha);};
-    if(evaluation>-80 & evaluation<80){colour = createColor('cyan', null, alpha);};
+    if(evaluation>-350 & evaluation<=-250){colour = createColor('red', 3, alpha);};
+    if(evaluation>-250 & evaluation<=-180){colour = createColor('orange', 3, alpha);};
+    if(evaluation>-180 & evaluation<=-120){colour = createColor('orange', 2, alpha);};
+    if(evaluation>-120 & evaluation<=-80){colour = createColor('yellow', 1, alpha);};
+    if(evaluation>-80 & evaluation<80){colour = createColor('cyan', 1, alpha);};
     if(evaluation>=80 & evaluation<120){colour = createColor('green', 1, alpha);};
     if(evaluation>=120 & evaluation<180){colour = createColor('green', 2, alpha);};
     if(evaluation>=180 & evaluation<250){colour = createColor('green', 3, alpha);};

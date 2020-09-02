@@ -56,6 +56,7 @@ function forward(){
 function enableAnalysis(checkboxElem) {
   if (checkboxElem.checked) {
     analysis = true;
+    clearEval()
     getAnalysis(null, null, game.fen()).then(analysis => displayAnalysis(analysis))
   } else {
     analysis = false;
