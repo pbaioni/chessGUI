@@ -95,6 +95,24 @@ article {
     height: 40px;
 }
 
+#evaluation{
+    position: absolute;
+    bottom: 100px;
+    left: 10px;
+    color: #fff;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 10px 10px 10px 10px;
+    outline: none;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    width: 70%;
+    height: 20px;
+
+}
+
 .action-button button, .blue-button {
     background: #2ba6cb;
     border-radius: 3px;

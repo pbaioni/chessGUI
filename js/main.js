@@ -6,7 +6,8 @@ var board = null
 var game = new Chess()
 var $board = $('#board')
 var $status = $('#status')
-var $evaluation = document.getElementById('evaluationBar')
+var $evaluationBar = document.getElementById('evaluationBar')
+var $evaluation = $('#evaluation')
 var $serverStatus = $('#serverStatus')
 var connected = false
 var analysisEnabled = false
@@ -77,7 +78,7 @@ function onDrop (source, target) {
 
   //asking for position evaluation (server analysis)
   changePosition(previousFen, source+target, game.fen())
-  
+
 }
 
 // update the board position after the piece snap
@@ -183,7 +184,8 @@ function showPawnStructure () {
 //server analysis treatment
 function displayAnalysis(analysis){
   console.log(analysis)
-  $evaluation.value = 500 - analysis.evaluation;
+  $evaluationBar.value = 500 - analysis.evaluation;
+  $evaluation.html('<h1>' + analysis.evaluation/100 + '</h1>');
   analysis.moveEvaluations.forEach(element => {
     if (game.turn() === 'b') {
       paintMoveAbsolute(element.move, element.evaluation*(-1));
@@ -195,7 +197,8 @@ function displayAnalysis(analysis){
 
 function clearEval(){
   //TODO: disable bar
-  $evaluation.value = "500";
+  $evaluationBar.value = "500";
+  $evaluation.html('<h1>-</h1>');
 }
 
 function setConnected(value){
