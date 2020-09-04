@@ -16,11 +16,10 @@
           <progress id= "evaluationBar" class="progress" max="1000" min="0" value="480"></progress>
           <div id="buttons" class="action-button">
             <div><button id="startBtn">Start Position</button></div>
-            <div><button id="clearBtn">Clear Board</button></div>
             <div><button id="onlyPawnsBtn">Pawn Structure</button></div>
-          <div><input type="checkbox" id="analysisCheckbox" name="autoanalysis" onchange="enableAnalysis(this)"/>
+            <div><button id="deleteBtn">Delete Line</button></div>
+            <div><input type="checkbox" id="analysisCheckbox" name="autoanalysis" checked onchange="enableAnalysis(this)"/>
             <label for="autoanalysis">Enable analysis</label></div>
-          </div>
           <label id="evaluation"><h1>0.2</h1></label>
           <div id="serverStatus">Server<br>Disonnected</div>
         </nav>

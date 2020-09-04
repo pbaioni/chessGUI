@@ -20,6 +20,31 @@ async function getOnlyPawns(fen){
     return fenWithoutPawns;
 }
 
+async function deleteLine(fen, move){
+  var analysis = null
+  var url = 'http://localhost:9001/board/delete';
+  var parameters= {};
+  parameters.fen = fen;
+  parameters.move = move;
+  //console.log(parameters);
+  await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(parameters),
+  })
+  .then(response => response.json())
+  .then(data => {
+    alert(data.content);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+
+  return analysis;
+}
+
 async function getAnalysis(previousFen, move, fen){
   var analysis = null
   var url = 'http://localhost:9001/board/analysis';
@@ -46,6 +71,8 @@ async function getAnalysis(previousFen, move, fen){
 
   return analysis;
 }
+
+
 
 async function testLink(){
   

@@ -10,7 +10,7 @@ var $evaluationBar = document.getElementById('evaluationBar')
 var $evaluation = $('#evaluation')
 var $serverStatus = $('#serverStatus')
 var connected = false
-var analysisEnabled = false
+var analysisEnabled = true
 var analysisPending = false
 
 var config = {
@@ -33,8 +33,7 @@ var config = {
 
 //create chessboard
 board = Chessboard('board', config)
-start()
-updateStatus()
+
 
 //bind keybord events
 document.onkeydown = function(evt) {
@@ -42,8 +41,9 @@ document.onkeydown = function(evt) {
     if(evt.keyCode == 39){forward();};
 };
 
-  testLink();
+  testLink().then(response => start());
   setInterval(function(){testLink();}, 10000);
+  
 
 
 
@@ -105,7 +105,11 @@ function changePosition(previousFen, move, fen){
   if(analysisEnabled & connected){
     analysisPending = true;
     setServerStatus('orange', 'Waiting for<br>Analysis');
-    getAnalysis(previousFen, move, fen).then(analysis => {displayAnalysis(analysis); analysisPending = false; setServerStatus('green', 'Server<br>Ready')});
+    getAnalysis(previousFen, move, fen).then(analysis => {
+      displayAnalysis(analysis); 
+      analysisPending = false; 
+      setServerStatus('green', 'Server<br>Ready')
+    });
   }
   
 }
@@ -167,11 +171,12 @@ function start () {
 }
 
 //clear board button and function
-$('#clearBtn').on('click', clear)
-function clear () {
-  eraseDrawings()
-    board.clear()
-    game = new Chess()
+$('#deleteBtn').on('click', deleteFromHere)
+function deleteFromHere() {
+var line = window.prompt("Enter line to delete: ");
+if(line){
+  deleteLine(game.fen(), line).then(response => changePosition(null, null, game.fen()));
+}
 }
 
 //button and function to show only the pawn structure on the board
