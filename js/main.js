@@ -77,14 +77,14 @@ function onDrop (source, target) {
 
   //asking for position evaluation (server analysis)
   changePosition(previousFen, source+target, game.fen())
-
-  updateStatus()
+  
 }
 
 // update the board position after the piece snap
 // for castling, en passant, pawn promotion
 function onSnapEnd () {
   board.position(game.fen())
+  updateStatus()
 }
 
 function enableAnalysis(checkboxElem) {
@@ -130,13 +130,18 @@ function updateStatus () {
 
   // checkmate?
   if (game.in_checkmate()) {
-    status = 'Game over, ' + moveColor + ' is in checkmate.'
+    alert('Game over, ' + moveColor + ' is in checkmate.')
   }
 
   // draw?
   else if (game.in_draw()) {
-    status = 'Game over, drawn position'
+    alert('Game over, drawn position')
   }
+
+    // stalemate?
+    else if (game.in_stalemate()) {
+      alert('Game over, draw by stalemate')
+    }
 
   // game still on
   else {
@@ -148,7 +153,7 @@ function updateStatus () {
     }
   }
 
-  $status.html('<label><h1>Status: ' + status + '</h1></label>')
+  //$status.html('<label><h1>Status: ' + status + '</h1></label>')
 
 }
 
