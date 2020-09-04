@@ -1,3 +1,54 @@
+//********************* */
+//  SCRIPT PART 
+//********************* */
+
+var board = null
+var game = new Chess()
+var $board = $('#board')
+var $status = $('#status')
+var $evaluation = document.getElementById('evaluationBar')
+var $serverStatus = $('#serverStatus')
+var connected = false
+var analysisEnabled = false
+var analysisPending = false
+
+var config = {
+  orientation: 'white',
+  draggable: true,
+  position: 'start',
+  appearSpeed: 'fast',
+  moveSpeed: 'fast',
+  snapbackSpeed: 50,
+  snapSpeed: 50,
+  trashSpeed: 'fast',
+  sparePieces: false,
+  pieceTheme: 'img/chesspieces/wikipedia/{piece}.png',
+  showNotation: false,
+  showerrors: true,
+  onDragStart: onDragStart,
+  onDrop: onDrop,
+  onSnapEnd: onSnapEnd
+}
+
+//create chessboard
+board = Chessboard('board', config)
+start()
+updateStatus()
+
+//bind keybord events
+document.onkeydown = function(evt) {
+    if(evt.keyCode == 37){back();};
+    if(evt.keyCode == 39){forward();};
+};
+
+  testLink();
+  setInterval(function(){testLink();}, 10000);
+
+
+
+//********************* */
+//  METHODS PART 
+//********************* */
 
 //Actions on mouse or keyboard events
 
@@ -25,13 +76,7 @@ function onDrop (source, target) {
   if (move === null) return 'snapback'
 
   //asking for position evaluation (server analysis)
-  var move = source + target;
-  var fen = game.fen();
-  //cleaning infos
-  clearEval()
-  eraseArrows()
-  //asking server
-  if(analysis){setAnalysisPending(); getAnalysis(previousFen, move, fen).then(analysis => displayAnalysis(analysis));};
+  changePosition(previousFen, source+target, game.fen())
 
   updateStatus()
 }
@@ -42,26 +87,36 @@ function onSnapEnd () {
   board.position(game.fen())
 }
 
-function back(){
+function enableAnalysis(checkboxElem) {
+  if (checkboxElem.checked) {
+    analysisEnabled = true;
+    changePosition(null, null, game.fen())
+  } else {
+    analysisEnabled = false;
+  }
+}
+
+function changePosition(previousFen, move, fen){
+  //cleaning infos
+  clearEval()
   eraseDrawings()
+  
+  if(analysisEnabled & connected){
+    analysisPending = true;
+    setServerStatus('orange', 'Waiting for<br>Analysis');
+    getAnalysis(previousFen, move, fen).then(analysis => {displayAnalysis(analysis); analysisPending = false; setServerStatus('green', 'Server<br>Ready')});
+  }
+  
+}
+
+function back(){
   game.undo();
-  board.position(game.fen());
-  if(analysis){getAnalysis(null, null, game.fen()).then(analysis => displayAnalysis(analysis));};
+  onSnapEnd()
+  changePosition(null, null, game.fen());
 }
 
 function forward(){
   console.log('forward')
-}
-
-function enableAnalysis(checkboxElem) {
-  if (checkboxElem.checked) {
-    analysis = true;
-    clearEval()
-    setAnalysisPending();
-    getAnalysis(null, null, game.fen()).then(analysis => displayAnalysis(analysis))
-  } else {
-    analysis = false;
-  }
 }
 
 //printing some informations about the game to the player
@@ -102,8 +157,7 @@ $('#startBtn').on('click', start)
 function start () {
     board.start()
     game = new Chess()
-    eraseDrawings()
-    if(analysis){getAnalysis(null, null, game.fen()).then(analysis => displayAnalysis(analysis));};
+    changePosition(null, null, game.fen())
 }
 
 //clear board button and function
@@ -123,8 +177,6 @@ function showPawnStructure () {
 
 //server analysis treatment
 function displayAnalysis(analysis){
-  analysisPending = false;
-  linkOk(true);
   console.log(analysis)
   $evaluation.value = 500 - analysis.evaluation;
   analysis.moveEvaluations.forEach(element => {
@@ -137,68 +189,22 @@ function displayAnalysis(analysis){
 }
 
 function clearEval(){
+  //TODO: disable bar
   $evaluation.value = "500";
 }
 
-function setAnalysisPending(){
-  analysisPending = true;
-  $serverStatus.css("background-color", "orange")
-  $serverStatus.html('Waiting for<br>Analysis')
-}
-
-function linkOk(status){
-  if(status & !analysisPending){
-    $serverStatus.css("background-color", "green")
-    $serverStatus.html('Server<br>Connected')
-  }
-
-  if(!status) {
-    $serverStatus.css("background-color", "red")
-    $serverStatus.html('Server<br>Disonnected')
+function setConnected(value){
+  connected = value;
+  if(!analysisPending){
+    if(connected){
+      setServerStatus('green', 'Server<br>Ready')
+    }else{
+      setServerStatus('red', 'Server<br>Disconnected')
+    }
   }
 }
 
-//********************* */
-//  SCRIPT PART 
-//********************* */
-
-var board = null
-var game = new Chess()
-var analysis = false
-var $board = $('#board')
-var $status = $('#status')
-var $evaluation = document.getElementById('evaluationBar')
-var $serverStatus = $('#serverStatus')
-var analysisPending = false
-
-var config = {
-  orientation: 'white',
-  draggable: true,
-  position: 'start',
-  appearSpeed: 'fast',
-  moveSpeed: 'fast',
-  snapbackSpeed: 50,
-  snapSpeed: 50,
-  trashSpeed: 'fast',
-  sparePieces: false,
-  pieceTheme: 'img/chesspieces/wikipedia/{piece}.png',
-  showNotation: false,
-  showerrors: true,
-  onDragStart: onDragStart,
-  onDrop: onDrop,
-  onSnapEnd: onSnapEnd
+function setServerStatus(colour, text){
+    $serverStatus.css("background-color", colour)
+    $serverStatus.html(text)
 }
-
-//create chessboard
-board = Chessboard('board', config)
-start()
-updateStatus()
-
-//bind keybord events
-document.onkeydown = function(evt) {
-    if(evt.keyCode == 37){back();};
-    if(evt.keyCode == 39){forward();};
-};
-
-testLink()
-setInterval(function(){testLink();}, 10000);

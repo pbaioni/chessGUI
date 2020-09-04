@@ -124,8 +124,15 @@ label {
     font-size: 16px;
 }
 
-.serverMessage{
-    font-family:Verdana;
-    color: yellow;
-    font-size: 16px;
+textarea {
+    margin-top: 20px;
+    width: 90%;
+    height: 50%;
+    font-size: .8rem;
+    letter-spacing: 1px;
+    line-height: 1.5;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px #999;
+    background: #aaaaaa;
 }

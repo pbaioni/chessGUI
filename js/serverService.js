@@ -52,10 +52,8 @@ async function testLink(){
   var url = 'http://localhost:9001/board';
 
   await fetch(url)
-  .then(response => {if(response.status == 200){linkOk(true);}})
+  .then(response => {if(response.status == 200){setConnected(true);}})
   .catch((error) => {
-    linkOk(false);
+    setConnected(false);
   });
-
-  return analysis;
 }
