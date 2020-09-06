@@ -15,6 +15,7 @@ async function getOnlyPawns(fen){
     })
     .catch((error) => {
       console.error('Error:', error);
+      serverReady();
     });
 
     return fenWithoutPawns;
@@ -40,6 +41,7 @@ async function deleteLine(fen, move){
   })
   .catch((error) => {
     console.error('Error:', error);
+    serverReady();
   });
 
   return analysis;
@@ -66,18 +68,35 @@ async function getAnalysis(previousFen, move, fen){
   })
   .catch((error) => {
     console.error('Error:', error);
-    linkOk(false);
+    serverReady();
   });
 
   return analysis;
 }
 
-
+async function updateDepth(fen, depth){
+  var analysis = null
+  var url = 'http://localhost:9001/board/update';
+  var parameters= {};
+  parameters.fen = fen;
+  parameters.depth = depth;
+  //console.log(parameters);
+  await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(parameters),
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+    serverReady();
+  });
+}
 
 async function testLink(){
   
   var url = 'http://localhost:9001/board';
-
   await fetch(url)
   .then(response => {if(response.status == 200){setConnected(true);}})
   .catch((error) => {

@@ -170,7 +170,7 @@ function start () {
     changePosition(null, null, game.fen())
 }
 
-//start position button and function
+//flip board button and function
 $('#flipBtn').on('click', flip)
 function flip () {
   eraseDrawings()
@@ -178,13 +178,27 @@ function flip () {
   changePosition(null, null, game.fen())
 }
 
-//clear board button and function
+//delete line button and function
 $('#deleteBtn').on('click', deleteFromHere)
 function deleteFromHere() {
-var line = window.prompt("Enter line to delete: ");
-if(line){
-  deleteLine(game.fen(), line).then(response => changePosition(null, null, game.fen()));
+  var line = window.prompt("Enter line to delete: ");
+  if(line){
+    deleteLine(game.fen(), line).then(response => changePosition(null, null, game.fen()));
+  }
 }
+
+$('#updateBtn').on('click', update)
+function update() {
+  var depth = window.prompt("Enter new depth: ");
+  if(depth){
+    analysisPending = true;
+    setServerStatus('grey', 'Updating<br>Database');
+    updateDepth(game.fen(), depth).then(analysis => {
+      analysisPending = false; 
+      setServerStatus('green', 'Server<br>Ready')
+    });
+    
+  }
 }
 
 //button and function to show only the pawn structure on the board
@@ -228,4 +242,8 @@ function setConnected(value){
 function setServerStatus(colour, text){
     $serverStatus.css("background-color", colour)
     $serverStatus.html(text)
+}
+
+function serverReady(){
+  setServerStatus('green', 'Server<br>Ready')
 }
