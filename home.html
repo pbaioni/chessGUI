@@ -14,12 +14,12 @@
       <section>
         <nav class='leftnav'>
           <progress id= "evaluationBar" class="progress" max="1000" min="0" value="480"></progress>
-          <div id="buttons" class="action-button">
+          <div id="leftbuttons" class="action-button">
             <div><button id="startBtn">Start Position</button></div>
             <div><button id="flipBtn">Flip board</button></div>
             <div><button id="onlyPawnsBtn">Pawn Structure</button></div>
             <div><button id="deleteBtn">Delete Line</button></div>
-            <div><button id="updateBtn">Update Depth</button></div>
+            <div><button id="updateBtn">Update Line Depth</button></div>
             <div><input type="checkbox" id="analysisCheckbox" name="autoanalysis" checked onchange="enableAnalysis(this)"/>
             <label for="autoanalysis">Enable analysis</label></div>
           <label id="evaluation"><h1>0.2</h1></label>
@@ -35,7 +35,12 @@
         <div id="footer">
         </div>
         </article>
-        <nav class='rightnav'></nav>
+        <nav class='rightnav'>
+          <textarea id="comment" name="comment"></textarea>
+          <div id="rightbuttons" class="action-button">
+          <div><button id="commentBtn">Save Comment</button></div>
+          </div>
+        </nav>
     </section>
 
     </div>

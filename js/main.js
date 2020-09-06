@@ -9,6 +9,7 @@ var $status = $('#status')
 var $evaluationBar = document.getElementById('evaluationBar')
 var $evaluation = $('#evaluation')
 var $serverStatus = $('#serverStatus')
+var $comment = $('#comment')
 var connected = false
 var analysisEnabled = true
 var analysisPending = false
@@ -170,6 +171,12 @@ function start () {
     changePosition(null, null, game.fen())
 }
 
+//delete line button and function
+$('#commentBtn').on('click', setComment)
+function setComment() {
+    setPositionComment(game.fen(), $comment.val()).then(response => {changePosition(null, null, game.fen()); alert('Comment saved');});
+}
+
 //flip board button and function
 $('#flipBtn').on('click', flip)
 function flip () {
@@ -220,6 +227,7 @@ function displayAnalysis(analysis){
       paintMoveAbsolute(element.move, element.evaluation);
     }
   });
+  $comment.html(analysis.comment);
 }
 
 function clearEval(){

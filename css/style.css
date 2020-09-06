@@ -143,8 +143,8 @@ label {
 }
 
 textarea {
-    margin-top: 20px;
-    width: 90%;
+    margin-top: 15px;
+    width: 95%;
     height: 50%;
     font-size: .8rem;
     letter-spacing: 1px;
@@ -152,6 +152,6 @@ textarea {
     border-radius: 5px;
     border: 1px solid #ccc;
     box-shadow: 1px 1px 1px #999;
-    background: #aaaaaa;
+    background: #cccccc;
 }
 

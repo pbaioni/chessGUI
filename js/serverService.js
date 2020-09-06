@@ -22,12 +22,11 @@ async function getOnlyPawns(fen){
 }
 
 async function deleteLine(fen, move){
-  var analysis = null
+
   var url = 'http://localhost:9001/board/delete';
   var parameters= {};
   parameters.fen = fen;
   parameters.move = move;
-  //console.log(parameters);
   await fetch(url, {
     method: 'POST',
     headers: {
@@ -43,8 +42,6 @@ async function deleteLine(fen, move){
     console.error('Error:', error);
     serverReady();
   });
-
-  return analysis;
 }
 
 async function getAnalysis(previousFen, move, fen){
@@ -54,7 +51,6 @@ async function getAnalysis(previousFen, move, fen){
   parameters.previousFen = previousFen;
   parameters.move = move;
   parameters.fen = fen;
-  //console.log(parameters);
   await fetch(url, {
     method: 'POST',
     headers: {
@@ -75,12 +71,30 @@ async function getAnalysis(previousFen, move, fen){
 }
 
 async function updateDepth(fen, depth){
-  var analysis = null
+
   var url = 'http://localhost:9001/board/update';
   var parameters= {};
   parameters.fen = fen;
   parameters.depth = depth;
-  //console.log(parameters);
+  await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(parameters),
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+    serverReady();
+  });
+}
+
+async function setPositionComment(fen, comment){
+  var url = 'http://localhost:9001/board/comment';
+  var parameters= {};
+  parameters.fen = fen;
+  parameters.comment = comment;
+
   await fetch(url, {
     method: 'POST',
     headers: {
