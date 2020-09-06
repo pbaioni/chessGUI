@@ -35,7 +35,6 @@ var config = {
 //create chessboard
 board = Chessboard('board', config)
 
-
 //bind keybord events
 document.onkeydown = function(evt) {
     if(evt.keyCode == 37){back();};

@@ -181,7 +181,7 @@ function paintMoveAbsolute(move, evaluation){
     var limits = [50, 100, 150, 200, 300];
     var colour;
     var alpha = 0.5;
-    if(evaluation<=-limits[5]){colour = createColor('black', null, alpha);};
+    if(evaluation<=-300){colour = createColor('black', null, alpha);};
     if(evaluation>-limits[5] & evaluation<=-limits[4]){colour = createColor('red', 5, alpha);};
     if(evaluation>-limits[4] & evaluation<=-limits[3]){colour = createColor('orange', 2, alpha);};
     if(evaluation>-limits[3]& evaluation<=-limits[2]){colour = createColor('yellow', 3, alpha);};
@@ -193,8 +193,7 @@ function paintMoveAbsolute(move, evaluation){
     if(evaluation>=limits[2] & evaluation<limits[3]){colour = createColor('green', 3, alpha);};
     if(evaluation>=limits[3] & evaluation<limits[4]){colour = createColor('green', 4, alpha);};
     if(evaluation>=limits[4] & evaluation<limits[5]){colour = createColor('green', 5, alpha);};
-    if(evaluation>limits[5]){colour = createColor('white', null, alpha);};
-
+    if(evaluation>=300){colour = createColor('white', null, alpha);};
     drawArrow(move.substring(0, 2),move.substring(2, 4), colour, 15);
 }
 
