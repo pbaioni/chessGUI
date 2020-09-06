@@ -177,21 +177,23 @@ function paintMoveRelative(move, centipawnloss){
 }
 
 function paintMoveAbsolute(move, evaluation){
+    
+    var limits = [50, 100, 150, 200, 300];
     var colour;
     var alpha = 0.5;
-    if(evaluation<=-500){colour = createColor('black', null, alpha);};
-    if(evaluation>-500 & evaluation<=-350){colour = createColor('red', 5, alpha);};
-    if(evaluation>-350 & evaluation<=-250){colour = createColor('red', 3, alpha);};
-    if(evaluation>-250 & evaluation<=-180){colour = createColor('orange', 3, alpha);};
-    if(evaluation>-180 & evaluation<=-120){colour = createColor('orange', 2, alpha);};
-    if(evaluation>-120 & evaluation<=-80){colour = createColor('yellow', 1, alpha);};
-    if(evaluation>-80 & evaluation<80){colour = createColor('cyan', 1, alpha);};
-    if(evaluation>=80 & evaluation<120){colour = createColor('green', 1, alpha);};
-    if(evaluation>=120 & evaluation<180){colour = createColor('green', 2, alpha);};
-    if(evaluation>=180 & evaluation<250){colour = createColor('green', 3, alpha);};
-    if(evaluation>=250 & evaluation<350){colour = createColor('green', 4, alpha);};
-    if(evaluation>=350 & evaluation<500){colour = createColor('green', 5, alpha);};
-    if(evaluation>500){colour = createColor('white', null, alpha);};
+    if(evaluation<=-limits[5]){colour = createColor('black', null, alpha);};
+    if(evaluation>-limits[5] & evaluation<=-limits[4]){colour = createColor('red', 5, alpha);};
+    if(evaluation>-limits[4] & evaluation<=-limits[3]){colour = createColor('red', 3, alpha);};
+    if(evaluation>-limits[3]& evaluation<=-limits[2]){colour = createColor('orange', 3, alpha);};
+    if(evaluation>-limits[2] & evaluation<=-limits[1]){colour = createColor('orange', 2, alpha);};
+    if(evaluation>-limits[1] & evaluation<=-limits[0]){colour = createColor('yellow', 1, alpha);};
+    if(evaluation>-limits[0] & evaluation<limits[0]){colour = createColor('cyan', 1, alpha);};
+    if(evaluation>=limits[0] & evaluation<limits[1]){colour = createColor('green', 2, alpha);};
+    if(evaluation>=limits[1] & evaluation<limits[2]){colour = createColor('green', 3, alpha);};
+    if(evaluation>=limits[2] & evaluation<limits[3]){colour = createColor('green', 4, alpha);};
+    if(evaluation>=limits[3] & evaluation<limits[4]){colour = createColor('green', 5, alpha);};
+    if(evaluation>=limits[4] & evaluation<limits[5]){colour = createColor('green', 5, alpha);};
+    if(evaluation>limits[5]){colour = createColor('white', null, alpha);};
 
     drawArrow(move.substring(0, 2),move.substring(2, 4), colour, 15);
 }
