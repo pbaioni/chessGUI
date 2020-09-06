@@ -170,6 +170,14 @@ function start () {
     changePosition(null, null, game.fen())
 }
 
+//start position button and function
+$('#flipBtn').on('click', flip)
+function flip () {
+  eraseDrawings()
+  board.flip()
+  changePosition(null, null, game.fen())
+}
+
 //clear board button and function
 $('#deleteBtn').on('click', deleteFromHere)
 function deleteFromHere() {
@@ -191,7 +199,7 @@ function displayAnalysis(analysis){
   console.log(analysis)
   $evaluationBar.value = 500 - analysis.evaluation;
   $evaluation.html('<h1>' + analysis.evaluation/100 + '</h1>');
-  analysis.moveEvaluations.forEach(element => {
+  analysis.moves.forEach(element => {
     if (game.turn() === 'b') {
       paintMoveAbsolute(element.move, element.evaluation*(-1));
     }else{
