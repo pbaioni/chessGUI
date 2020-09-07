@@ -4,6 +4,9 @@ var boardSize=640
 var contourWidth = 4
 var circleWidth = 4
 
+//define evaluation zones
+var limits = [50, 100, 150, 200, 300, 500];
+
 // arrows layer
 arrowCanvas = document.getElementById('arrowCanvas');
 arrowContext = arrowCanvas.getContext('2d');
@@ -177,24 +180,64 @@ function paintMoveRelative(move, centipawnloss){
 }
 
 function paintMoveAbsolute(move, evaluation){
-
-    var limits = [50, 100, 150, 200, 300];
-    var colour;
     var alpha = 0.5;
-    if(evaluation<=-300){colour = createColor('black', null, alpha);};
-    if(evaluation>-limits[5] & evaluation<=-limits[4]){colour = createColor('red', 5, alpha);};
-    if(evaluation>-limits[4] & evaluation<=-limits[3]){colour = createColor('orange', 2, alpha);};
-    if(evaluation>-limits[3]& evaluation<=-limits[2]){colour = createColor('yellow', 3, alpha);};
-    if(evaluation>-limits[2] & evaluation<=-limits[1]){colour = createColor('yellow', 2, alpha);};
-    if(evaluation>-limits[1] & evaluation<=-limits[0]){colour = createColor('yellow', 1, alpha);};
-    if(evaluation>-limits[0] & evaluation<limits[0]){colour = createColor('cyan', 1, alpha);};
-    if(evaluation>=limits[0] & evaluation<limits[1]){colour = createColor('green', 1, alpha);};
-    if(evaluation>=limits[1] & evaluation<limits[2]){colour = createColor('green', 2, alpha);};
-    if(evaluation>=limits[2] & evaluation<limits[3]){colour = createColor('green', 3, alpha);};
-    if(evaluation>=limits[3] & evaluation<limits[4]){colour = createColor('green', 4, alpha);};
-    if(evaluation>=limits[4] & evaluation<limits[5]){colour = createColor('green', 5, alpha);};
-    if(evaluation>=300){colour = createColor('white', null, alpha);};
+    var colors = [
+        createColor('red', 5, alpha),
+        createColor('orange', 5, alpha),
+        createColor('orange', 4, alpha),
+        createColor('orange', 3, alpha),
+        createColor('orange', 2, alpha),
+        createColor('yellow', 1, alpha),
+        createColor('white', null, alpha),
+        createColor('green', 1, alpha),
+        createColor('green', 2, alpha),
+        createColor('green', 3, alpha),
+        createColor('green', 4, alpha),
+        createColor('green', 5, alpha),
+        createColor('cyan', 5, alpha)
+    ];
+
+    var colour;
+    if(evaluation<=-limits[5]){colour = colors[0];};
+    if(evaluation>-limits[5] & evaluation<=-limits[4]){colour = colors[1]};
+    if(evaluation>-limits[4] & evaluation<=-limits[3]){colour = colors[2];};
+    if(evaluation>-limits[3]& evaluation<=-limits[2]){colour = colors[3];};
+    if(evaluation>-limits[2] & evaluation<=-limits[1]){colour = colors[4];};
+    if(evaluation>-limits[1] & evaluation<=-limits[0]){colour = colors[5];};
+    if(evaluation>-limits[0] & evaluation<limits[0]){colour = colors[6];};
+    if(evaluation>=limits[0] & evaluation<limits[1]){colour = colors[7];};
+    if(evaluation>=limits[1] & evaluation<limits[2]){colour = colors[8];};
+    if(evaluation>=limits[2] & evaluation<limits[3]){colour = colors[9];};
+    if(evaluation>=limits[3] & evaluation<limits[4]){colour = colors[10];};
+    if(evaluation>=limits[4] & evaluation<limits[5]){colour = colors[11];};
+    if(evaluation>=limits[5]){colour = colors[12];};
+
     drawArrow(move.substring(0, 2),move.substring(2, 4), colour, 15);
+
+}
+
+function testColors(){
+    eraseDrawings()
+
+    //good positions
+    paintMoveAbsolute('a2a4', limits[0]-1)
+    paintMoveAbsolute('b2b4', limits[1]-1)
+    paintMoveAbsolute('c2c4', limits[2]-1)
+    paintMoveAbsolute('d2d4', limits[3]-1)
+    paintMoveAbsolute('e2e4', limits[4]-1)
+    paintMoveAbsolute('f2f4', limits[5]-1)
+    paintMoveAbsolute('g2g4', limits[5]+1)
+
+       //bad positions
+       paintMoveAbsolute('a7a5', -limits[0]+1)
+       paintMoveAbsolute('b7b5', -limits[1]+1)
+       paintMoveAbsolute('c7c5', -limits[2]+1)
+       paintMoveAbsolute('d7d5', -limits[3]+1)
+       paintMoveAbsolute('e7e5', -limits[4]+1)
+       paintMoveAbsolute('f7f5', -limits[5]+1)
+       paintMoveAbsolute('g7g5', -limits[5]-1)
+
+
 }
 
 

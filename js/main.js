@@ -13,6 +13,7 @@ var $comment = $('#comment')
 var connected = false
 var analysisEnabled = true
 var analysisPending = false
+var analysisFen
 
 var config = {
   orientation: 'white',
@@ -43,8 +44,6 @@ document.onkeydown = function(evt) {
 
   testLink().then(response => start());
   setInterval(function(){testLink();}, 10000);
-  
-
 
 
 //********************* */
@@ -104,6 +103,7 @@ function changePosition(previousFen, move, fen){
   
   if(analysisEnabled & connected){
     analysisPending = true;
+    analysisFen = fen;
     setServerStatus('orange', 'Waiting for<br>Analysis');
     getAnalysis(previousFen, move, fen).then(analysis => {
       displayAnalysis(analysis); 
@@ -164,9 +164,11 @@ function updateStatus () {
 
 //start position button and function
 $('#startBtn').on('click', start)
-function start () {
+async function start () {
     board.start()
     game = new Chess()
+    testColors()
+    await sleep(2000)
     changePosition(null, null, game.fen())
 }
 
@@ -216,17 +218,17 @@ function showPawnStructure () {
 
 //server analysis treatment
 function displayAnalysis(analysis){
-  console.log(analysis)
-  $evaluationBar.value = 500 - analysis.evaluation;
-  $evaluation.html('<h1>' + analysis.evaluation/100 + '</h1>');
-  analysis.moves.forEach(element => {
-    if (game.turn() === 'b') {
-      paintMoveAbsolute(element.move, element.evaluation*(-1));
-    }else{
-      paintMoveAbsolute(element.move, element.evaluation);
-    }
-  });
-  $comment.html(analysis.comment);
+    console.log(analysis)
+    $evaluationBar.value = 500 - analysis.evaluation;
+    $evaluation.html('<h1>' + analysis.evaluation/100 + '</h1>');
+    analysis.moves.forEach(element => {
+      if (game.turn() === 'b') {
+        paintMoveAbsolute(element.move, element.evaluation*(-1));
+      }else{
+        paintMoveAbsolute(element.move, element.evaluation);
+      }
+    });
+    $comment.html(analysis.comment);
 }
 
 function clearEval(){
@@ -253,4 +255,8 @@ function setServerStatus(colour, text){
 
 function serverReady(){
   setServerStatus('green', 'Server<br>Ready')
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
