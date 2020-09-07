@@ -1,19 +1,24 @@
 //********************* */
 //  SCRIPT PART 
 //********************* */
-
+//initialize libraries
 var board = null
 var game = new Chess()
+
+//DOM objects
 var $board = $('#board')
 var $status = $('#status')
 var $evaluationBar = document.getElementById('evaluationBar')
 var $evaluation = $('#evaluation')
 var $serverStatus = $('#serverStatus')
 var $comment = $('#comment')
+var $onlyPawnsBtn = $('#onlyPawnsBtn')
+
+//script variables
 var connected = false
 var analysisEnabled = true
 var analysisPending = false
-var analysisFen
+var onlyPawns = false
 
 var config = {
   orientation: 'white',
@@ -103,7 +108,6 @@ function changePosition(previousFen, move, fen){
   
   if(analysisEnabled & connected){
     analysisPending = true;
-    analysisFen = fen;
     setServerStatus('orange', 'Waiting for<br>Analysis');
     getAnalysis(previousFen, move, fen).then(analysis => {
       displayAnalysis(analysis); 
@@ -212,8 +216,18 @@ function update() {
 //button and function to show only the pawn structure on the board
 $('#onlyPawnsBtn').on('click', showPawnStructure)
 function showPawnStructure () {
-  eraseDrawings()
-  getOnlyPawns(game.fen()).then(fenWithoutPieces => board.position(fenWithoutPieces));
+  if(onlyPawns){
+    board.position(game.fen())
+    changePosition(null, null, game.fen())
+    $onlyPawnsBtn.html('Pawn Structure')
+    onlyPawns = false
+  }else{
+    eraseDrawings()
+    getOnlyPawns(game.fen()).then(fenWithoutPieces => board.position(fenWithoutPieces));
+    $onlyPawnsBtn.html('Show all pieces')
+    onlyPawns = true
+  }
+
 }
 
 //server analysis treatment
