@@ -89,6 +89,29 @@ async function updateDepth(fen, depth){
   });
 }
 
+async function importPgn(openingDepth, analysisDepth){
+
+  var url = 'http://localhost:9001/board/import';
+  var parameters= {};
+  parameters.openingDepth = openingDepth;
+  parameters.analysisDepth = analysisDepth;
+  await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(parameters),
+  })
+  .then(response => response.json())
+  .then(data => {
+    alert(data.content);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+    serverReady();
+  });
+}
+
 async function setPositionComment(fen, comment){
   var url = 'http://localhost:9001/board/comment';
   var parameters= {};

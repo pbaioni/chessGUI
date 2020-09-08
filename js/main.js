@@ -11,7 +11,7 @@ var $status = $('#status')
 var $evaluationBar = document.getElementById('evaluationBar')
 var $evaluation = $('#evaluation')
 var $serverStatus = $('#serverStatus')
-var $comment = $('#comment')
+var $comment = $('textarea#comment')
 var $onlyPawnsBtn = $('#onlyPawnsBtn')
 
 //script variables
@@ -105,6 +105,7 @@ function changePosition(previousFen, move, fen){
   //cleaning infos
   clearEval()
   eraseDrawings()
+  $comment.val('')
   
   if(analysisEnabled & connected){
     analysisPending = true;
@@ -171,6 +172,7 @@ $('#startBtn').on('click', start)
 async function start () {
     board.start()
     game = new Chess()
+    $comment.val('')
     testColors()
     await sleep(2000)
     changePosition(null, null, game.fen())
@@ -213,6 +215,17 @@ function update() {
   }
 }
 
+//import openings from games
+$('#importBtn').on('click', importGames)
+function importGames() {
+  var first = window.prompt("Enter the opening depth to import: ");
+  var second = window.prompt("Enter the opening depth to import: ");
+  setServerStatus('grey', 'Importing<br>Games');
+  if(first !== undefined & second !== undefined){
+    importPgn(first, second).then(response => serverReady());
+  }
+}
+
 //button and function to show only the pawn structure on the board
 $('#onlyPawnsBtn').on('click', showPawnStructure)
 function showPawnStructure () {
@@ -242,7 +255,7 @@ function displayAnalysis(analysis){
         paintMoveAbsolute(element.move, element.evaluation);
       }
     });
-    $comment.html(analysis.comment);
+    $comment.val(analysis.comment);
 }
 
 function clearEval(){

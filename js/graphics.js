@@ -199,26 +199,26 @@ function paintMoveAbsolute(move, evaluation){
 
 function testColors(){
     eraseDrawings()
-
+    var tenth = shadeLimit/10
     //good positions
     paintMoveAbsolute('a2a4', 0)
-    paintMoveAbsolute('b2b4', 50)
-    paintMoveAbsolute('c2c4', 100)
-    paintMoveAbsolute('d2d4', 150)
-    paintMoveAbsolute('e2e4', 200)
-    paintMoveAbsolute('f2f4', 300)
-    paintMoveAbsolute('g2g4', 500)
-    paintMoveAbsolute('h2h4', 600)
+    paintMoveAbsolute('b2b4', tenth)
+    paintMoveAbsolute('c2c4', 2*tenth)
+    paintMoveAbsolute('d2d4', 3*tenth)
+    paintMoveAbsolute('e2e4', 4*tenth)
+    paintMoveAbsolute('f2f4', 6*tenth)
+    paintMoveAbsolute('g2g4', 10*tenth)
+    paintMoveAbsolute('h2h4', 12*tenth)
 
     //bad positions
     paintMoveAbsolute('a7a5', 0)
-    paintMoveAbsolute('b7b5', -50)
-    paintMoveAbsolute('c7c5', -100)
-    paintMoveAbsolute('d7d5', -150)
-    paintMoveAbsolute('e7e5', -200)
-    paintMoveAbsolute('f7f5', -300)
-    paintMoveAbsolute('g7g5', -500)
-    paintMoveAbsolute('h7h5', -600)
+    paintMoveAbsolute('b7b5', -tenth)
+    paintMoveAbsolute('c7c5', -2*tenth)
+    paintMoveAbsolute('d7d5', -3*tenth)
+    paintMoveAbsolute('e7e5', -4*tenth)
+    paintMoveAbsolute('f7f5', -6*tenth)
+    paintMoveAbsolute('g7g5', -10*tenth)
+    paintMoveAbsolute('h7h5', -12*tenth)
 }
 
 
