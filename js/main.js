@@ -13,6 +13,7 @@ var $evaluation = $('#evaluation')
 var $serverStatus = $('#serverStatus')
 var $comment = $('textarea#comment')
 var $onlyPawnsBtn = $('#onlyPawnsBtn')
+var $pgn = $('#pgnLabel')
 
 //script variables
 var connected = false
@@ -115,8 +116,10 @@ function changePosition(previousFen, move, fen){
       analysisPending = false; 
       setServerStatus('green', 'Server<br>Ready')
     });
+
+    $pgn.html('PGN: ' + game.pgn())
   }
-  
+
 }
 
 function back(){

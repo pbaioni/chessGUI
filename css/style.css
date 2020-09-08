@@ -164,3 +164,9 @@ textarea {
     background: #dddddd;
 }
 
+#pgnLabel {
+    margin-top: 10px;
+    float: left;
+    color: #cccccc;
+}
+
