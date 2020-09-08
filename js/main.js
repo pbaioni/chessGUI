@@ -218,11 +218,13 @@ function update() {
 //import openings from games
 $('#importBtn').on('click', importGames)
 function importGames() {
-  var first = window.prompt("Enter the opening depth to import: ");
-  var second = window.prompt("Enter the opening depth to import: ");
-  setServerStatus('grey', 'Importing<br>Games');
-  if(first !== undefined & second !== undefined){
-    importPgn(first, second).then(response => serverReady());
+  var openingDepth = window.prompt("Enter the opening depth to import: ");
+  if(openingDepth != null){
+    var analysisDepth = window.prompt("Enter the opening depth to import: ");
+    if(analysisDepth != null){
+      setServerStatus('grey', 'Importing<br>Games');
+      importPgn(openingDepth, analysisDepth).then(response => serverReady());
+    }
   }
 }
 
