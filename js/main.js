@@ -100,6 +100,8 @@ function enableAnalysis(checkboxElem) {
     changePosition(null, null, game.fen())
   } else {
     eraseArrows()
+    eraseContours()
+    $pgn.html('')
     analysisEnabled = false;
   }
 }
