@@ -20,7 +20,7 @@ var connected = false
 var analysisEnabled = true
 var analysisPending = false
 var onlyPawns = false
-var influenceEnabled = true
+var influenceEnabled = false
 
 var config = {
   orientation: 'white',
@@ -220,28 +220,46 @@ function deleteFromHere() {
 
 $('#updateBtn').on('click', update)
 function update() {
+  if(!analysisPending){
   var depth = window.prompt("Enter new depth (ex: 28): ");
-  if(depth){
-    analysisPending = true;
-    setServerStatus('grey', 'Updating<br>Database');
-    updateDepth(game.fen(), depth).then(analysis => {
-      analysisPending = false; 
-      setServerStatus('green', 'Server<br>Ready')
-    });
-    
+    if(depth){
+      analysisPending = true;
+      $('#updateBtn').css("background-color", 'orange')
+      $('#updateBtn').html('Stop Update')
+      setServerStatus('grey', 'Updating<br>Database');
+      updateDepth(game.fen(), depth).then(analysis => {
+        analysisPending = false; 
+        setServerStatus('green', 'Server<br>Ready')
+      });
+    }
+  }else{
+    stopTask()
+    $('#updateBtn').css("background-color", '#2ba6cb')
+    $('#updateBtn').html('Update Line Depth')
+    analysisPending = false
   }
 }
 
 //import openings from games
 $('#importBtn').on('click', importGames)
 function importGames() {
-  var openingDepth = window.prompt("Enter the opening depth to import (ex: 4): ");
-  if(openingDepth != null){
-    var analysisDepth = window.prompt("Enter the analysis depth for the import (ex: 24): ");
-    if(analysisDepth != null){
-      setServerStatus('grey', 'Importing<br>Games');
-      importPgn(openingDepth, analysisDepth).then(response => serverReady());
+  if(!analysisPending){
+    var openingDepth = window.prompt("Enter the opening depth to import (ex: 4): ");
+    if(openingDepth != null){
+      var analysisDepth = window.prompt("Enter the analysis depth for the import (ex: 24): ");
+      if(analysisDepth != null){
+        analysisPending = true
+        $('#importBtn').css("background-color", 'orange')
+        $('#importBtn').html('Stop Import')
+        setServerStatus('grey', 'Importing<br>Games');
+        importPgn(openingDepth, analysisDepth).then(response => {serverReady(); analysisPending = false;});
+      }
     }
+  }else{
+    stopTask()
+    $('#importBtn').css("background-color", '#2ba6cb')
+    $('#importBtn').html('Import Games')
+    analysisPending = false
   }
 }
 

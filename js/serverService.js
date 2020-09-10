@@ -131,6 +131,16 @@ async function setPositionComment(fen, comment){
   });
 }
 
+async function stopTask(){
+  
+  var url = 'http://localhost:9001/board/stop';
+  await fetch(url)
+  .then(response => {if(response.status == 200){alert('Task stopped!')}})
+  .catch((error) => {
+    setConnected(false);
+  });
+}
+
 async function testLink(){
   
   var url = 'http://localhost:9001/board';
