@@ -1,6 +1,9 @@
+var urlBase = 'http://localhost:' + properties.serverPort + '/board/'
+
+
 async function getOnlyPawns(fen){
     var fenWithoutPawns = null
-    var url = 'http://localhost:9001/board/onlypawns';
+    var url = urlBase + 'onlypawns';
 
     await fetch(url, {
       method: 'POST',
@@ -23,7 +26,7 @@ async function getOnlyPawns(fen){
 
 async function deleteLine(fen, move){
 
-  var url = 'http://localhost:9001/board/delete';
+  var url = urlBase + 'delete';
   var parameters= {};
   parameters.fen = fen;
   parameters.move = move;
@@ -46,7 +49,7 @@ async function deleteLine(fen, move){
 
 async function getAnalysis(previousFen, move, fen){
   var analysis = null
-  var url = 'http://localhost:9001/board/analysis';
+  var url = urlBase + 'analysis';
   var parameters= {};
   parameters.previousFen = previousFen;
   parameters.move = move;
@@ -72,7 +75,7 @@ async function getAnalysis(previousFen, move, fen){
 
 async function updateDepth(fen, depth){
 
-  var url = 'http://localhost:9001/board/update';
+  var url = urlBase + 'update';
   var parameters= {};
   parameters.fen = fen;
   parameters.depth = depth;
@@ -91,7 +94,7 @@ async function updateDepth(fen, depth){
 
 async function importPgn(openingDepth, analysisDepth){
 
-  var url = 'http://localhost:9001/board/import';
+  var url = urlBase + 'import';
   var parameters= {};
   parameters.openingDepth = openingDepth;
   parameters.analysisDepth = analysisDepth;
@@ -113,7 +116,7 @@ async function importPgn(openingDepth, analysisDepth){
 }
 
 async function setPositionComment(fen, comment){
-  var url = 'http://localhost:9001/board/comment';
+  var url = urlBase + 'comment';
   var parameters= {};
   parameters.fen = fen;
   parameters.comment = comment;
@@ -133,7 +136,7 @@ async function setPositionComment(fen, comment){
 
 async function stopTask(){
   
-  var url = 'http://localhost:9001/board/stop';
+  var url = urlBase + 'stop';
   await fetch(url)
   .then(response => {if(response.status == 200){alert('Task stopped!')}})
   .catch((error) => {
@@ -143,7 +146,7 @@ async function stopTask(){
 
 async function testLink(){
   
-  var url = 'http://localhost:9001/board';
+  var url = urlBase;
   await fetch(url)
   .then(response => {if(response.status == 200){setConnected(true);}})
   .catch((error) => {

@@ -1,6 +1,7 @@
 properties = {
 
-    arrowShadeLimit: 500,
-    contourShadeLimit: 2
+  serverPort: 9099,
+  arrowShadeLimit: 500,
+  contourShadeLimit: 2
 
-  }
+}
