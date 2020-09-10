@@ -20,6 +20,7 @@ var connected = false
 var analysisEnabled = true
 var analysisPending = false
 var onlyPawns = false
+var influenceEnabled = true
 
 var config = {
   orientation: 'white',
@@ -98,7 +99,18 @@ function enableAnalysis(checkboxElem) {
     analysisEnabled = true;
     changePosition(null, null, game.fen())
   } else {
+    eraseArrows()
     analysisEnabled = false;
+  }
+}
+
+function enableInfluence(checkboxElem) {
+  if (checkboxElem.checked) {
+    influenceEnabled = true;
+    changePosition(null, null, game.fen())
+  } else {
+    eraseContours()
+    influenceEnabled = false;
   }
 }
 
@@ -198,7 +210,7 @@ function flip () {
 //delete line button and function
 $('#deleteBtn').on('click', deleteFromHere)
 function deleteFromHere() {
-  var line = window.prompt("Enter line to delete: ");
+  var line = window.prompt("Enter line to delete in uci format (ex: g1f3): ");
   if(line){
     deleteLine(game.fen(), line).then(response => changePosition(null, null, game.fen()));
   }
@@ -206,7 +218,7 @@ function deleteFromHere() {
 
 $('#updateBtn').on('click', update)
 function update() {
-  var depth = window.prompt("Enter new depth: ");
+  var depth = window.prompt("Enter new depth (ex: 28): ");
   if(depth){
     analysisPending = true;
     setServerStatus('grey', 'Updating<br>Database');
@@ -221,9 +233,9 @@ function update() {
 //import openings from games
 $('#importBtn').on('click', importGames)
 function importGames() {
-  var openingDepth = window.prompt("Enter the opening depth to import: ");
+  var openingDepth = window.prompt("Enter the opening depth to import (ex: 4): ");
   if(openingDepth != null){
-    var analysisDepth = window.prompt("Enter the opening depth to import: ");
+    var analysisDepth = window.prompt("Enter the analysis depth for the import (ex: 24): ");
     if(analysisDepth != null){
       setServerStatus('grey', 'Importing<br>Games');
       importPgn(openingDepth, analysisDepth).then(response => serverReady());
@@ -260,6 +272,11 @@ function displayAnalysis(analysis){
         paintMoveAbsolute(element.move, element.evaluation);
       }
     });
+    if(influenceEnabled){
+      analysis.influences.forEach(element => {
+          paintInfluence(element.square, element.influence);
+      });
+  }
     $comment.val(analysis.comment);
 }
 

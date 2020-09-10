@@ -170,3 +170,8 @@ textarea {
     color: #cccccc;
 }
 
+#analysisCheckbox, #influenceCheckbox {
+
+    margin: 10px;
+}
+
