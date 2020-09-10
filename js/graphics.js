@@ -4,9 +4,6 @@ var boardSize=640
 var contourWidth = 5
 var circleWidth = 4
 
-//define max evaluation (absolute) for shade arrows
-var shadeLimit = 500
-
 // arrows layer
 arrowCanvas = document.getElementById('arrowCanvas');
 arrowContext = arrowCanvas.getContext('2d');
@@ -187,20 +184,35 @@ function paintMoveRelative(move, centipawnloss){
 }
 
 function paintMoveAbsolute(move, evaluation){
-    var alpha = 0.5 + (Math.abs(evaluation)/shadeLimit)*0.3;
+
+    //define max evaluation (absolute) for shade arrows
+    var shadeLimit = properties.arrowShadeLimit
+    var graduation = (Math.abs(evaluation)/shadeLimit)
+
+    //adjust alpha with evaluation
+    var alpha = 0.5 + graduation*0.3;
+
+    //calculate arrow color
     var color;
     if(evaluation < -shadeLimit){color = createColor('red', 1, alpha);};
-    if(evaluation >= -shadeLimit & evaluation < 0){color = createColor('orange', Math.abs(evaluation)/shadeLimit, alpha);};
-    if(evaluation >= 0 & evaluation <= shadeLimit){color = createColor('green', (Math.abs(evaluation)/shadeLimit), alpha);};
+    if(evaluation >= -shadeLimit & evaluation < 0){color = createColor('orange', graduation, alpha);};
+    if(evaluation >= 0 & evaluation <= shadeLimit){color = createColor('green', graduation, alpha);};
     if(evaluation > shadeLimit){color = createColor('cyan', 1, alpha);};
 
+    //paint arrow
     drawArrow(move.substring(0, 2),move.substring(2, 4), color, 15);
 }
 
 function paintInfluence(square, influence){
-    var influenceLimit = 2
+
+    //define limit for contour shade
+    var influenceLimit = properties.contourShadeLimit
     var graduation = (Math.abs(influence)/influenceLimit)
+
+    //adjust alpha with influence
     var alpha = 0.5 + graduation*0.3;
+
+    //calculate contour color
     var color;
     if(influence < -influenceLimit){color = createColor('cyan', 1, alpha);};
     if(influence >= -influenceLimit & influence < 0){color = createColor('cyan', graduation, alpha);};
@@ -208,12 +220,13 @@ function paintInfluence(square, influence){
     if(influence > 0 & influence <= influenceLimit){color = createColor('yellow', graduation, alpha);};
     if(influence > influenceLimit){color = createColor('yellow', 1, alpha);};
 
+    //paint contour
     drawSquareContour(square, color)
 }
 
 function testColors(){
     eraseDrawings()
-    var tenth = shadeLimit/10
+    var tenth = properties.arrowShadeLimit/10
     //good positions
     paintMoveAbsolute('a2a4', 0)
     paintMoveAbsolute('b2b4', tenth)
