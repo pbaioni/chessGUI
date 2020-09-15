@@ -86,6 +86,10 @@ async function updateDepth(fen, depth){
     },
     body: JSON.stringify(parameters),
   })
+  .then(response => response.json())
+  .then(data => {
+    alert(data.content);
+  })
   .catch((error) => {
     console.error('Error:', error);
     serverReady();
@@ -138,7 +142,6 @@ async function stopTask(){
   
   var url = urlBase + 'stop';
   await fetch(url)
-  .then(response => {if(response.status == 200){alert('Task stopped!')}})
   .catch((error) => {
     setConnected(false);
   });
