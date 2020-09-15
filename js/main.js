@@ -54,7 +54,7 @@ document.onkeydown = function(evt) {
 
 
 //********************* */
-//  METHODS PART 
+//  CALLBACK METHODS 
 //********************* */
 
 //Actions on mouse or keyboard events
@@ -95,56 +95,6 @@ function onSnapEnd () {
   checkGameTerminantion()
 }
 
-function enableAnalysis(checkboxElem) {
-  if (checkboxElem.checked) {
-    analysisEnabled = true;
-    changePosition(null, null, game.fen())
-  } else {
-    eraseArrows()
-    eraseContours()
-    analysisEnabled = false;
-  }
-}
-
-function enableInfluence(checkboxElem) {
-  if (checkboxElem.checked) {
-    influenceEnabled = true;
-    changePosition(null, null, game.fen())
-  } else {
-    eraseContours()
-    influenceEnabled = false;
-  }
-}
-
-function changePosition(previousFen, move, fen){
-  //cleaning infos
-  clearEval()
-  eraseDrawings()
-  $comment.val('')
-  
-  if(analysisEnabled & connected){
-    analysisPending = true;
-    setServerStatus('orange', 'Waiting for<br>Analysis');
-    getAnalysis(previousFen, move, fen).then(analysis => {
-      displayAnalysis(analysis); 
-      analysisPending = false; 
-      setServerStatus('green', 'Server<br>Ready')
-    });
-  }
-
-}
-
-function back(){
-  game.undo();
-  onSnapEnd()
-  changePosition(null, null, game.fen());
-}
-
-function forward(){
-  console.log('forward')
-}
-
-
 function checkGameTerminantion () {
  
   var moveColor = 'White'
@@ -168,6 +118,24 @@ function checkGameTerminantion () {
   }
 }
 
+// keyboard actions
+
+function back(){
+  game.undo();
+  onSnapEnd()
+  changePosition(null, null, game.fen());
+}
+
+function forward(){
+  console.log('forward')
+}
+
+//********************* */
+//  BUTTONS and CHECKBOXES 
+//********************* */
+
+//BUTTONS
+
 //start position button and function
 $('#startBtn').on('click', start)
 async function start () {
@@ -180,18 +148,28 @@ async function start () {
     changePosition(null, null, game.fen())
 }
 
-//delete line button and function
-$('#commentBtn').on('click', setComment)
-function setComment() {
-    setPositionComment(game.fen(), $comment.val()).then(response => {changePosition(null, null, game.fen()); alert('Comment saved');});
-}
-
 //flip board button and function
 $('#flipBtn').on('click', flip)
 function flip () {
   eraseDrawings()
   board.flip()
   changePosition(null, null, game.fen())
+}
+
+//button and function to show only the pawn structure on the board
+$('#onlyPawnsBtn').on('click', showPawnStructure)
+function showPawnStructure () {
+  if(onlyPawns){
+    board.position(game.fen())
+    changePosition(null, null, game.fen())
+    $onlyPawnsBtn.html('Pawn Structure')
+    onlyPawns = false
+  }else{
+    eraseDrawings()
+    getOnlyPawns(game.fen()).then(fenWithoutPieces => board.position(fenWithoutPieces));
+    $onlyPawnsBtn.html('Show all pieces')
+    onlyPawns = true
+  }
 }
 
 //delete line button and function
@@ -248,19 +226,54 @@ function importGames() {
   }
 }
 
-//button and function to show only the pawn structure on the board
-$('#onlyPawnsBtn').on('click', showPawnStructure)
-function showPawnStructure () {
-  if(onlyPawns){
-    board.position(game.fen())
+
+//delete line button and function
+$('#commentBtn').on('click', setComment)
+function setComment() {
+    setPositionComment(game.fen(), $comment.val()).then(response => {changePosition(null, null, game.fen()); alert('Comment saved');});
+}
+
+//CHECKBOXES
+
+function enableAnalysis(checkboxElem) {
+  if (checkboxElem.checked) {
+    analysisEnabled = true;
     changePosition(null, null, game.fen())
-    $onlyPawnsBtn.html('Pawn Structure')
-    onlyPawns = false
-  }else{
-    eraseDrawings()
-    getOnlyPawns(game.fen()).then(fenWithoutPieces => board.position(fenWithoutPieces));
-    $onlyPawnsBtn.html('Show all pieces')
-    onlyPawns = true
+  } else {
+    eraseArrows()
+    eraseContours()
+    analysisEnabled = false;
+  }
+}
+
+function enableInfluence(checkboxElem) {
+  if (checkboxElem.checked) {
+    influenceEnabled = true;
+    changePosition(null, null, game.fen())
+  } else {
+    eraseContours()
+    influenceEnabled = false;
+  }
+}
+
+//********************* */
+//  ANALYSIS METHODS 
+//********************* */
+
+function changePosition(previousFen, move, fen){
+  //cleaning infos
+  clearEval()
+  eraseDrawings()
+  $comment.val('')
+  
+  if(analysisEnabled & connected){
+    analysisPending = true;
+    setServerStatus('orange', 'Waiting for<br>Analysis');
+    getAnalysis(previousFen, move, fen).then(analysis => {
+      displayAnalysis(analysis); 
+      analysisPending = false; 
+      setServerStatus('green', 'Server<br>Ready')
+    });
   }
 
 }
@@ -290,6 +303,16 @@ function clearEval(){
   $evaluation.html('<h1>-</h1>');
 }
 
+//********************* */
+//  SERVER RELATED METHODS 
+//********************* */
+
+
+function setServerStatus(colour, text){
+  $serverStatus.css("background-color", colour)
+  $serverStatus.html(text)
+}
+
 function setConnected(value){
   connected = value;
   if(!analysisPending){
@@ -301,14 +324,13 @@ function setConnected(value){
   }
 }
 
-function setServerStatus(colour, text){
-    $serverStatus.css("background-color", colour)
-    $serverStatus.html(text)
-}
-
 function serverReady(){
   setServerStatus('green', 'Server<br>Ready')
 }
+
+//********************* */
+//  OTHER METHODS 
+//********************* */
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
