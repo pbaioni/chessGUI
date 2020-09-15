@@ -60,6 +60,10 @@ document.onkeydown = function(evt) {
 //Actions on mouse or keyboard events
 
 function onDragStart (source, piece, position, orientation) {
+
+  //freezing the board moves during analysis
+  if(analysisPending) return false
+
   // do not pick up pieces if the game is over
   if (game.game_over()) return false
 
@@ -121,9 +125,11 @@ function checkGameTerminantion () {
 // keyboard actions
 
 function back(){
-  game.undo();
-  onSnapEnd()
-  changePosition(null, null, game.fen());
+  if(!analysisPending){
+    game.undo();
+    onSnapEnd()
+    changePosition(null, null, game.fen());
+  }
 }
 
 function forward(){
