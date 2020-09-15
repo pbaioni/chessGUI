@@ -15,14 +15,13 @@ section {
     display: flex;
     height: 680px;
 }
-/* Clear floats after the columns */
+
 section:after {
     content: "";
     display: table;
     clear: both;
 }
 
-/* Create columns that float next to each other (navs and articles)*/
 nav {
     float: left;
     height: 100%;
@@ -75,6 +74,65 @@ article {
     pointer-events: none
 }
 
+.progress {
+    height: 30px;
+    width: 640px;
+    transform: rotate(90deg) translateX(323px) translateY(110px);
+}
+
+.action-button button, .blue-button {
+    background: #2ba6cb;
+    border-radius: 3px;
+    border: 1px solid #1e728c;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 10px 10px 10px 10px;
+    outline: none;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    width: 80%;
+}
+
+#analysisCheckbox, #influenceCheckbox {
+    margin: 10px;
+}
+
+label {
+    font-family:Verdana;
+    color: #cccccc;
+    font-size: 16px;
+}
+
+#evaluation{
+    position: absolute;
+    bottom: 90px;
+    left: 10px;
+    color: #fff;
+    display: inline-flex;
+    margin: 10px 10px 10px 10px;
+    outline: none;
+    padding: 10px 10px;
+    font-size: 20px;
+    text-align: center;
+    text-decoration: none;
+    width: 70%;
+    height: 20px;
+
+}
+
+.eval{
+    width: 60%;
+}
+
+.depth{
+    width: 40%;
+    float: right;
+}
+
 #serverStatus{
     position: absolute;
     bottom: 20px;
@@ -95,59 +153,6 @@ article {
     height: 40px;
 }
 
-#evaluation{
-    position: absolute;
-    bottom: 100px;
-    left: 10px;
-    color: #fff;
-    display: inline-block;
-    font-size: 14px;
-    font-weight: 600;
-    margin: 10px 10px 10px 10px;
-    outline: none;
-    padding: 10px 10px;
-    text-align: center;
-    text-decoration: none;
-    width: 70%;
-    height: 20px;
-
-}
-
-.action-button button, .blue-button {
-    background: #2ba6cb;
-    border-radius: 3px;
-    border: 1px solid #1e728c;
-    color: #fff;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 14px;
-    font-weight: 600;
-    margin: 10px 10px 10px 10px;
-    outline: none;
-    padding: 10px 10px;
-    text-align: center;
-    text-decoration: none;
-    width: 80%;
-}
-
-#commentBtn {
-    width: 150px;
-    float: right;
-    margin-right: 0;
-}
-
-.progress {
-    height: 30px;
-    width: 640px;
-    transform: rotate(90deg) translateX(323px) translateY(110px);
-}
-
-label {
-    font-family:Verdana;
-    color: #cccccc;
-    font-size: 16px;
-}
-
 textarea {
     margin-top: 15px;
     width: 100%;
@@ -164,14 +169,15 @@ textarea {
     background: #dddddd;
 }
 
+#commentBtn {
+    width: 150px;
+    float: right;
+    margin-right: 0;
+}
+
 #pgnLabel {
     margin-top: 10px;
     float: left;
     color: #cccccc;
-}
-
-#analysisCheckbox, #influenceCheckbox {
-
-    margin: 10px;
 }
 

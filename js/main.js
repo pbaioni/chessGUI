@@ -180,8 +180,6 @@ function updateStatus () {
     }
   }
 
-  //$status.html('<label><h1>Status: ' + status + '</h1></label>')
-
 }
 
 //start position button and function
@@ -284,7 +282,7 @@ function showPawnStructure () {
 function displayAnalysis(analysis){
     console.log(analysis)
     $evaluationBar.value = 500 - analysis.evaluation;
-    $evaluation.html('<h1>' + analysis.evaluation/100 + '</h1>');
+    $evaluation.html('<div class="eval"><b>' + analysis.evaluation/100 + '</b></div><div class="depth">('+ analysis.depth + ')</div>');
     analysis.moves.forEach(element => {
       if (game.turn() === 'b') {
         paintMoveAbsolute(element.move, element.evaluation*(-1));
