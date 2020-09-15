@@ -186,20 +186,43 @@ function update() {
   if(!analysisPending){
   var depth = window.prompt("Enter new depth (ex: 28): ");
     if(depth){
-      analysisPending = true;
-      $('#updateBtn').css("background-color", 'orange')
-      $('#updateBtn').html('Stop Update')
-      setServerStatus('grey', 'Updating<br>Database');
+        //running task requiring chess engine
+        analysisPending = true
+
+        //avoiding conflicts
+        analysisEnabled  = false;
+
+        //managing GUI
+        $('#updateBtn').css("background-color", 'orange')
+        $('#updateBtn').html('Stop Update')
+        $('#importBtn').attr('disabled', true)
+        $('#importBtn').css("background-color", 'grey')
+        $('#analysisCheckbox').attr('disabled', true)
+        $('#influenceCheckbox').attr('disabled', true)
+        setServerStatus('orange', 'Updating<br>Line');
+
       updateDepth(game.fen(), depth).then(analysis => {
         analysisPending = false; 
-        setServerStatus('green', 'Server<br>Ready')
+        serverReady()
       });
     }
   }else{
+    //stopping task
     stopTask()
+
+    //setting analysis variables
+    analysisEnabled  = $('#analysisCheckbox').is(":checked");
+
+    //managing GUI
     $('#updateBtn').css("background-color", '#2ba6cb')
     $('#updateBtn').html('Update Line Depth')
-    analysisPending = false
+    $('#importBtn').attr('disabled', false)
+    $('#importBtn').css("background-color", '#2ba6cb')
+    $('#analysisCheckbox').attr('disabled', false)
+    $('#influenceCheckbox').attr('disabled', false)
+
+    //recall analysis for current position
+    changePosition(null, null, game.fen())
   }
 }
 
@@ -211,18 +234,43 @@ function importGames() {
     if(openingDepth != null){
       var analysisDepth = window.prompt("Enter the analysis depth for the import (ex: 24): ");
       if(analysisDepth != null){
+
+        //running task requiring chess engine
         analysisPending = true
+
+        //avoiding conflicts
+        analysisEnabled  = false;
+
+        //managing GUI
         $('#importBtn').css("background-color", 'orange')
         $('#importBtn').html('Stop Import')
-        setServerStatus('grey', 'Importing<br>Games');
+        $('#updateBtn').attr('disabled', true)
+        $('#updateBtn').css("background-color", 'grey')
+        $('#analysisCheckbox').attr('disabled', true)
+        $('#influenceCheckbox').attr('disabled', true)
+        setServerStatus('orange', 'Importing<br>Games');
+
+        //launch task
         importPgn(openingDepth, analysisDepth).then(response => {serverReady(); analysisPending = false;});
       }
     }
   }else{
+    //stopping task
     stopTask()
+
+    //setting analysis variables
+    analysisEnabled  = $('#analysisCheckbox').is(":checked");
+
+    //managing GUI
     $('#importBtn').css("background-color", '#2ba6cb')
     $('#importBtn').html('Import Games')
-    analysisPending = false
+    $('#updateBtn').attr('disabled', false)
+    $('#updateBtn').css("background-color", '#2ba6cb')
+    $('#analysisCheckbox').attr('disabled', false)
+    $('#influenceCheckbox').attr('disabled', false)
+
+    //recall analysis for current position
+    changePosition(null, null, game.fen())
   }
 }
 
