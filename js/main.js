@@ -283,8 +283,14 @@ function importGames() {
 
 //delete line button and function
 $('#commentBtn').on('click', setComment)
-function setComment() {
-    setPositionComment(game.fen(), $comment.val()).then(response => {changePosition(null, null, game.fen()); alert('Comment saved');});
+async function setComment() {
+    setPositionComment(game.fen(), $comment.val()).then(response => {
+      $('#commentBtn').css("background-color", 'green');
+      $('#commentBtn').html('Comment saved');
+    });
+    await sleep(1000)
+    $('#commentBtn').css("background-color", '#2ba6cb');
+    $('#commentBtn').html('Save Comment');
 }
 
 //CHECKBOXES
