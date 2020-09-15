@@ -91,7 +91,8 @@ function onDrop (source, target) {
 // for castling, en passant, pawn promotion
 function onSnapEnd () {
   board.position(game.fen())
-  updateStatus()
+  $pgn.html('PGN: ' + game.pgn())
+  checkGameTerminantion()
 }
 
 function enableAnalysis(checkboxElem) {
@@ -101,7 +102,6 @@ function enableAnalysis(checkboxElem) {
   } else {
     eraseArrows()
     eraseContours()
-    $pgn.html('')
     analysisEnabled = false;
   }
 }
@@ -130,8 +130,6 @@ function changePosition(previousFen, move, fen){
       analysisPending = false; 
       setServerStatus('green', 'Server<br>Ready')
     });
-
-    $pgn.html('PGN: ' + game.pgn())
   }
 
 }
@@ -146,10 +144,9 @@ function forward(){
   console.log('forward')
 }
 
-//printing some informations about the game to the player
-function updateStatus () {
-  var status = ''
 
+function checkGameTerminantion () {
+ 
   var moveColor = 'White'
   if (game.turn() === 'b') {
     moveColor = 'Black'
@@ -165,21 +162,10 @@ function updateStatus () {
     alert('Game over, drawn position')
   }
 
-    // stalemate?
-    else if (game.in_stalemate()) {
-      alert('Game over, draw by stalemate')
-    }
-
-  // game still on
-  else {
-    status = moveColor + ' to move'
-
-    // check?
-    if (game.in_check()) {
-      status += ', ' + moveColor + ' is in check'
-    }
+  // stalemate?
+  else if (game.in_stalemate()) {
+    alert('Game over, draw by stalemate')
   }
-
 }
 
 //start position button and function
@@ -187,6 +173,7 @@ $('#startBtn').on('click', start)
 async function start () {
     board.start()
     game = new Chess()
+    $pgn.html('PGN:')
     $comment.val('')
     testColors()
     await sleep(2000)
@@ -299,7 +286,6 @@ function displayAnalysis(analysis){
 }
 
 function clearEval(){
-  //TODO: disable bar
   $evaluationBar.value = "500";
   $evaluation.html('<h1>-</h1>');
 }
