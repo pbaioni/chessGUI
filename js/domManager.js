@@ -93,12 +93,13 @@ function clearEval(){
 
 function setEval(evaluation, depth){
 
-    var barEvaluation;
-    if(evaluation > 500){barEvaluation = 500;};
-    if(evaluation < -500){barEvaluation = -500;};
-
-    $evaluationBar.value = 500 - barEvaluation;
     $evaluation.html('<div class="eval"><b>' + evaluation/100 + '</b></div><div class="depth">('+ depth + ')</div>');
+
+    if(evaluation > 500){evaluation = 500;};
+    if(evaluation < -500){evaluation = -500;};
+
+    $evaluationBar.value = 500 - evaluation;
+
 }
 
   function serverReady(){
