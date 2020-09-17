@@ -244,7 +244,10 @@ function importGames() {
         serverImporting()
 
         //launch task
-        importPgn(openingDepth, analysisDepth).then(response => {serverReady(); analysisPending = false;});
+        importPgn(openingDepth, analysisDepth).then(response => {serverReady(); analysisPending = false;
+          enableAnalysisButtons()
+          toggleImportButton(false)
+          serverReady()});
       }
     }
   }else{
