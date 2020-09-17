@@ -1,27 +1,18 @@
-//********************* */
+//*************** */
 //  SCRIPT PART 
-//********************* */
-//initialize libraries
+//*************** */
+//initialize javascript libraries
 var board = null
 var game = new Chess()
-
-//DOM objects
-var $board = $('#board')
-var $status = $('#status')
-var $evaluationBar = document.getElementById('evaluationBar')
-var $evaluation = $('#evaluation')
-var $serverStatus = $('#serverStatus')
-var $comment = $('textarea#comment')
-var $onlyPawnsBtn = $('#onlyPawnsBtn')
-var $pgn = $('#pgnLabel')
 
 //script variables
 var connected = false
 var analysisEnabled = true
+var influenceEnabled = false
 var analysisPending = false
 var onlyPawns = false
-var influenceEnabled = false
 
+//chessboard configuration
 var config = {
   orientation: 'white',
   draggable: true,
@@ -42,6 +33,7 @@ var config = {
 
 //create chessboard
 board = Chessboard('board', config)
+var $board = $('#board')
 
 //bind keybord events
 document.onkeydown = function(evt) {
@@ -49,6 +41,7 @@ document.onkeydown = function(evt) {
     if(evt.keyCode == 39){forward();};
 };
 
+  //start periodic check of server connection
   testLink().then(response => start());
   setInterval(function(){testLink();}, 10000);
 
@@ -95,11 +88,11 @@ function onDrop (source, target) {
 // for castling, en passant, pawn promotion
 function onSnapEnd () {
   board.position(game.fen())
-  $pgn.html('PGN: ' + game.pgn())
-  checkGameTerminantion()
+  setPgnLabel('PGN: ' + game.pgn())
+  checkGameTermination()
 }
 
-function checkGameTerminantion () {
+function checkGameTermination () {
  
   var moveColor = 'White'
   if (game.turn() === 'b') {
@@ -124,6 +117,7 @@ function checkGameTerminantion () {
 
 // keyboard actions
 
+//on left arrow
 function back(){
   if(!analysisPending){
     game.undo();
@@ -132,13 +126,14 @@ function back(){
   }
 }
 
+//on right arrow
 function forward(){
   console.log('forward')
 }
 
-//********************* */
+//************************** */
 //  BUTTONS and CHECKBOXES 
-//********************* */
+//************************** */
 
 //BUTTONS
 
@@ -147,8 +142,8 @@ $('#startBtn').on('click', start)
 async function start () {
     board.start()
     game = new Chess()
-    $pgn.html('PGN:')
-    $comment.val('')
+    setPgnLabel('PGN:')
+    displayComment('')
     testColors()
     await sleep(2000)
     changePosition(null, null, game.fen())
@@ -168,12 +163,12 @@ function showPawnStructure () {
   if(onlyPawns){
     board.position(game.fen())
     changePosition(null, null, game.fen())
-    $onlyPawnsBtn.html('Pawn Structure')
+    toggleOnlyPawnsBtn(onlyPawns)
     onlyPawns = false
   }else{
     eraseDrawings()
     getOnlyPawns(game.fen()).then(fenWithoutPieces => board.position(fenWithoutPieces));
-    $onlyPawnsBtn.html('Show all pieces')
+    toggleOnlyPawnsBtn(onlyPawns)
     onlyPawns = true
   }
 }
@@ -192,24 +187,22 @@ function update() {
   if(!analysisPending){
   var depth = window.prompt("Enter new depth (ex: 28): ");
     if(depth){
-        //running task requiring chess engine
-        analysisPending = true
+      //running task requiring chess engine
+      analysisPending = true
 
-        //avoiding conflicts
-        analysisEnabled  = false;
+      //avoiding conflicts
+      analysisEnabled  = false;
 
-        //managing GUI
-        $('#updateBtn').css("background-color", 'orange')
-        $('#updateBtn').html('Stop Update')
-        $('#importBtn').attr('disabled', true)
-        $('#importBtn').css("background-color", 'grey')
-        $('#analysisCheckbox').attr('disabled', true)
-        $('#influenceCheckbox').attr('disabled', true)
-        setServerStatus('orange', 'Updating<br>Line');
+      //managing GUI
+      disableAnalysisButtons()
+      toggleUpdateButton(true)
+      serverUpdating()
 
       updateDepth(game.fen(), depth).then(analysis => {
         analysisPending = false; 
-        serverReady()
+        enableAnalysisButtons();
+        toggleUpdateButton(false);
+        serverReady();
       });
     }
   }else{
@@ -217,15 +210,12 @@ function update() {
     stopTask()
 
     //setting analysis variables
-    analysisEnabled  = $('#analysisCheckbox').is(":checked");
+    analysisPending = false;
 
     //managing GUI
-    $('#updateBtn').css("background-color", '#2ba6cb')
-    $('#updateBtn').html('Update Line Depth')
-    $('#importBtn').attr('disabled', false)
-    $('#importBtn').css("background-color", '#2ba6cb')
-    $('#analysisCheckbox').attr('disabled', false)
-    $('#influenceCheckbox').attr('disabled', false)
+    enableAnalysisButtons()
+    toggleUpdateButton(false)
+    serverReady()
 
     //recall analysis for current position
     changePosition(null, null, game.fen())
@@ -248,13 +238,10 @@ function importGames() {
         analysisEnabled  = false;
 
         //managing GUI
-        $('#importBtn').css("background-color", 'orange')
-        $('#importBtn').html('Stop Import')
-        $('#updateBtn').attr('disabled', true)
-        $('#updateBtn').css("background-color", 'grey')
-        $('#analysisCheckbox').attr('disabled', true)
-        $('#influenceCheckbox').attr('disabled', true)
-        setServerStatus('orange', 'Importing<br>Games');
+    
+        disableAnalysisButtons()
+        toggleImportButton(true)
+        serverImporting()
 
         //launch task
         importPgn(openingDepth, analysisDepth).then(response => {serverReady(); analysisPending = false;});
@@ -265,15 +252,12 @@ function importGames() {
     stopTask()
 
     //setting analysis variables
-    analysisEnabled  = $('#analysisCheckbox').is(":checked");
+    analysisPending = false;
 
     //managing GUI
-    $('#importBtn').css("background-color", '#2ba6cb')
-    $('#importBtn').html('Import Games')
-    $('#updateBtn').attr('disabled', false)
-    $('#updateBtn').css("background-color", '#2ba6cb')
-    $('#analysisCheckbox').attr('disabled', false)
-    $('#influenceCheckbox').attr('disabled', false)
+    enableAnalysisButtons()
+    toggleImportButton(false)
+    serverReady()
 
     //recall analysis for current position
     changePosition(null, null, game.fen())
@@ -281,16 +265,12 @@ function importGames() {
 }
 
 
-//delete line button and function
+//comment button and function
 $('#commentBtn').on('click', setComment)
 async function setComment() {
     setPositionComment(game.fen(), $comment.val()).then(response => {
-      $('#commentBtn').css("background-color", 'green');
-      $('#commentBtn').html('Comment saved');
+      toggleCommentButton()
     });
-    await sleep(1000)
-    $('#commentBtn').css("background-color", '#2ba6cb');
-    $('#commentBtn').html('Save Comment');
 }
 
 //CHECKBOXES
@@ -324,15 +304,15 @@ function changePosition(previousFen, move, fen){
   //cleaning infos
   clearEval()
   eraseDrawings()
-  $comment.val('')
+  displayComment('')
   
   if(analysisEnabled & connected){
     analysisPending = true;
-    setServerStatus('orange', 'Waiting for<br>Analysis');
+    serverWaiting()
     getAnalysis(previousFen, move, fen).then(analysis => {
       displayAnalysis(analysis); 
       analysisPending = false; 
-      setServerStatus('green', 'Server<br>Ready')
+      serverReady()
     });
   }
 
@@ -340,9 +320,8 @@ function changePosition(previousFen, move, fen){
 
 //server analysis treatment
 function displayAnalysis(analysis){
-    console.log(analysis)
-    $evaluationBar.value = 500 - analysis.evaluation;
-    $evaluation.html('<div class="eval"><b>' + analysis.evaluation/100 + '</b></div><div class="depth">('+ analysis.depth + ')</div>');
+    //console.log(analysis)
+    setEval(analysis.evaluation, analysis.depth)
     analysis.moves.forEach(element => {
       if (game.turn() === 'b') {
         paintMoveAbsolute(element.move, element.evaluation*(-1));
@@ -355,42 +334,28 @@ function displayAnalysis(analysis){
           paintInfluence(element.square, element.influence);
       });
   }
-    $comment.val(analysis.comment);
+    displayComment(analysis.comment);
 }
 
-function clearEval(){
-  $evaluationBar.value = "500";
-  $evaluation.html('<h1>-</h1>');
-}
 
 //********************* */
-//  SERVER RELATED METHODS 
+//  OTHER METHODS 
 //********************* */
-
-
-function setServerStatus(colour, text){
-  $serverStatus.css("background-color", colour)
-  $serverStatus.html(text)
-}
 
 function setConnected(value){
   connected = value;
   if(!analysisPending){
     if(connected){
-      setServerStatus('green', 'Server<br>Ready')
+      serverReady()
     }else{
-      setServerStatus('red', 'Server<br>Disconnected')
+      serverDisconnected()
     }
   }
 }
 
-function serverReady(){
-  setServerStatus('green', 'Server<br>Ready')
+function setAnalysisEnabled(value){
+  analysisEnabled = value;
 }
-
-//********************* */
-//  OTHER METHODS 
-//********************* */
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
