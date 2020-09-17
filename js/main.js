@@ -11,6 +11,8 @@ var analysisEnabled = true
 var influenceEnabled = false
 var analysisPending = false
 var onlyPawns = false
+var mouseSqaure;
+var circleColor = null;
 
 //chessboard configuration
 var config = {
@@ -28,6 +30,7 @@ var config = {
   showerrors: true,
   onDragStart: onDragStart,
   onDrop: onDrop,
+  onMouseoverSquare: onMouseoverSquare,
   onSnapEnd: onSnapEnd
 }
 
@@ -37,9 +40,27 @@ var $board = $('#board')
 
 //bind keybord events
 document.onkeydown = function(evt) {
-    if(evt.keyCode == 37){back();};
-    if(evt.keyCode == 39){forward();};
+    if(evt.key == 'ArrowLeft'){back();};
+    if(evt.key == 'ArrowRight'){forward();};
+    if(evt.key == 'r'){circleColor = '#ff0000'}
+    if(evt.key == 'g'){circleColor = '#00ff00'}
+    if(evt.key == 'b'){circleColor = '#0000ff'}
+    if(evt.key == 'y'){circleColor = '#ffff00'}
+    if(evt.key == 'c'){circleColor = '#00ffff'}
+    if(evt.key == 'w'){circleColor = '#ffffff'}
 };
+
+document.onkeyup = function(evt) {
+  circleColor = null
+};
+
+window.addEventListener('contextmenu', function(ev) {
+  ev.preventDefault();
+  if(ev.button == 2){
+    addCircle(mouseSquare, circleColor)
+  }
+  return false;
+}, false);
 
   //start periodic check of server connection
   testLink().then(response => start());
@@ -91,6 +112,11 @@ function onSnapEnd () {
   setPgnLabel('PGN: ' + game.pgn())
   checkGameTermination()
 }
+
+function onMouseoverSquare(square){
+  mouseSquare = square
+}
+
 
 function checkGameTermination () {
  

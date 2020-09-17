@@ -224,6 +224,16 @@ function paintInfluence(square, influence){
     drawSquareContour(square, color)
 }
 
+function addCircle(square, color){
+    if(color){
+        drawCircle(square, color)
+    }else{
+        var pos = $board.find('.square-' + square).position();
+        var length = boardSize/8
+        circleContext.clearRect(pos.left-2, pos.top-2, length, length);
+    }
+}
+
 function testColors(){
     eraseDrawings()
     var tenth = properties.arrowShadeLimit/10
