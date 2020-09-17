@@ -286,6 +286,8 @@ function enableAnalysis(checkboxElem) {
     eraseArrows()
     eraseContours()
     analysisEnabled = false;
+    influenceEnabled = false;
+    checkInfluence(false)
   }
 }
 

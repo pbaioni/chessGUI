@@ -57,6 +57,14 @@ function toggleImportButton(inUse){
     }
 }
 
+function checkAnalysis(value){
+    $analysisCb.prop("checked", value);
+}
+
+function checkInfluence(value){
+    $influenceCb.prop("checked", value);
+}
+
 function disableAnalysisButtons(){
 
     $updateBtn.attr('disabled', true)
