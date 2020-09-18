@@ -9,10 +9,11 @@ var game = new Chess()
 var connected = false
 var analysisEnabled = true
 var influenceEnabled = false
+var drawingsEnabled = true
 var analysisPending = false
 var onlyPawns = false
 var mouseSqaure;
-var circleColor = null;
+var drawingColor = null;
 
 //chessboard configuration
 var config = {
@@ -42,22 +43,31 @@ var $board = $('#board')
 document.onkeydown = function(evt) {
     if(evt.key == 'ArrowLeft'){back();};
     if(evt.key == 'ArrowRight'){forward();};
-    if(evt.key == 'r'){circleColor = '#ff0000'}
-    if(evt.key == 'g'){circleColor = '#00ff00'}
-    if(evt.key == 'b'){circleColor = '#0000ff'}
-    if(evt.key == 'y'){circleColor = '#ffff00'}
-    if(evt.key == 'c'){circleColor = '#00ffff'}
-    if(evt.key == 'w'){circleColor = '#ffffff'}
+    if(evt.key == 'r'){drawingColor = '#ff0000'}
+    if(evt.key == 'g'){drawingColor = '#00ff00'}
+    if(evt.key == 'b'){drawingColor = '#0000ff'}
+    if(evt.key == 'y'){drawingColor = '#ffff00'}
+    if(evt.key == 'c'){drawingColor = '#00ffff'}
+    if(evt.key == 'w'){drawingColor = '#ffffff'}
 };
 
 document.onkeyup = function(evt) {
-  circleColor = null
+  drawingColor = null
 };
 
 window.addEventListener('contextmenu', function(ev) {
   ev.preventDefault();
   if(ev.button == 2){
-    addCircle(mouseSquare, circleColor)
+    if(drawingsEnabled){
+      if(drawingColor){
+        drawCircle(mouseSquare, drawingColor)
+        storeDrawing(game.fen(), 'circle', mouseSquare, drawingColor)
+      }else{
+        eraseCircle(mouseSquare)
+        storeDrawing(game.fen(), 'circle', mouseSquare, null)
+      }
+    }
+    
   }
   return false;
 }, false);
@@ -192,7 +202,8 @@ function showPawnStructure () {
     toggleOnlyPawnsBtn(onlyPawns)
     onlyPawns = false
   }else{
-    eraseDrawings()
+    eraseArrows()
+    eraseContours()
     getOnlyPawns(game.fen()).then(fenWithoutPieces => board.position(fenWithoutPieces));
     toggleOnlyPawnsBtn(onlyPawns)
     onlyPawns = true
@@ -317,6 +328,16 @@ function enableAnalysis(checkboxElem) {
   }
 }
 
+function enableDrawings(checkboxElem) {
+  if (checkboxElem.checked) {
+    drawingsEnabled = true;
+    changePosition(null, null, game.fen())
+  } else {
+    eraseCircles()
+    drawingsEnabled = false;
+  }
+}
+
 function enableInfluence(checkboxElem) {
   if (checkboxElem.checked) {
     influenceEnabled = true;
@@ -353,6 +374,7 @@ function changePosition(previousFen, move, fen){
 function displayAnalysis(analysis){
     //console.log(analysis)
     setEval(analysis.evaluation, analysis.depth)
+
     analysis.moves.forEach(element => {
       if (game.turn() === 'b') {
         paintMoveAbsolute(element.move, element.evaluation*(-1));
@@ -360,11 +382,19 @@ function displayAnalysis(analysis){
         paintMoveAbsolute(element.move, element.evaluation);
       }
     });
+
     if(influenceEnabled){
       analysis.influences.forEach(element => {
           paintInfluence(element.square, element.influence);
       });
-  }
+    }
+
+    if(drawingsEnabled){
+      analysis.drawings.forEach(element => {
+        drawCircle(element.path, element.color);
+      });
+    }
+
     displayComment(analysis.comment);
 }
 

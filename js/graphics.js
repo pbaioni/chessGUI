@@ -123,6 +123,13 @@ function drawCircle(square, colour) {
     circleContext.stroke();
 }
 
+
+function eraseCircle(square){
+    var pos = $board.find('.square-' + square).position();
+    var length = boardSize/8
+    circleContext.clearRect(pos.left-2, pos.top-2, length, length);
+}
+
 function eraseCircles(){
     circleContext.clearRect(0, 0, circleCanvas.width, circleCanvas.height);
 }
@@ -222,16 +229,6 @@ function paintInfluence(square, influence){
 
     //paint contour
     drawSquareContour(square, color)
-}
-
-function addCircle(square, color){
-    if(color){
-        drawCircle(square, color)
-    }else{
-        var pos = $board.find('.square-' + square).position();
-        var length = boardSize/8
-        circleContext.clearRect(pos.left-2, pos.top-2, length, length);
-    }
 }
 
 function testColors(){

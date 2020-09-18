@@ -147,6 +147,27 @@ async function stopTask(){
   });
 }
 
+async function storeDrawing(fen, type, path, color){
+
+  var url = urlBase + 'drawing';
+  var parameters= {};
+  parameters.fen = fen;
+  parameters.type = type;
+  parameters.path = path;
+  parameters.color = color;
+  await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(parameters),
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+    serverReady();
+  });
+}
+
 async function testLink(){
   
   var url = urlBase;

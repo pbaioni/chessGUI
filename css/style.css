@@ -97,7 +97,7 @@ article {
     width: 80%;
 }
 
-#analysisCheckbox, #influenceCheckbox {
+#analysisCheckbox, #influenceCheckbox, #drawingCheckbox{
     margin: 10px;
 }
 
