@@ -59,10 +59,15 @@ window.addEventListener('contextmenu', function(ev) {
   ev.preventDefault();
   if(ev.button == 2){
     if(drawingsEnabled){
+
+      //draw new circle
       if(drawingColor){
         drawCircle(mouseSquare, drawingColor)
         storeDrawing(game.fen(), 'circle', mouseSquare, drawingColor)
-      }else{
+      }
+
+      //erase circle
+      if(ev.ctrlKey){
         eraseCircle(mouseSquare)
         storeDrawing(game.fen(), 'circle', mouseSquare, null)
       }
