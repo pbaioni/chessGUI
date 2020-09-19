@@ -31,7 +31,6 @@ nav {
 .leftnav {
     position: relative;
     width: 200px;
-    text-align: center;
 }
 
 .rightnav {
@@ -77,7 +76,7 @@ article {
 .progress {
     height: 30px;
     width: 640px;
-    transform: rotate(90deg) translateX(323px) translateY(110px);
+    transform: rotate(90deg) translateX(322px) translateY(112px);
 }
 
 .action-button button, .blue-button {
@@ -89,7 +88,7 @@ article {
     display: inline-block;
     font-size: 14px;
     font-weight: 600;
-    margin: 10px 10px 10px 10px;
+    margin: 10px 10px 10px 20px;
     outline: none;
     padding: 10px 10px;
     text-align: center;
@@ -98,7 +97,7 @@ article {
 }
 
 #analysisCheckbox, #influenceCheckbox, #drawingCheckbox{
-    margin: 10px;
+    margin: 10px 10px 10px 20px;
 }
 
 label {
