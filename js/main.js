@@ -12,8 +12,8 @@ var influenceEnabled = false
 var drawingsEnabled = true
 var analysisPending = false
 var onlyPawns = false
-var mouseSqaure;
-var drawingColor = null;
+var mouseSqaure
+var drawingColor = null
 
 //chessboard configuration
 var config = {
@@ -41,8 +41,9 @@ var $board = $('#board')
 
 //bind keybord events
 document.onkeydown = function(evt) {
-    if(evt.key == 'ArrowLeft'){back();};
-    if(evt.key == 'ArrowRight'){forward();};
+    if(evt.key == 'ArrowLeft'){back()};
+    if(evt.key == 'ArrowRight'){forward()};
+    if(evt.ctrlKey & evt.key == 'Enter'){setComment()};
     if(evt.key == 'r'){drawingColor = '#ff0000'}
     if(evt.key == 'g'){drawingColor = '#00ff00'}
     if(evt.key == 'b'){drawingColor = '#0000ff'}
@@ -74,7 +75,6 @@ window.addEventListener('contextmenu', function(ev) {
     }
     
   }
-  return false;
 }, false);
 
   //start periodic check of server connection
