@@ -18,7 +18,6 @@ async function getOnlyPawns(fen){
     })
     .catch((error) => {
       console.error('Error:', error);
-      serverReady();
     });
 
     return fenWithoutPawns;
@@ -43,7 +42,6 @@ async function deleteLine(fen, move){
   })
   .catch((error) => {
     console.error('Error:', error);
-    serverReady();
   });
 }
 
@@ -67,7 +65,6 @@ async function getAnalysis(previousFen, move, fen){
   })
   .catch((error) => {
     console.error('Error:', error);
-    serverReady();
   });
 
   return analysis;
@@ -92,7 +89,6 @@ async function updateDepth(fen, depth){
   })
   .catch((error) => {
     console.error('Error:', error);
-    serverReady();
   });
 }
 
@@ -115,7 +111,6 @@ async function importPgn(openingDepth, analysisDepth){
   })
   .catch((error) => {
     console.error('Error:', error);
-    serverReady();
   });
 }
 
@@ -134,7 +129,6 @@ async function setPositionComment(fen, comment){
   })
   .catch((error) => {
     console.error('Error:', error);
-    serverReady();
   });
 }
 
@@ -164,7 +158,6 @@ async function storeDrawing(fen, type, path, color){
   })
   .catch((error) => {
     console.error('Error:', error);
-    serverReady();
   });
 }
 
