@@ -238,7 +238,7 @@ function paintInfluence(square, influence){
     drawSquareContour(square, color)
 }
 
-function drawEval(evaluation){
+function drawEval(evaluation, boardFlipped){
 
     //clearing previous evaluation
     progressContext.clearRect(0, 0, progressCanvas.width, progressCanvas.height);
@@ -251,12 +251,21 @@ function drawEval(evaluation){
         evaluation = -400
     }
 
-    var lenght = 320 - (320/400)*evaluation
+    var lenght;
+    var start;
+    if(boardFlipped){
+        start = 0
+        lenght = 320 + (320/400)*evaluation
+    }else{
+        start = 640
+        lenght = 320 - (320/400)*evaluation
+    }
+
     //drawing evaluation bar
     progressContext.strokeStyle = '#fff';
     progressContext.beginPath();
     progressContext.lineWidth = 16;
-    progressContext.moveTo(8, 640);
+    progressContext.moveTo(8, start);
     progressContext.lineTo(8, lenght);
     progressContext.stroke();
     progressContext.closePath()

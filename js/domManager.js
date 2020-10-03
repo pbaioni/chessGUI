@@ -89,13 +89,13 @@ function clearEval(){
     $evaluation.html('<h1>-</h1>');
 }
 
-function setEval(evaluation, depth){
+function setEval(evaluation, depth, boardFlipped){
 
     $evaluation.html('<div class="eval"><b>' + evaluation/100 + '</b></div><div class="depth">('+ depth + ')</div>');
 
     if(evaluation > 500){evaluation = 500;};
     if(evaluation < -500){evaluation = -500;};
-    drawEval(evaluation)
+    drawEval(evaluation, boardFlipped)
 
 }
 

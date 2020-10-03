@@ -12,6 +12,7 @@ var influenceEnabled = false
 var drawingsEnabled = true
 var analysisPending = false
 var onlyPawns = false
+var boardFlipped = false
 var mouseSqaure
 var drawingColor = null
 
@@ -195,6 +196,7 @@ $('#flipBtn').on('click', flip)
 function flip () {
   eraseDrawings()
   board.flip()
+  boardFlipped = boardFlipped ? false : true;
   changePosition(null, null, game.fen())
 }
 
@@ -378,7 +380,7 @@ function changePosition(previousFen, move, fen){
 //server analysis treatment
 function displayAnalysis(analysis){
     console.log(analysis)
-    setEval(analysis.evaluation, analysis.depth)
+    setEval(analysis.evaluation, analysis.depth, boardFlipped)
 
     analysis.moves.forEach(element => {
       if (game.turn() === 'b') {
