@@ -1,4 +1,4 @@
-var  arrowCanvas, arrowContext, contourCanvas, contourContext, circleCanvas, circleContext
+var  arrowCanvas, arrowContext, contourCanvas, contourContext, circleCanvas, circleContext, progressCanvas, progressContext
 var squareClass = 'square-55d63'
 var boardSize=640
 var contourWidth = 5
@@ -18,6 +18,11 @@ contourContext.lineJoin = 'butt';
 circleCanvas = document.getElementById('circleCanvas');
 circleContext = circleCanvas.getContext('2d');
 circleContext.lineJoin = 'butt';
+
+// progress layer
+progressCanvas = document.getElementById('progressCanvas');
+progressContext = progressCanvas.getContext('2d');
+progressContext.lineJoin = 'butt';
 
 function createColor(colourName, graduation, alpha){
 
@@ -231,6 +236,57 @@ function paintInfluence(square, influence){
 
     //paint contour
     drawSquareContour(square, color)
+}
+
+function drawEval(evaluation){
+
+    //clearing previous evaluation
+    progressContext.clearRect(0, 0, progressCanvas.width, progressCanvas.height);
+
+    if(evaluation > 400){
+        evaluation = 400
+    }
+
+    if(evaluation < -400){
+        evaluation = -400
+    }
+
+    var lenght = 320 - (320/400)*evaluation
+    //drawing evaluation bar
+    progressContext.strokeStyle = '#fff';
+    progressContext.beginPath();
+    progressContext.lineWidth = 16;
+    progressContext.moveTo(8, 640);
+    progressContext.lineTo(8, lenght);
+    progressContext.stroke();
+    progressContext.closePath()
+
+    //drawing references
+    progressContext.strokeStyle = '#a00';
+    progressContext.beginPath();
+    progressContext.lineWidth = 2;
+    progressContext.moveTo(0, 80);
+    progressContext.lineTo(16, 80);
+    progressContext.moveTo(0, 160);
+    progressContext.lineTo(16, 160);
+    progressContext.moveTo(0, 240);
+    progressContext.lineTo(16, 240);
+    progressContext.moveTo(0, 320);
+    progressContext.lineTo(16, 320);
+    progressContext.moveTo(0, 400);
+    progressContext.lineTo(16, 400);
+    progressContext.moveTo(0, 480);
+    progressContext.lineTo(16, 480);
+    progressContext.moveTo(0, 560);
+    progressContext.lineTo(16, 560);
+    progressContext.stroke();
+    progressContext.closePath()
+
+    //drawing 0 mark
+    progressContext.beginPath();
+    progressContext.arc(8, 320, 2, 0, 2 * Math.PI);
+    progressContext.stroke();
+    
 }
 
 function testColors(){

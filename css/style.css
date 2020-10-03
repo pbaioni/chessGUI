@@ -8,7 +8,7 @@ body {
 .mainPage {
     height: 700px;
     width: 1300px;
-	background-color: #000000;
+	background-color: black;
 }
 
 section {
@@ -103,18 +103,16 @@ label {
 
 .progressBar {
     position: relative;
-    background: #dddddd;
+    background: #000;
+    border: 2px solid #888888;
     top: 22px;
-    width: 15px;
+    width: 16px;
     height: 640px;
 }
 #progressCanvas {
     position: absolute; 
     top: 0px; 
     left: 0px;
-    width: 15px;
-    height: 640px;
-    opacity: 1;
 }
 
 #evaluation{

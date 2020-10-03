@@ -1,5 +1,4 @@
 //DOM objects
-var $evaluationBar = document.getElementById('evaluationBar')
 var $evaluation = $('#evaluation')
 var $serverStatus = $('#serverStatus')
 var $comment = $('textarea#comment')
@@ -87,7 +86,6 @@ function enableAnalysisButtons(){
 }
 
 function clearEval(){
-    $evaluationBar.value = "500";
     $evaluation.html('<h1>-</h1>');
 }
 
@@ -97,8 +95,7 @@ function setEval(evaluation, depth){
 
     if(evaluation > 500){evaluation = 500;};
     if(evaluation < -500){evaluation = -500;};
-
-    $evaluationBar.value = 500 - evaluation;
+    drawEval(evaluation)
 
 }
 
