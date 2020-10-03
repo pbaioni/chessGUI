@@ -207,7 +207,9 @@ function paintMoveAbsolute(move, evaluation){
     if(evaluation > shadeLimit){color = createColor('cyan', 1, alpha);};
 
     //paint arrow
-    drawArrow(move.substring(0, 2),move.substring(2, 4), color, 15);
+    if(move){
+        drawArrow(move.substring(0, 2),move.substring(2, 4), color, 15);
+    }
 }
 
 function paintInfluence(square, influence){

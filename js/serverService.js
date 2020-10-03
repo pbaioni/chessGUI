@@ -45,13 +45,15 @@ async function deleteLine(fen, move){
   });
 }
 
-async function getAnalysis(previousFen, move, fen){
+async function getAnalysis(previousFen, move, fen, useEngine){
   var analysis = null
   var url = urlBase + 'analysis';
   var parameters= {};
   parameters.previousFen = previousFen;
   parameters.move = move;
   parameters.fen = fen;
+  parameters.depth = properties.defaultAnalysisDepth;
+  parameters.useEngine = useEngine;
   await fetch(url, {
     method: 'POST',
     headers: {

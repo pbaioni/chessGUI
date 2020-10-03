@@ -363,10 +363,10 @@ function changePosition(previousFen, move, fen){
   eraseDrawings()
   displayComment('')
   
-  if(analysisEnabled & connected){
+  if(connected){
     analysisPending = true;
     serverWaiting()
-    getAnalysis(previousFen, move, fen).then(analysis => {
+    getAnalysis(previousFen, move, fen, analysisEnabled).then(analysis => {
       displayAnalysis(analysis); 
       analysisPending = false; 
       serverReady()
@@ -377,7 +377,7 @@ function changePosition(previousFen, move, fen){
 
 //server analysis treatment
 function displayAnalysis(analysis){
-    //console.log(analysis)
+    console.log(analysis)
     setEval(analysis.evaluation, analysis.depth)
 
     analysis.moves.forEach(element => {
