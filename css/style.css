@@ -31,6 +31,7 @@ nav {
 .leftnav {
     position: relative;
     width: 200px;
+    padding-top: 12px;
 }
 
 .rightnav {
@@ -60,23 +61,17 @@ article {
 #board{
     position: absolute; 
     top: 10px; 
-    left: 10px;
+    left: 0px;
     z-index: 0;
 }
 
 #arrowCanvas, #contourCanvas, #circleCanvas {
     position: absolute; 
     top: 12px; 
-    left: 12px;
+    left: 2px;
     opacity: 1;
     z-index: 1;
     pointer-events: none
-}
-
-.progress {
-    height: 30px;
-    width: 640px;
-    transform: rotate(90deg) translateX(322px) translateY(112px);
 }
 
 .action-button button, .blue-button {
@@ -88,7 +83,7 @@ article {
     display: inline-block;
     font-size: 14px;
     font-weight: 600;
-    margin: 10px 10px 10px 20px;
+    margin: 10px 0px 10px 20px;
     outline: none;
     padding: 10px 10px;
     text-align: center;
@@ -104,6 +99,22 @@ label {
     font-family:Verdana;
     color: #cccccc;
     font-size: 16px;
+}
+
+.progressBar {
+    position: relative;
+    background: #dddddd;
+    top: 22px;
+    width: 15px;
+    height: 640px;
+}
+#progressCanvas {
+    position: absolute; 
+    top: 0px; 
+    left: 0px;
+    width: 15px;
+    height: 640px;
+    opacity: 1;
 }
 
 #evaluation{
@@ -134,7 +145,7 @@ label {
 
 #serverStatus{
     position: absolute;
-    bottom: 20px;
+    bottom: 25px;
     left: 10px;
     background: red;
     border-radius: 3px;
@@ -179,4 +190,6 @@ textarea {
     float: left;
     color: #cccccc;
 }
+
+
 
