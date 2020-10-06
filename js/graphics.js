@@ -321,7 +321,7 @@ function drawEval(evaluation, boardFlipped){
     
 }
 
-function testColors(){
+async function testColors(){
     eraseDrawings()
     var tenth = properties.arrowShadeLimit/10
     //good positions
@@ -343,6 +343,8 @@ function testColors(){
     paintMoveAbsolute('f7f5', -6*tenth)
     paintMoveAbsolute('g7g5', -10*tenth)
     paintMoveAbsolute('h7h5', -12*tenth)
+
+    await sleep(2000);
 }
 
 

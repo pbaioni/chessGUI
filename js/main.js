@@ -108,8 +108,10 @@ window.addEventListener('mouseup', function(ev){
 }, false);
 
   //start periodic check of server connection
-  testLink().then(response => start());
+
+  testLink();
   setInterval(function(){testLink();}, 10000);
+  testColors().then(promise => start())
 
 
 //********************* */
@@ -240,8 +242,6 @@ async function start () {
     game = new Chess()
     setPgnLabel('PGN:')
     displayComment('')
-    testColors()
-    await sleep(2000)
     changePosition(null, null, game.fen())
 }
 
