@@ -65,7 +65,7 @@ article {
     z-index: 0;
 }
 
-#arrowCanvas, #contourCanvas, #circleCanvas {
+#arrowCanvas, #contourCanvas, #drawingCanvas, #tempCanvas {
     position: absolute; 
     top: 12px; 
     left: 2px;

@@ -1,4 +1,5 @@
-var  arrowCanvas, arrowContext, contourCanvas, contourContext, circleCanvas, circleContext, progressCanvas, progressContext
+var  arrowCanvas, arrowContext, contourCanvas, contourContext, tempCanvas, tempContext
+var drawingCanvas, drawingContext, progressCanvas, progressContext
 var squareClass = 'square-55d63'
 var boardSize=640
 var contourWidth = 5
@@ -14,12 +15,17 @@ contourCanvas = document.getElementById('contourCanvas');
 contourContext = contourCanvas.getContext('2d');
 contourContext.lineJoin = 'butt';
 
-// circles layer
-circleCanvas = document.getElementById('circleCanvas');
-circleContext = circleCanvas.getContext('2d');
-circleContext.lineJoin = 'butt';
+// temp drawing layer
+tempCanvas = document.getElementById('tempCanvas');
+tempContext = tempCanvas.getContext('2d');
+tempContext.lineJoin = 'butt';
 
-// progress layer
+// drawing layer
+drawingCanvas = document.getElementById('drawingCanvas');
+drawingContext = drawingCanvas.getContext('2d');
+drawingContext.lineJoin = 'butt';
+
+// progress bar layer
 progressCanvas = document.getElementById('progressCanvas');
 progressContext = progressCanvas.getContext('2d');
 progressContext.lineJoin = 'butt';
@@ -49,7 +55,15 @@ switch(colourName) {
   return 'rgba('+red+', '+green+', '+blue+', '+alpha+')';
 }
 
-function drawArrow(depSquare, arrSquare, colour, lineWidth) {
+function drawArrow(depSquare, arrSquare, colour, lineWidth, layer) {
+    context = arrowContext
+    if(layer === 'temp'){
+        context = tempContext
+    }
+    if(layer === 'drawing'){
+        context = drawingContext
+    }
+    
     var offset = 3;
     var pos1 = $board.find('.square-' + depSquare).position();
     var from = {x: pos1.left + (boardSize/(8*2))-offset , y: pos1.top + (boardSize/(8*2))-offset }
@@ -57,7 +71,7 @@ function drawArrow(depSquare, arrSquare, colour, lineWidth) {
     var to = {x: pos2.left + (boardSize/(8*2))-offset, y: pos2.top + (boardSize/(8*2))-offset }
 
     //setting arrow colour
-    arrowContext.strokeStyle = arrowContext.fillStyle = colour;
+    context.strokeStyle = context.fillStyle = colour;
 
     // offset to allow the arrow head hitting the center of the square
     var xFactor, yFactor;
@@ -77,12 +91,12 @@ function drawArrow(depSquare, arrSquare, colour, lineWidth) {
     }
 
     // draw arrow line
-    arrowContext.beginPath();
-    arrowContext.lineCap = "round";
-    arrowContext.lineWidth = lineWidth;
-    arrowContext.moveTo(from.x, from.y);
-    arrowContext.lineTo(to.x - xFactor, to.y - yFactor);
-    arrowContext.stroke();
+    context.beginPath();
+    context.lineCap = "round";
+    context.lineWidth = lineWidth;
+    context.moveTo(from.x, from.y);
+    context.lineTo(to.x - xFactor, to.y - yFactor);
+    context.stroke();
 
     // draw arrow head
     //offsetting final point
@@ -90,53 +104,61 @@ function drawArrow(depSquare, arrSquare, colour, lineWidth) {
     to.y = to.y - yFactor;
 	var angle, x, y;
 	
-	arrowContext.beginPath();
+	context.beginPath();
 	
 	angle = Math.atan2(to.y-from.y,to.x-from.x)
 	x = lineWidth*Math.cos(angle) + to.x;
 	y = lineWidth*Math.sin(angle) + to.y;
 
-	arrowContext.moveTo(x, y);
+	context.moveTo(x, y);
 	
 	angle += (1/3)*(2*Math.PI)
 	x = lineWidth*Math.cos(angle) + to.x;
 	y = lineWidth*Math.sin(angle) + to.y;
 	
-	arrowContext.lineTo(x, y);
+	context.lineTo(x, y);
 	
 	angle += (1/3)*(2*Math.PI)
 	x = lineWidth*Math.cos(angle) + to.x;
 	y = lineWidth*Math.sin(angle) + to.y;
 	
-	arrowContext.lineTo(x, y);
-	arrowContext.closePath();
-	arrowContext.fill();
+	context.lineTo(x, y);
+	context.closePath();
+	context.fill();
 }
 
 function eraseArrows(){
     arrowContext.clearRect(0, 0, arrowCanvas.width, arrowCanvas.height);
 }
 
-function drawCircle(square, colour) {
+function drawCircle(square, colour, layer) {
+    var context = drawingContext
+    if(layer === 'temp'){
+        context = tempContext
+    }
+
     var pos = $board.find('.square-' + square).position();
     var center = {x: pos.left + (boardSize/(8*2)) - circleWidth/2, y: pos.top + (boardSize/(8*2)) - circleWidth/2, }
     radius= (boardSize/(8*2)) - circleWidth/2;
-    circleContext.strokeStyle = colour;
-    circleContext.beginPath();
-    circleContext.lineWidth = circleWidth;
-    circleContext.arc(center.x, center.y, radius, 0, 2 * Math.PI);
-    circleContext.stroke();
+    context.strokeStyle = colour;
+    context.beginPath();
+    context.lineWidth = circleWidth;
+    context.arc(center.x, center.y, radius, 0, 2 * Math.PI);
+    context.stroke();
 }
-
 
 function eraseCircle(square){
     var pos = $board.find('.square-' + square).position();
     var length = boardSize/8
-    circleContext.clearRect(pos.left-2, pos.top-2, length, length);
+    drawingContext.clearRect(pos.left-2, pos.top-2, length, length);
 }
 
 function eraseCircles(){
-    circleContext.clearRect(0, 0, circleCanvas.width, circleCanvas.height);
+    drawingContext.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+}
+
+function eraseTempContext(){
+    tempContext.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
 }
 
 function drawSquareContour(square, colour) {
@@ -211,9 +233,9 @@ function paintMoveAbsolute(move, evaluation){
     if(evaluation >= 0 & evaluation <= shadeLimit){color = createColor('green', graduation, alpha);};
     if(evaluation > shadeLimit){color = createColor('cyan', 1, alpha);};
 
-    //paint arrow
+    //paint move arrow
     if(move){
-        drawArrow(move.substring(0, 2),move.substring(2, 4), color, 15);
+        drawArrow(move.substring(0, 2),move.substring(2, 4), color, 15, 'arrow');
     }
 }
 

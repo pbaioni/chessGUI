@@ -13,8 +13,11 @@ var drawingsEnabled = true
 var analysisPending = false
 var onlyPawns = false
 var boardFlipped = false
-var mouseSqaure
+var mouseSquare
 var drawingColor = null
+var isDrawing = false
+var drawStart
+var tempArrowWidth = 8
 
 //chessboard configuration
 var config = {
@@ -59,24 +62,57 @@ document.onkeyup = function(evt) {
   drawingColor = null
 };
 
+//drawing listeners
+
+//inhibiting context menu display on right click
 window.addEventListener('contextmenu', function(ev) {
   ev.preventDefault();
-  if(ev.button == 2){
-    if(drawingsEnabled){
+}, false);
 
-      //draw new circle
+window.addEventListener('mousedown', function(ev){
+  ev.preventDefault();
+  if(ev.button == 2 && drawingsEnabled){
+      isDrawing = true
+      drawStart = mouseSquare
+
+      //draw temp circle
       if(drawingColor){
-        drawCircle(mouseSquare, drawingColor)
-        storeDrawing(game.fen(), 'circle', mouseSquare, drawingColor)
+        drawCircle(mouseSquare, drawingColor, 'temp')
+      }   
+  }
+}, false);
+
+window.addEventListener('mouseup', function(ev){
+  if(ev.button == 2){
+
+    //erasing temp drawings
+    eraseTempContext()
+
+    if(drawStart === mouseSquare){  //circle case
+
+      //draw circle if a color is defined
+      if(drawingColor){
+        drawCircle(mouseSquare, drawingColor, 'drawing')
+        storeDrawing(game.fen(), 'circle', drawStart, drawingColor)
       }
 
-      //erase circle
+      //erase circle 
       if(ev.ctrlKey){
         eraseCircle(mouseSquare)
-        storeDrawing(game.fen(), 'circle', mouseSquare, null)
-      }
+        storeDrawing(game.fen(), 'circle', drawStart, null)
+      }   
+
+    }else{  //arrow case
+
+      //draw arrow
+      if(isDrawing){
+        storeDrawing(game.fen(), 'arrow', drawStart + mouseSquare, drawingColor).then(data => changePosition(null, null, game.fen()))
+      } 
     }
-    
+
+    drawStart = null
+    isDrawing = false
+
   }
 }, false);
 
@@ -133,8 +169,33 @@ function onSnapEnd () {
 
 function onMouseoverSquare(square){
   mouseSquare = square
+
+  //drawing temp arrow if needed
+  if(isDrawing && drawingColor){
+    if(mouseSquare != drawStart){
+      eraseTempContext()
+      drawArrow(drawStart, mouseSquare, drawingColor, tempArrowWidth, 'temp')
+    }
+  }
 }
 
+function onMouseMove(event) {
+  finalPoint = getMousePos(drawCanvas, event);
+
+  if (!mouseDown) return;
+  if (initialPoint.x == finalPoint.x && initialPoint.y == finalPoint.y) return;
+
+  drawContext.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+  drawArrowToCanvas(drawContext);
+}
+
+function getMousePos(canvas, evt) {
+  var rect = canvas.getBoundingClientRect();
+  return {
+    x: Q(evt.clientX - rect.left),
+    y: Q(evt.clientY - rect.top)
+  };
+}
 
 function checkGameTermination () {
  
@@ -400,7 +461,12 @@ function displayAnalysis(analysis){
 
     if(drawingsEnabled){
       analysis.drawings.forEach(element => {
-        drawCircle(element.path, element.color);
+        if(element.type === 'circle'){
+          drawCircle(element.path, element.color, 'drawing');
+        }
+        if(element.type === 'arrow'){
+          drawArrow(element.path.substring(0, 2), element.path.substring(2, 4), element.color, tempArrowWidth, 'drawing');
+        }
       });
     }
 
