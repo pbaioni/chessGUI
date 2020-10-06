@@ -43,7 +43,7 @@ var config = {
 board = Chessboard('board', config)
 var $board = $('#board')
 
-//bind keybord events
+//BIND KEYBOARD EVENTS
 document.onkeydown = function(evt) {
     if(evt.key == 'ArrowLeft'){back()};
     if(evt.key == 'ArrowRight'){forward()};
@@ -62,13 +62,14 @@ document.onkeyup = function(evt) {
   drawingColor = null
 };
 
-//drawing listeners
+//DRAWING LISTENERS
 
 //inhibiting context menu display on right click
 window.addEventListener('contextmenu', function(ev) {
   ev.preventDefault();
 }, false);
 
+//start drawing
 window.addEventListener('mousedown', function(ev){
   ev.preventDefault();
   if(ev.button == 2 && drawingsEnabled){
@@ -83,36 +84,26 @@ window.addEventListener('mousedown', function(ev){
 }, false);
 
 window.addEventListener('mouseup', function(ev){
-  if(ev.button == 2){
+  if(ev.button == 2 && drawingsEnabled){
 
     //erasing temp drawings
     eraseTempContext()
 
     if(drawStart === mouseSquare){  //circle case
-
-      //draw circle if a color is defined
-      if(drawingColor){
-        drawCircle(mouseSquare, drawingColor, 'drawing')
-        storeDrawing(game.fen(), 'circle', drawStart, drawingColor)
-      }
-
-      //erase circle 
-      if(ev.ctrlKey){
-        eraseCircle(mouseSquare)
-        storeDrawing(game.fen(), 'circle', drawStart, null)
-      }   
-
+      //draw circle
+      if(isDrawing){
+        storeDrawing(game.fen(), 'circle', drawStart, drawingColor).then(promise => changePosition(null, null, game.fen()))
+      } 
     }else{  //arrow case
-
       //draw arrow
       if(isDrawing){
-        storeDrawing(game.fen(), 'arrow', drawStart + mouseSquare, drawingColor).then(data => changePosition(null, null, game.fen()))
+        storeDrawing(game.fen(), 'arrow', drawStart + mouseSquare, drawingColor).then(promise => changePosition(null, null, game.fen()))
       } 
     }
 
+    //reinit drawing variables
     drawStart = null
     isDrawing = false
-
   }
 }, false);
 

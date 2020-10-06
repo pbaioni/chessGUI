@@ -132,19 +132,20 @@ function eraseArrows(){
 }
 
 function drawCircle(square, colour, layer) {
-    var context = drawingContext
-    if(layer === 'temp'){
-        context = tempContext
-    }
 
-    var pos = $board.find('.square-' + square).position();
-    var center = {x: pos.left + (boardSize/(8*2)) - circleWidth/2, y: pos.top + (boardSize/(8*2)) - circleWidth/2, }
-    radius= (boardSize/(8*2)) - circleWidth/2;
-    context.strokeStyle = colour;
-    context.beginPath();
-    context.lineWidth = circleWidth;
-    context.arc(center.x, center.y, radius, 0, 2 * Math.PI);
-    context.stroke();
+        var context = drawingContext
+        if(layer === 'temp'){
+            context = tempContext
+        }
+
+        var pos = $board.find('.square-' + square).position();
+        var center = {x: pos.left + (boardSize/(8*2)) - circleWidth/2, y: pos.top + (boardSize/(8*2)) - circleWidth/2, }
+        radius= (boardSize/(8*2)) - circleWidth/2;
+        context.strokeStyle = colour;
+        context.beginPath();
+        context.lineWidth = circleWidth;
+        context.arc(center.x, center.y, radius, 0, 2 * Math.PI);
+        context.stroke();
 }
 
 function eraseCircle(square){
