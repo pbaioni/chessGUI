@@ -95,7 +95,7 @@ function setEval(evaluation, depth, boardFlipped){
 
     if(evaluation > 500){evaluation = 500;};
     if(evaluation < -500){evaluation = -500;};
-    drawEval(evaluation, boardFlipped)
+    drawEvaluationBar(evaluation, boardFlipped)
 
 }
 

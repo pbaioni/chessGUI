@@ -108,7 +108,6 @@ window.addEventListener('mouseup', function(ev){
 }, false);
 
   //start periodic check of server connection
-
   testLink();
   setInterval(function(){testLink();}, 10000);
   testColors().then(promise => start())
@@ -381,8 +380,6 @@ function enableAnalysis(checkboxElem) {
     analysisEnabled = true;
     changePosition(null, null, game.fen())
   } else {
-    eraseArrows()
-    eraseContours()
     analysisEnabled = false;
     influenceEnabled = false;
     checkInfluence(false)
@@ -394,7 +391,7 @@ function enableDrawings(checkboxElem) {
     drawingsEnabled = true;
     changePosition(null, null, game.fen())
   } else {
-    eraseCircles()
+    eraseDrawings()
     drawingsEnabled = false;
   }
 }
@@ -416,7 +413,7 @@ function enableInfluence(checkboxElem) {
 function changePosition(previousFen, move, fen){
   //cleaning infos
   clearEval()
-  eraseDrawings()
+  eraseCanvases()
   displayComment('')
   
   if(connected){

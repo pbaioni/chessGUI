@@ -30,29 +30,50 @@ progressCanvas = document.getElementById('progressCanvas');
 progressContext = progressCanvas.getContext('2d');
 progressContext.lineJoin = 'butt';
 
-function createColor(colourName, graduation, alpha){
 
-var red, green, blue;
+// **** DRAW METHODS ****
 
-// full shading
-var shade = 255 - graduation*255
+function paintMoveAbsolute(move, evaluation){
 
-//half shading
-var halfShade = 255 - (graduation/2)*255
+    //define max evaluation (absolute) for shade arrows
+    var shadeLimit = properties.arrowShadeLimit
+    var graduation = (Math.abs(evaluation)/shadeLimit)
 
-switch(colourName) {
-    case 'white': red=255; green=255; blue=255; break;
-    case 'black': red=0; green=0; blue=0; break;
-    case 'cyan': red=shade; green=255; blue=255; break;
-    case 'yellow': red=255; green=255; blue=shade; break;
-    case 'orange': red=255; green=halfShade; blue=shade-40; break;
-    case 'blue': red=shade; green=shade; blue=255; break;
-    case 'green': red=shade; green=255; blue=shade; break;
-    case 'red': red=255; green=shade; blue=shade; break;
-    default:
-        red=255; green=255; blue=255; break;
-  }
-  return 'rgba('+red+', '+green+', '+blue+', '+alpha+')';
+    //adjust alpha with evaluation
+    var alpha = 0.5 + graduation*0.3;
+
+    //calculate arrow color
+    var color;
+    if(evaluation < -shadeLimit){color = createColor('red', 1, alpha);};
+    if(evaluation >= -shadeLimit & evaluation < 0){color = createColor('orange', graduation, alpha);};
+    if(evaluation >= 0 & evaluation <= shadeLimit){color = createColor('green', graduation, alpha);};
+    if(evaluation > shadeLimit){color = createColor('cyan', 1, alpha);};
+
+    //paint move arrow
+    if(move){
+        drawArrow(move.substring(0, 2),move.substring(2, 4), color, 15, 'arrow');
+    }
+}
+
+function paintInfluence(square, influence){
+
+    //define limit for contour shade
+    var influenceLimit = properties.contourShadeLimit
+    var graduation = (Math.abs(influence)/influenceLimit)
+
+    //adjust alpha with influence
+    var alpha = 0.5 + graduation*0.3;
+
+    //calculate contour color
+    var color;
+    if(influence < -influenceLimit){color = createColor('cyan', 1, alpha);};
+    if(influence >= -influenceLimit & influence < 0){color = createColor('cyan', graduation, alpha);};
+    if(influence == 0){color = createColor('white', 1, 0.8);};
+    if(influence > 0 & influence <= influenceLimit){color = createColor('yellow', graduation, alpha);};
+    if(influence > influenceLimit){color = createColor('yellow', 1, alpha);};
+
+    //paint contour
+    drawSquareContour(square, color)
 }
 
 function drawArrow(depSquare, arrSquare, colour, lineWidth, layer) {
@@ -127,10 +148,6 @@ function drawArrow(depSquare, arrSquare, colour, lineWidth, layer) {
 	context.fill();
 }
 
-function eraseArrows(){
-    arrowContext.clearRect(0, 0, arrowCanvas.width, arrowCanvas.height);
-}
-
 function drawCircle(square, colour, layer) {
 
         var context = drawingContext
@@ -148,20 +165,6 @@ function drawCircle(square, colour, layer) {
         context.stroke();
 }
 
-function eraseCircle(square){
-    var pos = $board.find('.square-' + square).position();
-    var length = boardSize/8
-    drawingContext.clearRect(pos.left-2, pos.top-2, length, length);
-}
-
-function eraseCircles(){
-    drawingContext.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
-}
-
-function eraseTempContext(){
-    tempContext.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
-}
-
 function drawSquareContour(square, colour) {
     var pos = $board.find('.square-' + square).position();
     contourContext.strokeStyle = colour;
@@ -176,92 +179,7 @@ function drawSquareContour(square, colour) {
     contourContext.stroke();
 }
 
-function eraseContours(){
-    contourContext.clearRect(0, 0, contourCanvas.width, contourCanvas.height);
-}
-
-function eraseDrawings(){
-    eraseArrows()
-    eraseCircles()
-    eraseContours()
-}
-
-function setSquareHighlight(square, highlightColour) {
-    $board.find('.square-' + square).addClass('highlight-' + highlightColour)
-}
-
-function removeHighlights(colour) {
-
-    if(colour=='all'){
-        var colors = new Array('white', 'black', 'red', 'green', 'blue', 'yellow');
-        colors.forEach(element => {
-            $board.find('.' + squareClass)
-            .removeClass('highlight-'+element);
-        });
-    } else{
-        $board.find('.' + squareClass)
-        .removeClass('highlight-'+colour);
-    }
-}
-
-function paintMoveRelative(move, centipawnloss){
-    var colour;
-    var alpha = 0.5;
-    if(centipawnloss<=30){colour = createColor('white', null, alpha);};
-    if(centipawnloss>30 & centipawnloss<70){colour = createColor('red', 1, alpha);};
-    if(centipawnloss>70 & centipawnloss<120){colour = createColor('red', 2, alpha);};
-    if(centipawnloss>120 & centipawnloss<200){colour = createColor('red', 3, alpha);};
-    if(centipawnloss>200 & centipawnloss<30){colour = createColor('red', 4, alpha);};
-    if(centipawnloss>300 & centipawnloss<500){colour = createColor('red', 5, alpha);};
-    if(centipawnloss>500){colour = createColor('black', null, alpha);};
-
-    drawArrow(move.substring(0, 2),move.substring(2, 4), colour, 15);
-}
-
-function paintMoveAbsolute(move, evaluation){
-
-    //define max evaluation (absolute) for shade arrows
-    var shadeLimit = properties.arrowShadeLimit
-    var graduation = (Math.abs(evaluation)/shadeLimit)
-
-    //adjust alpha with evaluation
-    var alpha = 0.5 + graduation*0.3;
-
-    //calculate arrow color
-    var color;
-    if(evaluation < -shadeLimit){color = createColor('red', 1, alpha);};
-    if(evaluation >= -shadeLimit & evaluation < 0){color = createColor('orange', graduation, alpha);};
-    if(evaluation >= 0 & evaluation <= shadeLimit){color = createColor('green', graduation, alpha);};
-    if(evaluation > shadeLimit){color = createColor('cyan', 1, alpha);};
-
-    //paint move arrow
-    if(move){
-        drawArrow(move.substring(0, 2),move.substring(2, 4), color, 15, 'arrow');
-    }
-}
-
-function paintInfluence(square, influence){
-
-    //define limit for contour shade
-    var influenceLimit = properties.contourShadeLimit
-    var graduation = (Math.abs(influence)/influenceLimit)
-
-    //adjust alpha with influence
-    var alpha = 0.5 + graduation*0.3;
-
-    //calculate contour color
-    var color;
-    if(influence < -influenceLimit){color = createColor('cyan', 1, alpha);};
-    if(influence >= -influenceLimit & influence < 0){color = createColor('cyan', graduation, alpha);};
-    if(influence == 0){color = createColor('white', 1, 0.8);};
-    if(influence > 0 & influence <= influenceLimit){color = createColor('yellow', graduation, alpha);};
-    if(influence > influenceLimit){color = createColor('yellow', 1, alpha);};
-
-    //paint contour
-    drawSquareContour(square, color)
-}
-
-function drawEval(evaluation, boardFlipped){
+function drawEvaluationBar(evaluation, boardFlipped){
 
     //clearing previous evaluation
     progressContext.clearRect(0, 0, progressCanvas.width, progressCanvas.height);
@@ -321,8 +239,66 @@ function drawEval(evaluation, boardFlipped){
     
 }
 
-async function testColors(){
+// **** ERASE METHODS ****
+
+function eraseArrows(){
+    arrowContext.clearRect(0, 0, arrowCanvas.width, arrowCanvas.height);
+}
+
+function eraseCircle(square){
+    var pos = $board.find('.square-' + square).position();
+    var length = boardSize/8
+    drawingContext.clearRect(pos.left-2, pos.top-2, length, length);
+}
+
+function eraseDrawings(){
+    drawingContext.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+}
+
+function eraseTempContext(){
+    tempContext.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+}
+function eraseContours(){
+    contourContext.clearRect(0, 0, contourCanvas.width, contourCanvas.height);
+}
+
+function eraseCanvases(){
+
+    //erase all graphics
+    eraseArrows()
+    eraseContours()
+    eraseTempContext()
     eraseDrawings()
+}
+
+
+// **** COLOR METHODS ****
+
+function createColor(colourName, graduation, alpha){
+
+    var red, green, blue;
+    // full shading
+    var shade = 255 - graduation*255
+    //half shading
+    var halfShade = 255 - (graduation/2)*255
+    
+    switch(colourName) {
+        case 'white': red=255; green=255; blue=255; break;
+        case 'black': red=0; green=0; blue=0; break;
+        case 'cyan': red=shade; green=255; blue=255; break;
+        case 'yellow': red=255; green=255; blue=shade; break;
+        case 'orange': red=255; green=halfShade; blue=shade-40; break;
+        case 'blue': red=shade; green=shade; blue=255; break;
+        case 'green': red=shade; green=255; blue=shade; break;
+        case 'red': red=255; green=shade; blue=shade; break;
+        default:
+            red=255; green=255; blue=255; break;
+      }
+    return 'rgba('+red+', '+green+', '+blue+', '+alpha+')';
+}
+
+async function testColors(){
+    eraseCanvases()
     var tenth = properties.arrowShadeLimit/10
     //good positions
     paintMoveAbsolute('a2a4', 0)
