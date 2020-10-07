@@ -420,9 +420,11 @@ function changePosition(previousFen, move, fen){
     analysisPending = true;
     serverWaiting()
     getAnalysis(previousFen, move, fen, analysisEnabled).then(analysis => {
-      displayAnalysis(analysis); 
-      analysisPending = false; 
-      serverReady()
+      if(analysis){
+        displayAnalysis(analysis)
+        analysisPending = false; 
+        serverReady();
+      }
     });
   }
 
@@ -461,6 +463,12 @@ function displayAnalysis(analysis){
     displayComment(analysis.comment);
 }
 
+//server analysis treatment
+async function analysisRollback(){
+  console.log('rollback')
+  analysisPending = false; 
+  serverError().then(promise => serverReady())
+}
 
 //********************* */
 //  OTHER METHODS 

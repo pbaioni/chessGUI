@@ -114,8 +114,14 @@ function setEval(evaluation, depth, boardFlipped){
   function serverUpdating(){
     setServerStatus('orange', 'Updating<br>Line');
   }
+
   function serverImporting(){
     setServerStatus('orange', 'Importing<br>Games');
+  }
+
+ async function serverError(){
+    setServerStatus('red', 'Server<br>Error');
+    await sleep(2000)
   }
 
   function setServerStatus(colour, text){

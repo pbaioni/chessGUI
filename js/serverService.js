@@ -61,9 +61,12 @@ async function getAnalysis(previousFen, move, fen, useEngine){
     },
     body: JSON.stringify(parameters),
   })
-  .then(response => response.json())
-  .then(data => {
-    analysis = data;
+  .then(response => {
+    if(response.status != 200){
+      analysisRollback()
+    }else{
+      analysis = response.json()
+    }
   })
   .catch((error) => {
     console.error('Error:', error);
