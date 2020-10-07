@@ -1,5 +1,6 @@
 //DOM objects
 var $evaluation = $('#evaluation')
+var $bestmove = $('bestmove')
 var $serverStatus = $('#serverStatus')
 var $comment = $('textarea#comment')
 var $onlyPawnsBtn = $('#onlyPawnsBtn')
@@ -90,14 +91,13 @@ function clearEval(boardFlipped){
     drawEvaluationBar(0, boardFlipped)
 }
 
-function setEval(evaluation, depth, boardFlipped){
+function setEval(bestmove, evaluation, depth, boardFlipped){
 
-    $evaluation.html('<div class="eval"><b>' + evaluation/100 + '</b></div><div class="depth">('+ depth + ')</div>');
+    $evaluation.html('<div class="bestmove"><b>' + bestmove + '</b></div><div class="eval"><b>' + evaluation/100 + '</b></div><div class="depth">('+ depth + ')</div>');
 
     if(evaluation > 500){evaluation = 500;};
     if(evaluation < -500){evaluation = -500;};
     drawEvaluationBar(evaluation, boardFlipped)
-
 }
 
   function serverReady(){

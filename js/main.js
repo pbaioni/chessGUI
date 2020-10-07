@@ -432,7 +432,7 @@ function changePosition(previousFen, move, fen){
 //server analysis treatment
 function displayAnalysis(analysis){
     console.log(analysis)
-    setEval(analysis.evaluation, analysis.depth, boardFlipped)
+    setEval(analysis.bestMove, analysis.evaluation, analysis.depth, boardFlipped)
 
     analysis.moves.forEach(element => {
       if (game.turn() === 'b') {
