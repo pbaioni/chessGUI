@@ -85,8 +85,9 @@ function enableAnalysisButtons(){
     setAnalysisEnabled($('#analysisCheckbox').is(":checked"));
 }
 
-function clearEval(){
+function clearEval(boardFlipped){
     $evaluation.html('<h1>-</h1>');
+    drawEvaluationBar(0, boardFlipped)
 }
 
 function setEval(evaluation, depth, boardFlipped){

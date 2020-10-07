@@ -140,7 +140,7 @@ function onDrop (source, target) {
   var move = game.move({
     from: source,
     to: target,
-    promotion: 'q' // NOTE: always promote to a queen for example simplicity
+    promotion: 'q' // NOTE: always promote to a queen for simplicity
   })
 
   // illegal move
@@ -412,7 +412,7 @@ function enableInfluence(checkboxElem) {
 
 function changePosition(previousFen, move, fen){
   //cleaning infos
-  clearEval()
+  clearEval(boardFlipped)
   eraseCanvases()
   displayComment('')
   
@@ -465,7 +465,6 @@ function displayAnalysis(analysis){
 
 //server analysis treatment
 async function analysisRollback(){
-  console.log('rollback')
   analysisPending = false; 
   serverError().then(promise => serverReady())
 }
