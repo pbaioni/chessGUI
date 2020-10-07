@@ -115,7 +115,7 @@ label {
     left: 0px;
 }
 
-#evaluation{
+#evaluation {
     position: absolute;
     bottom: 90px;
     left: 10px;
@@ -124,20 +124,25 @@ label {
     margin: 10px 10px 10px 10px;
     outline: none;
     padding: 10px 10px;
-    font-size: 20px;
+    font-size: 16px;
     text-align: center;
     text-decoration: none;
     width: 70%;
     height: 20px;
+}
 
+.bestmove{
+    width: 40%;
+    float: left;
 }
 
 .eval{
-    width: 60%;
+    width: 30%;
+    float: left;
 }
 
 .depth{
-    width: 40%;
+    width: 30%;
     float: right;
 }
 
