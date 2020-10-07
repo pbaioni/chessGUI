@@ -87,12 +87,15 @@ function enableAnalysisButtons(){
 }
 
 function clearEval(boardFlipped){
-    $evaluation.html('<h1>-</h1>');
+    $evaluation.html('<div class="bestmove"><b>-</b></div><div class="eval"><b>-</b></div><div class="depth">(-)</div>');
     drawEvaluationBar(0, boardFlipped)
 }
 
 function setEval(bestmove, evaluation, depth, boardFlipped){
 
+    if(!bestmove){
+        bestmove = '-';
+    }
     $evaluation.html('<div class="bestmove"><b>' + bestmove + '</b></div><div class="eval"><b>' + evaluation/100 + '</b></div><div class="depth">('+ depth + ')</div>');
 
     if(evaluation > 500){evaluation = 500;};
