@@ -71,7 +71,6 @@ window.addEventListener('contextmenu', function(ev) {
 
 //start drawing
 window.addEventListener('mousedown', function(ev){
-  ev.preventDefault();
   if(ev.button == 2 && drawingsEnabled){
       isDrawing = true
       drawStart = mouseSquare
