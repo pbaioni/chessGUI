@@ -51,7 +51,7 @@ function paintMoveAbsolute(move, evaluation){
 
     //paint move arrow
     if(move){
-        drawArrow(move.substring(0, 2),move.substring(2, 4), color, 15, 'arrow');
+        drawArrow(move.substring(0, 2),move.substring(2, 4), color, properties.moveArrowWidth, 'arrow');
     }
 }
 

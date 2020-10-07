@@ -166,7 +166,7 @@ function onMouseoverSquare(square){
   if(isDrawing && drawingColor){
     if(mouseSquare != drawStart){
       eraseTempContext()
-      drawArrow(drawStart, mouseSquare, drawingColor, tempArrowWidth, 'temp')
+      drawArrow(drawStart, mouseSquare, drawingColor, properties.userArrowWidth, 'temp')
     }
   }
 }
@@ -455,7 +455,7 @@ function displayAnalysis(analysis){
           drawCircle(element.path, element.color, 'drawing');
         }
         if(element.type === 'arrow'){
-          drawArrow(element.path.substring(0, 2), element.path.substring(2, 4), element.color, tempArrowWidth, 'drawing');
+          drawArrow(element.path.substring(0, 2), element.path.substring(2, 4), element.color, properties.userArrowWidth, 'drawing');
         }
       });
     }
