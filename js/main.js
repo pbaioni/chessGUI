@@ -70,20 +70,22 @@ window.addEventListener('contextmenu', function(ev) {
 }, false);
 
 //start drawing
-window.addEventListener('mousedown', function(ev){
-  if(ev.button == 2 && drawingsEnabled){
-      isDrawing = true
-      drawStart = mouseSquare
+$board.mousedown(function(ev) {
+  console.log("Jquery down, which=" + ev.which)
+  if(ev.which == 3 && drawingsEnabled){
+    isDrawing = true
+    drawStart = mouseSquare
 
-      //draw temp circle
-      if(drawingColor){
-        drawCircle(mouseSquare, drawingColor, 'temp')
-      }   
-  }
-}, false);
+    //draw temp circle
+    if(drawingColor){
+      drawCircle(mouseSquare, drawingColor, 'temp')
+    }   
+}
+});
 
-window.addEventListener('mouseup', function(ev){
-  if(ev.button == 2 && drawingsEnabled){
+$board.mouseup(function(ev) {
+  console.log("Jquery up, which=" + ev.which)
+  if(ev.which== 3 && drawingsEnabled){
 
     //erasing temp drawings
     eraseTempContext()
@@ -104,17 +106,12 @@ window.addEventListener('mouseup', function(ev){
     drawStart = null
     isDrawing = false
   }
-}, false);
+});
 
   //start periodic check of server connection
   testLink();
   setInterval(function(){testLink();}, properties.testlinkPeriod);
   testColors().then(promise => start())
-
-  //stopping server on HMI exit
-  window.onbeforeunload = function(){
-    shutdownServer()
-  };
 
 //********************* */
 //  CALLBACK METHODS 
@@ -462,7 +459,6 @@ function displayAnalysis(analysis){
         }
       });
     }
-
     displayComment(analysis.comment);
 }
 
@@ -477,6 +473,7 @@ async function analysisRollback(){
 //********************* */
 
 function setConnected(value){
+  console.log('connect: ' + value)
   connected = value;
   if(!analysisPending){
     if(connected){
