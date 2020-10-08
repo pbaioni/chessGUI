@@ -481,6 +481,7 @@ function setConnected(value){
   if(!analysisPending){
     if(connected){
       serverReady()
+      changePosition(null, null, game.fen(), boardFlipped)
     }else{
       serverDisconnected()
     }

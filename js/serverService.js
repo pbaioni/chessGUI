@@ -171,7 +171,6 @@ async function storeDrawing(fen, type, path, color){
 }
 
 async function testLink(){
-  
   var url = urlBase;
   await fetch(url)
   .then(response => {if(response.status == 200){setConnected(true);}})
@@ -181,7 +180,6 @@ async function testLink(){
 }
 
 async function shutdownServer(){
-  
   var url = urlBase + 'shutdown';
   await fetch(url)
   .then(response => {console.log('Shutting down server')})
