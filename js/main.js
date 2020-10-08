@@ -494,10 +494,6 @@ function setAnalysisEnabled(value){
   analysisEnabled = value;
 }
 
-function saveSettings(){
-  hideSettings()
-}
-
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
