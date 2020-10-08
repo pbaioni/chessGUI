@@ -108,7 +108,7 @@ window.addEventListener('mouseup', function(ev){
 
   //start periodic check of server connection
   testLink();
-  setInterval(function(){testLink();}, 10000);
+  setInterval(function(){testLink();}, properties.testlinkPeriod);
   testColors().then(promise => start())
 
   //stopping server on HMI exit
