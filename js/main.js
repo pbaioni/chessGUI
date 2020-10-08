@@ -56,7 +56,7 @@ document.onkeydown = function(evt) {
     if(evt.key == 'c'){drawingColor = '#00ffff'}
     if(evt.key == 'w'){drawingColor = '#ffffff'}
     if(evt.key == 'p'){drawingColor = '#9900dd'}
-    if(evt.key == 'q'){drawingColor = '#000000'}
+    if(evt.key == 'k'){drawingColor = '#000000'}
 };
 
 document.onkeyup = function(evt) {
