@@ -7,6 +7,7 @@ var game = new Chess()
 
 //script variables
 var connected = false
+var firstConnection = true
 var analysisEnabled = true
 var influenceEnabled = false
 var drawingsEnabled = true
@@ -71,7 +72,6 @@ window.addEventListener('contextmenu', function(ev) {
 
 //start drawing
 $board.mousedown(function(ev) {
-  console.log("Jquery down, which=" + ev.which)
   if(ev.which == 3 && drawingsEnabled){
     isDrawing = true
     drawStart = mouseSquare
@@ -84,7 +84,6 @@ $board.mousedown(function(ev) {
 });
 
 $board.mouseup(function(ev) {
-  console.log("Jquery up, which=" + ev.which)
   if(ev.which== 3 && drawingsEnabled){
 
     //erasing temp drawings
@@ -108,10 +107,9 @@ $board.mouseup(function(ev) {
   }
 });
 
-  //start periodic check of server connection
-  testLink();
-  setInterval(function(){testLink();}, properties.testlinkPeriod);
-  testColors().then(promise => start())
+  //test arrow colors and start periodic check of server connection
+  testColors().then(promise => {start(); testLink(); setInterval(function(){testLink()}, properties.testlinkPeriod)})
+    
 
 //********************* */
 //  CALLBACK METHODS 
@@ -473,12 +471,14 @@ async function analysisRollback(){
 //********************* */
 
 function setConnected(value){
-  console.log('connect: ' + value)
   connected = value;
   if(!analysisPending){
     if(connected){
       serverReady()
-      changePosition(null, null, game.fen(), boardFlipped)
+      if(firstConnection){
+        changePosition(null, null, game.fen(), boardFlipped)
+        firstConnection = false
+      }
     }else{
       serverDisconnected()
     }
