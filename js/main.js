@@ -107,6 +107,11 @@ $board.mouseup(function(ev) {
   }
 });
 
+//stopping server on HMI exit
+window.onbeforeunload = function() {
+  shutdownServer()
+}
+
   //test arrow colors and start periodic check of server connection
   testColors().then(promise => {start(); testLink(); setInterval(function(){testLink()}, properties.testlinkPeriod)})
     
