@@ -132,12 +132,12 @@ label {
 }
 
 .bestmove{
-    width: 40%;
+    width: 35%;
     float: left;
 }
 
 .eval{
-    width: 30%;
+    width: 35%;
     float: left;
 }
 
