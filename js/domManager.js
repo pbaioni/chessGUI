@@ -93,7 +93,7 @@ function clearEval(boardFlipped){
 
 function setEval(bestmove, evaluation, depth, boardFlipped){
 
-    if(!bestmove){
+    if(!(bestmove&&depth)){
         bestmove = '-';
     }
     $evaluation.html('<div class="bestmove"><b>' + bestmove + '</b></div><div class="eval"><b>' + evaluation/100 + '</b></div><div class="depth">('+ depth + ')</div>');

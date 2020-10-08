@@ -48,11 +48,15 @@ async function deleteLine(fen, move){
 async function getAnalysis(previousFen, move, fen, useEngine){
   var analysis = null
   var url = urlBase + 'analysis';
+  var depth = 0
+  if(useEngine){
+    depth = properties.defaultAnalysisDepth
+  }
   var parameters= {};
   parameters.previousFen = previousFen;
   parameters.move = move;
   parameters.fen = fen;
-  parameters.depth = properties.defaultAnalysisDepth;
+  parameters.depth = depth;
   parameters.useEngine = useEngine;
   await fetch(url, {
     method: 'POST',
@@ -173,5 +177,15 @@ async function testLink(){
   .then(response => {if(response.status == 200){setConnected(true);}})
   .catch((error) => {
     setConnected(false);
+  });
+}
+
+async function shutdownServer(){
+  
+  var url = urlBase + 'shutdown';
+  await fetch(url)
+  .then(response => {console.log('Shutting down server')})
+  .catch((error) => {
+    //DO NOTHING
   });
 }

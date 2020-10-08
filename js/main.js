@@ -111,6 +111,10 @@ window.addEventListener('mouseup', function(ev){
   setInterval(function(){testLink();}, 10000);
   testColors().then(promise => start())
 
+  //stopping server on HMI exit
+  window.onbeforeunload = function(){
+    shutdownServer()
+  };
 
 //********************* */
 //  CALLBACK METHODS 
