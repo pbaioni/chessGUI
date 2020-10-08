@@ -48,7 +48,18 @@
           <textarea id="comment" name="comment"></textarea>
           <div id="rightbuttons" class="action-button">
             <div><button id="commentBtn">Save Comment</button></div>
-            <img id="setting" src=img/icons/setting.png onclick=displaySettings() alt=”image”></img>
+            <div id="settingDiv">
+              <img id="settingImg" src=img/icons/setting.png onclick=showSettings() alt=”image”></img>
+              <div id="settingForm">
+                <form onsubmit="saveSettings(); return false;">
+                  <label for="defaultDepth">Default stockfish analyse depth</label>
+                  <input type="text" id="defaultDepth" name="depth" placeholder="24">
+                  <label for="serverPort">Server port</label>
+                  <input type="text" id="serverPort" name="port" placeholder="9099">
+                  <input type="submit" value="Set">
+                </form>
+              </div>
+            </div>
           </div>
           
         </nav>

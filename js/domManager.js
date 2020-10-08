@@ -7,6 +7,8 @@ var $onlyPawnsBtn = $('#onlyPawnsBtn')
 var $updateBtn = $('#updateBtn')
 var $importBtn = $('#importBtn')
 var $commentBtn = $('#commentBtn')
+var $settingForm = $('#settingForm')
+var $settingImg = $('#settingImg')
 var $analysisCb = $('#analysisCheckbox')
 var $influenceCb = $('#influenceCheckbox')
 var $pgn = $('#pgnLabel')
@@ -33,6 +35,17 @@ async function toggleCommentButton(){
     await sleep(1000)
     $commentBtn.css("background-color", '#2ba6cb');
     $commentBtn.html('Save Comment');
+}
+
+function showSettings(){
+    $settingImg.hide()
+    $settingForm.show()
+}
+
+function hideSettings(){
+    $settingForm.hide()
+    $settingImg.show()
+
 }
 
 function toggleUpdateButton(inUse){
