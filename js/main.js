@@ -436,13 +436,21 @@ function changePosition(previousFen, move, fen){
 //server analysis treatment
 function displayAnalysis(analysis){
     console.log(analysis)
-    setEval(analysis.bestMove, analysis.evaluation, analysis.depth, boardFlipped)
+    setEval(analysis.bestMove, analysis.evaluation, analysis.depth, analysis.turn, boardFlipped)
 
     analysis.moves.forEach(element => {
-      if (game.turn() === 'b') {
-        paintMoveAbsolute(element.move, element.evaluation*(-1));
+      if(element.evaluation.includes('#')){
+        numericalEval = 1000
+        if (game.turn() === 'b') {
+          numericalEval = -1000
+        }
       }else{
-        paintMoveAbsolute(element.move, element.evaluation);
+        numericalEval = element.evaluation
+      }
+      if (game.turn() === 'b') {
+        paintMoveAbsolute(element.move, numericalEval*(-1));
+      }else{
+        paintMoveAbsolute(element.move, numericalEval);
       }
     });
 

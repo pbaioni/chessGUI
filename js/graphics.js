@@ -44,10 +44,12 @@ function paintMoveAbsolute(move, evaluation){
 
     //calculate arrow color
     var color;
-    if(evaluation < -shadeLimit){color = createColor('red', 1, alpha);};
+    if(evaluation <= -1000){color = '#9900dd'}
+    if(evaluation > -1000 & evaluation < -shadeLimit){color = createColor('red', 1, alpha);};
     if(evaluation >= -shadeLimit & evaluation < 0){color = createColor('orange', graduation, alpha);};
     if(evaluation >= 0 & evaluation <= shadeLimit){color = createColor('green', graduation, alpha);};
-    if(evaluation > shadeLimit){color = createColor('cyan', 1, alpha);};
+    if(evaluation > shadeLimit & evaluation < 1000){color = createColor('cyan', 1, alpha);};
+    if(evaluation >= 1000){color = 'black'}
 
     //paint move arrow
     if(move){
@@ -179,31 +181,32 @@ function drawSquareContour(square, colour) {
     contourContext.stroke();
 }
 
-function drawEvaluationBar(evaluation, boardFlipped){
+function drawEvaluationBar(evaluation, boardFlipped, depth){
 
     //clearing previous evaluation
     progressContext.clearRect(0, 0, progressCanvas.width, progressCanvas.height);
-
-    if(evaluation > 400){
-        evaluation = 400
-    }
-
-    if(evaluation < -400){
-        evaluation = -400
-    }
-
+    console.log('depth: ' + depth)
     var lenght;
     var start;
-    if(boardFlipped){
+    var color = '#fff'
+    var drawReferences = true
+    if(depth == 0){
         start = 0
-        lenght = 320 + (320/400)*evaluation
+        lenght = 640
+        color = '#777'
+        drawReferences = false
     }else{
-        start = 640
-        lenght = 320 - (320/400)*evaluation
+        if(boardFlipped){
+            start = 0
+            lenght = 320 + (320/400)*evaluation
+        }else{
+            start = 640
+            lenght = 320 - (320/400)*evaluation
+        }
     }
 
     //drawing evaluation bar
-    progressContext.strokeStyle = '#fff';
+    progressContext.strokeStyle = color;
     progressContext.beginPath();
     progressContext.lineWidth = 16;
     progressContext.moveTo(8, start);
@@ -211,31 +214,33 @@ function drawEvaluationBar(evaluation, boardFlipped){
     progressContext.stroke();
     progressContext.closePath()
 
-    //drawing references
-    progressContext.strokeStyle = '#a00';
-    progressContext.beginPath();
-    progressContext.lineWidth = 2;
-    progressContext.moveTo(0, 80);
-    progressContext.lineTo(16, 80);
-    progressContext.moveTo(0, 160);
-    progressContext.lineTo(16, 160);
-    progressContext.moveTo(0, 240);
-    progressContext.lineTo(16, 240);
-    progressContext.moveTo(0, 320);
-    progressContext.lineTo(16, 320);
-    progressContext.moveTo(0, 400);
-    progressContext.lineTo(16, 400);
-    progressContext.moveTo(0, 480);
-    progressContext.lineTo(16, 480);
-    progressContext.moveTo(0, 560);
-    progressContext.lineTo(16, 560);
-    progressContext.stroke();
-    progressContext.closePath()
+    if(drawReferences){
+        //drawing references
+        progressContext.strokeStyle = '#a00';
+        progressContext.beginPath();
+        progressContext.lineWidth = 2;
+        progressContext.moveTo(0, 80);
+        progressContext.lineTo(16, 80);
+        progressContext.moveTo(0, 160);
+        progressContext.lineTo(16, 160);
+        progressContext.moveTo(0, 240);
+        progressContext.lineTo(16, 240);
+        progressContext.moveTo(0, 320);
+        progressContext.lineTo(16, 320);
+        progressContext.moveTo(0, 400);
+        progressContext.lineTo(16, 400);
+        progressContext.moveTo(0, 480);
+        progressContext.lineTo(16, 480);
+        progressContext.moveTo(0, 560);
+        progressContext.lineTo(16, 560);
+        progressContext.stroke();
+        progressContext.closePath()
 
-    //drawing 0 mark
-    progressContext.beginPath();
-    progressContext.arc(8, 320, 2, 0, 2 * Math.PI);
-    progressContext.stroke();
+        //drawing 0 mark
+        progressContext.beginPath();
+        progressContext.arc(8, 320, 2, 0, 2 * Math.PI);
+        progressContext.stroke();
+    }
     
 }
 
