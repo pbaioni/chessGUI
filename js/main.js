@@ -150,7 +150,7 @@ function onDrop (source, target) {
   if (move === null) return 'snapback'
 
   //asking for position evaluation (server analysis)
-  changePosition(previousFen, source+target, game.fen())
+    changePosition(previousFen, source+target, game.fen())
 
 }
 
@@ -430,27 +430,19 @@ function changePosition(previousFen, move, fen){
       }
     });
   }
-
 }
 
 //server analysis treatment
 function displayAnalysis(analysis){
-    console.log(analysis)
-    setEval(analysis.bestMove, analysis.evaluation, analysis.depth, analysis.turn, boardFlipped)
 
+    console.log(analysis)
+
+    setEval(analysis.bestMove, analysis.evaluation, analysis.depth, boardFlipped)
     analysis.moves.forEach(element => {
-      if(element.evaluation.includes('#')){
-        numericalEval = 1000
-        if (game.turn() === 'b') {
-          numericalEval = -1000
-        }
-      }else{
-        numericalEval = element.evaluation
-      }
       if (game.turn() === 'b') {
-        paintMoveAbsolute(element.move, numericalEval*(-1));
+        paintMoveAbsolute(element.move, (-1)*numEval(element.evaluation));
       }else{
-        paintMoveAbsolute(element.move, numericalEval);
+        paintMoveAbsolute(element.move, numEval(element.evaluation));
       }
     });
 
@@ -471,6 +463,23 @@ function displayAnalysis(analysis){
       });
     }
     displayComment(analysis.comment);
+}
+
+function numEval(evaluation){
+  var rval = evaluation
+  evaluation = '' + evaluation
+  if(evaluation.includes('#')){
+    rval = 10000
+    if(game.turn() == 'w'){rval = rval*(-1)}
+    if(evaluation.includes('-')){rval = rval*(-1)}
+  }
+  return rval
+}
+
+function flipTurn(turn){
+  var flip = 'w'
+  if(turn == 'w'){flip = 'b'}
+  return flip;
 }
 
 //server analysis treatment

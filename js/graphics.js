@@ -34,7 +34,6 @@ progressContext.lineJoin = 'butt';
 // **** DRAW METHODS ****
 
 function paintMoveAbsolute(move, evaluation){
-
     //define max evaluation (absolute) for shade arrows
     var shadeLimit = properties.arrowShadeLimit
     var graduation = (Math.abs(evaluation)/shadeLimit)
@@ -44,12 +43,12 @@ function paintMoveAbsolute(move, evaluation){
 
     //calculate arrow color
     var color;
-    if(evaluation <= -1000){color = '#9900dd'}
-    if(evaluation > -1000 & evaluation < -shadeLimit){color = createColor('red', 1, alpha);};
+    if(evaluation <= -10000){color = 'black'}
+    if(evaluation > -10000 & evaluation < -shadeLimit){color = createColor('red', 1, alpha);};
     if(evaluation >= -shadeLimit & evaluation < 0){color = createColor('orange', graduation, alpha);};
     if(evaluation >= 0 & evaluation <= shadeLimit){color = createColor('green', graduation, alpha);};
-    if(evaluation > shadeLimit & evaluation < 1000){color = createColor('cyan', 1, alpha);};
-    if(evaluation >= 1000){color = 'black'}
+    if(evaluation > shadeLimit & evaluation < 10000){color = createColor('cyan', 1, alpha);};
+    if(evaluation >= 10000){color = '#9900dd'}
 
     //paint move arrow
     if(move){
@@ -185,7 +184,6 @@ function drawEvaluationBar(evaluation, boardFlipped, depth){
 
     //clearing previous evaluation
     progressContext.clearRect(0, 0, progressCanvas.width, progressCanvas.height);
-    console.log('depth: ' + depth)
     var lenght;
     var start;
     var color = '#fff'
