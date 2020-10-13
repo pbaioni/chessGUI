@@ -51,7 +51,7 @@ function paintMoveAbsolute(move, evaluation){
     if(evaluation >= 10000){color = '#9900dd'}
 
     //paint move arrow
-    if(move){
+    if(move && move != '-'){
         drawArrow(move.substring(0, 2),move.substring(2, 4), color, properties.moveArrowWidth, 'arrow');
     }
 }
