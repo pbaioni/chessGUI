@@ -107,8 +107,13 @@ function setEval(bestmove, evaluation, depth, turn, boardFlipped){
             numericalEvaluation = numericalEvaluation * (-1)
         }
     }else{
-        evaluationLabel = evaluation/100
-        numericalEvaluation = evaluation
+        if(evaluation == '-'){
+            evaluationLabel = evaluation
+            numericalEvaluation = 0
+        }else{
+            evaluationLabel = evaluation/100
+            numericalEvaluation = evaluation
+        }
     }
 
     $evaluation.html('<div class="bestmove"><b>' + bestmove + '</b></div><div class="eval"><b>' + evaluationLabel + '</b></div><div class="depth">('+ depth + ')</div>');

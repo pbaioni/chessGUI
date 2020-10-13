@@ -34,25 +34,33 @@ progressContext.lineJoin = 'butt';
 // **** DRAW METHODS ****
 
 function paintMoveAbsolute(move, evaluation){
-    //define max evaluation (absolute) for shade arrows
-    var shadeLimit = properties.arrowShadeLimit
-    var graduation = (Math.abs(evaluation)/shadeLimit)
+    if(evaluation == '-'){
+        var unanalizedColor = createColor('blue', 1, 0.5)
+        var unanalizedWidth = 6
+        if(move && move != '-'){
+            drawArrow(move.substring(0, 2),move.substring(2, 4), unanalizedColor, unanalizedWidth, 'arrow');
+        }
+    }else{
+        //define max evaluation (absolute) for shade arrows
+        var shadeLimit = properties.arrowShadeLimit
+        var graduation = (Math.abs(evaluation)/shadeLimit)
 
-    //adjust alpha with evaluation
-    var alpha = 0.5 + graduation*0.3;
+        //adjust alpha with evaluation
+        var alpha = 0.5 + graduation*0.3;
 
-    //calculate arrow color
-    var color;
-    if(evaluation <= -10000){color = 'black'}
-    if(evaluation > -10000 & evaluation < -shadeLimit){color = createColor('red', 1, alpha);};
-    if(evaluation >= -shadeLimit & evaluation < 0){color = createColor('orange', graduation, alpha);};
-    if(evaluation >= 0 & evaluation <= shadeLimit){color = createColor('green', graduation, alpha);};
-    if(evaluation > shadeLimit & evaluation < 10000){color = createColor('cyan', 1, alpha);};
-    if(evaluation >= 10000){color = '#9900dd'}
+        //calculate arrow color
+        var color;
+        if(evaluation <= -10000){color = 'black'}
+        if(evaluation > -10000 & evaluation < -shadeLimit){color = createColor('red', 1, alpha);};
+        if(evaluation >= -shadeLimit & evaluation < 0){color = createColor('orange', graduation, alpha);};
+        if(evaluation >= 0 & evaluation <= shadeLimit){color = createColor('green', graduation, alpha);};
+        if(evaluation > shadeLimit & evaluation < 10000){color = createColor('cyan', 1, alpha);};
+        if(evaluation >= 10000){color = '#9900dd'}
 
-    //paint move arrow
-    if(move && move != '-'){
-        drawArrow(move.substring(0, 2),move.substring(2, 4), color, properties.moveArrowWidth, 'arrow');
+        //paint move arrow
+        if(move && move != '-'){
+            drawArrow(move.substring(0, 2),move.substring(2, 4), color, properties.moveArrowWidth, 'arrow');
+        }
     }
 }
 

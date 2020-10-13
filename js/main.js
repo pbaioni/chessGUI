@@ -439,10 +439,14 @@ function displayAnalysis(analysis){
 
     setEval(analysis.bestMove, analysis.evaluation, analysis.depth, analysis.turn, boardFlipped)
     analysis.moves.forEach(element => {
-      if (game.turn() === 'b') {
-        paintMoveAbsolute(element.move, (-1)*numEval(element.evaluation));
+      if(element.evaluation == '-'){
+        paintMoveAbsolute(element.move, element.evaluation);
       }else{
-        paintMoveAbsolute(element.move, numEval(element.evaluation));
+        if (game.turn() === 'b') {
+          paintMoveAbsolute(element.move, (-1)*numEval(element.evaluation));
+        }else{
+          paintMoveAbsolute(element.move, numEval(element.evaluation));
+        }
       }
     });
 
