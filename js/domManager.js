@@ -91,7 +91,7 @@ function clearEval(boardFlipped){
     drawEvaluationBar(0, boardFlipped, 0)
 }
 
-function setEval(bestmove, evaluation, depth, boardFlipped){
+function setEval(bestmove, evaluation, depth, turn, boardFlipped){
 
     if(!(bestmove&&depth)){
         bestmove = '-';
@@ -100,6 +100,12 @@ function setEval(bestmove, evaluation, depth, boardFlipped){
     if((''+evaluation).includes('#')){
         evaluationLabel = evaluation
         numericalEvaluation = 400
+        if((''+evaluation).includes('-')){
+            numericalEvaluation = numericalEvaluation * (-1)
+        }
+        if(turn == 'b'){
+            numericalEvaluation = numericalEvaluation * (-1)
+        }
     }else{
         evaluationLabel = evaluation/100
         numericalEvaluation = evaluation
@@ -109,7 +115,7 @@ function setEval(bestmove, evaluation, depth, boardFlipped){
 
     if(numericalEvaluation > 400){numericalEvaluation = 400}
     if(numericalEvaluation < -400){numericalEvaluation = -400}
-    drawEvaluationBar(evaluation, boardFlipped, depth)
+    drawEvaluationBar(numericalEvaluation, boardFlipped, depth)
 }
 
   function serverReady(){

@@ -437,7 +437,7 @@ function displayAnalysis(analysis){
 
     console.log(analysis)
 
-    setEval(analysis.bestMove, analysis.evaluation, analysis.depth, boardFlipped)
+    setEval(analysis.bestMove, analysis.evaluation, analysis.depth, analysis.turn, boardFlipped)
     analysis.moves.forEach(element => {
       if (game.turn() === 'b') {
         paintMoveAbsolute(element.move, (-1)*numEval(element.evaluation));
