@@ -182,7 +182,6 @@ function drawSquareContour(square, colour) {
 
 function drawEvaluationBar(evaluation, boardFlipped, depth){
 
-    console.log("draw eval:", evaluation)
     //clearing previous evaluation
     progressContext.clearRect(0, 0, progressCanvas.width, progressCanvas.height);
     var lenght;
