@@ -36,9 +36,8 @@ progressContext.lineJoin = 'butt';
 function paintMoveAbsolute(move, evaluation){
     if(evaluation == '-'){
         var unanalizedColor = createColor('blue', 1, 0.5)
-        var unanalizedWidth = 6
         if(move && move != '-'){
-            drawArrow(move.substring(0, 2),move.substring(2, 4), unanalizedColor, unanalizedWidth, 'arrow');
+            drawArrow(move.substring(0, 2),move.substring(2, 4), unanalizedColor, properties.unanalizedArrowWidth, 'arrow');
         }
     }else{
         //define max evaluation (absolute) for shade arrows

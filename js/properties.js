@@ -6,7 +6,7 @@ properties = {
   serverPort: 9099,
 
   //define interval (in milliseconds) for server connection checking
-  testlinkPeriod: 5000,
+  testlinkPeriod: 3000,
 
   //centipawn absolute limit for shadowed move arrows. 
   //Above that there is only a static color (red for lost positions, cyan for won positions)
@@ -19,5 +19,8 @@ properties = {
   moveArrowWidth: 15,
 
   //define the width of the user annotation arrow
-  userArrowWidth: 10
+  userArrowWidth: 10,
+
+  //define the width of the unanalized move arrow
+  unanalizedArrowWidth: 6
 }
