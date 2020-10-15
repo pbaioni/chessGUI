@@ -98,7 +98,11 @@ function setEval(bestmove, evaluation, depth, turn, boardFlipped){
     }
     var evaluationLabel, numericalEvaluation
     if((''+evaluation).includes('#')){
-        evaluationLabel = evaluation
+        if(evaluation == '-#0'){
+            evaluationLabel = '#'
+        }else{
+            evaluationLabel = evaluation
+        }
         numericalEvaluation = 400
         if((''+evaluation).includes('-')){
             numericalEvaluation = numericalEvaluation * (-1)
