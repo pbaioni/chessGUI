@@ -303,6 +303,7 @@ function update() {
         enableAnalysisButtons();
         toggleUpdateButton(false);
         serverReady();
+        changePosition(null, null, game.fen())
       });
     }
   }else{
