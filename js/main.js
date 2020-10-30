@@ -372,7 +372,7 @@ function importGames() {
 //comment button and function
 $('#commentBtn').on('click', setComment)
 async function setComment() {
-  //stoppinh autosave in case of keyboard shortcut for saving comment
+  //stopping autosave in case of keyboard shortcut for saving comment
   clearTimeout(commentTimeout)
   setPositionComment(game.fen(), $comment.val()).then(response => {
     toggleCommentButton();
@@ -387,6 +387,12 @@ function autoSave(){
 
 //set preferences button and function
 $('#settingBtn').on('click', saveSettings)
+
+$('input#defaultDepth').keydown(function(evt) {
+  if(evt.key == 'Enter') {
+    saveSettings()
+  }
+});
 
 //CHECKBOXES
 
