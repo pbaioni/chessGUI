@@ -368,7 +368,6 @@ function importGames() {
   }
 }
 
-
 //comment button and function
 $('#commentBtn').on('click', setComment)
 async function setComment() {
@@ -376,6 +375,9 @@ async function setComment() {
       toggleCommentButton()
     });
 }
+
+//set preferences button and function
+$('#settingBtn').on('click', saveSettings)
 
 //CHECKBOXES
 

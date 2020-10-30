@@ -50,12 +50,7 @@ async function getAnalysis(previousFen, move, fen, useEngine){
   var url = urlBase + 'analysis';
   var depth = 0
   if(useEngine){
-    depth = getCookie("depth")
-    console.log('depth from cookie: ' + depth)
-    if(!depth){
       depth = properties.defaultAnalysisDepth
-    }
-    console.log('final depth: ' + depth)
   }
   var parameters= {};
   parameters.previousFen = previousFen;

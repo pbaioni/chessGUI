@@ -39,21 +39,15 @@ async function toggleCommentButton(){
 
 function showSettings(){
     $settingImg.hide()
+    document.getElementById('defaultDepth').value = properties.defaultAnalysisDepth
     $settingForm.show()
 }
 
 function saveSettings(){
     var depth = document.getElementById('defaultDepth').value
     if(depth){
-        setCookie("depth", depth, 7)
+        properties.defaultAnalysisDepth = depth
     }
-
-    var port = document.getElementById('serverPort').value
-    if(port){
-        setCookie("port=", port, 7)
-    }
-
-    console.log(depth, port)
 
     $settingForm.hide()
     $settingImg.show()
@@ -181,28 +175,3 @@ function setEval(bestmove, evaluation, depth, turn, boardFlipped){
     $serverStatus.css("background-color", colour)
     $serverStatus.html(text)
   }
-
-function setCookie(name,value,days) {
-    var expires = "";
-    if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days*24*60*60*1000));
-        expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
-}
-
-function getCookie(name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-    }
-    return null;
-}
-
-function eraseCookie(name) {   
-    document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-}
