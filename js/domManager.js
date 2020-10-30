@@ -50,7 +50,6 @@ function saveSettings(){
 
     if(regex.test(depth)){
         properties.defaultAnalysisDepth = depth
-        console.log(properties.defaultAnalysisDepth)
     }
 
     $settingForm.hide()
