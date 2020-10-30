@@ -113,19 +113,43 @@ function enableAnalysisButtons(){
 
 function clearEval(boardFlipped){
     $evaluation.html('<div class="bestmove"><b>-</b></div><div class="eval"><b>-</b></div><div class="depth">(-)</div>');
-    drawEvaluationBar(0, boardFlipped)
+    drawEvaluationBar(0, boardFlipped, 0)
 }
 
-function setEval(bestmove, evaluation, depth, boardFlipped){
+function setEval(bestmove, evaluation, depth, turn, boardFlipped){
 
     if(!(bestmove&&depth)){
         bestmove = '-';
     }
-    $evaluation.html('<div class="bestmove"><b>' + bestmove + '</b></div><div class="eval"><b>' + evaluation/100 + '</b></div><div class="depth">('+ depth + ')</div>');
+    var evaluationLabel, numericalEvaluation
+    if((''+evaluation).includes('#')){
+        if(evaluation == '-#0'){
+            evaluationLabel = '#'
+        }else{
+            evaluationLabel = evaluation
+        }
+        numericalEvaluation = 400
+        if((''+evaluation).includes('-')){
+            numericalEvaluation = numericalEvaluation * (-1)
+        }
+        if(turn == 'b'){
+            numericalEvaluation = numericalEvaluation * (-1)
+        }
+    }else{
+        if(evaluation == '-'){
+            evaluationLabel = evaluation
+            numericalEvaluation = 0
+        }else{
+            evaluationLabel = evaluation/100
+            numericalEvaluation = evaluation
+        }
+    }
 
-    if(evaluation > 500){evaluation = 500;};
-    if(evaluation < -500){evaluation = -500;};
-    drawEvaluationBar(evaluation, boardFlipped)
+    $evaluation.html('<div class="bestmove"><b>' + bestmove + '</b></div><div class="eval"><b>' + evaluationLabel + '</b></div><div class="depth">('+ depth + ')</div>');
+
+    if(numericalEvaluation > 400){numericalEvaluation = 400}
+    if(numericalEvaluation < -400){numericalEvaluation = -400}
+    drawEvaluationBar(numericalEvaluation, boardFlipped, depth)
 }
 
   function serverReady(){

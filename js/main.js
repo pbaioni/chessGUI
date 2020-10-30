@@ -150,7 +150,7 @@ function onDrop (source, target) {
   if (move === null) return 'snapback'
 
   //asking for position evaluation (server analysis)
-  changePosition(previousFen, source+target, game.fen())
+    changePosition(previousFen, source+target, game.fen())
 
 }
 
@@ -303,6 +303,7 @@ function update() {
         enableAnalysisButtons();
         toggleUpdateButton(false);
         serverReady();
+        changePosition(null, null, game.fen())
       });
     }
   }else{
@@ -430,19 +431,23 @@ function changePosition(previousFen, move, fen){
       }
     });
   }
-
 }
 
 //server analysis treatment
 function displayAnalysis(analysis){
-    console.log(analysis)
-    setEval(analysis.bestMove, analysis.evaluation, analysis.depth, boardFlipped)
 
+    console.log(analysis)
+
+    setEval(analysis.bestMove, analysis.evaluation, analysis.depth, analysis.turn, boardFlipped)
     analysis.moves.forEach(element => {
-      if (game.turn() === 'b') {
-        paintMoveAbsolute(element.move, element.evaluation*(-1));
-      }else{
+      if(element.evaluation == '-'){
         paintMoveAbsolute(element.move, element.evaluation);
+      }else{
+        if (game.turn() === 'b') {
+          paintMoveAbsolute(element.move, (-1)*numEval(element.evaluation));
+        }else{
+          paintMoveAbsolute(element.move, numEval(element.evaluation));
+        }
       }
     });
 
@@ -463,6 +468,23 @@ function displayAnalysis(analysis){
       });
     }
     displayComment(analysis.comment);
+}
+
+function numEval(evaluation){
+  var rval = evaluation
+  evaluation = '' + evaluation
+  if(evaluation.includes('#')){
+    rval = 10000
+    if(game.turn() == 'w'){rval = rval*(-1)}
+    if(evaluation.includes('-')){rval = rval*(-1)}
+  }
+  return rval
+}
+
+function flipTurn(turn){
+  var flip = 'w'
+  if(turn == 'w'){flip = 'b'}
+  return flip;
 }
 
 //server analysis treatment
