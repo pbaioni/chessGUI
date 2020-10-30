@@ -19,6 +19,7 @@ var drawingColor = null
 var isDrawing = false
 var drawStart
 var tempArrowWidth = 8
+var commentTimeout
 
 //chessboard configuration
 var config = {
@@ -371,9 +372,17 @@ function importGames() {
 //comment button and function
 $('#commentBtn').on('click', setComment)
 async function setComment() {
-    setPositionComment(game.fen(), $comment.val()).then(response => {
-      toggleCommentButton()
-    });
+  //stoppinh autosave in case of keyboard shortcut for saving comment
+  clearTimeout(commentTimeout)
+  setPositionComment(game.fen(), $comment.val()).then(response => {
+    toggleCommentButton();
+  });
+}
+
+//autosave comments
+function autoSave(){
+  commentTimeout = clearTimeout(commentTimeout)
+  commentTimeout = setTimeout(setComment, 2000)
 }
 
 //set preferences button and function
@@ -417,6 +426,11 @@ function enableInfluence(checkboxElem) {
 //********************* */
 
 function changePosition(previousFen, move, fen){
+
+  //canceling comment autosave if any
+  if(commentTimeout){
+    commentTimeout = clearTimeout(commentTimeout)
+  }
   //cleaning infos
   clearEval(boardFlipped)
   eraseCanvases()

@@ -31,8 +31,8 @@ function toggleOnlyPawnsBtn(onlyPawns){
 
 async function toggleCommentButton(){
     $commentBtn.css("background-color", 'green');
-    $commentBtn.html('Comment saved');
-    await sleep(1000)
+    $commentBtn.html('Saved');
+    await sleep(500)
     $commentBtn.css("background-color", '#2ba6cb');
     $commentBtn.html('Save Comment');
 }
