@@ -44,9 +44,13 @@ function showSettings(){
 }
 
 function saveSettings(){
+
     var depth = document.getElementById('defaultDepth').value
-    if(depth){
+    var regex = new RegExp("^[0-9]+$");
+
+    if(regex.test(depth)){
         properties.defaultAnalysisDepth = depth
+        console.log(properties.defaultAnalysisDepth)
     }
 
     $settingForm.hide()
