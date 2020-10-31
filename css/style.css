@@ -35,7 +35,9 @@ nav {
 }
 
 .rightnav {
+    position: relative;
     width: 400px;
+    padding-top: 12px;
 }
 
 article {
@@ -219,7 +221,7 @@ input[type=text], select {
 
   #settingDiv {
     position: absolute;
-    bottom: 50px;
+    bottom: 30px;
   }
 
 #pgnLabel {
