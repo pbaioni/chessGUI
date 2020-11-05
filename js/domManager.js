@@ -8,7 +8,9 @@ var $updateBtn = $('#updateBtn')
 var $importBtn = $('#importBtn')
 var $commentBtn = $('#commentBtn')
 var $settingForm = $('#settingForm')
+var $actionButtons = $('#actionbuttons')
 var $settingImg = $('#settingImg')
+var $rightFooter = $('#rightfooter')
 var $analysisCb = $('#analysisCheckbox')
 var $influenceCb = $('#influenceCheckbox')
 var $pgn = $('#pgnLabel')
@@ -29,18 +31,22 @@ function toggleOnlyPawnsBtn(onlyPawns){
     }
 }
 
-async function toggleCommentButton(){
-    $commentBtn.css("background-color", 'green');
-    $commentBtn.html('Saved');
-    await sleep(500)
-    $commentBtn.css("background-color", '#2ba6cb');
-    $commentBtn.html('Save Comment');
-}
-
 function showSettings(){
-    $settingImg.hide()
+    $pgn.hide()
     document.getElementById('defaultDepth').value = properties.defaultAnalysisDepth
     $settingForm.show()
+}
+
+function showActions(){
+    $rightFooter.hide()
+    $pgn.hide()
+    $actionButtons.show()
+}
+
+function hideActions(){
+    $rightFooter.show()
+    $pgn.show()
+    $actionButtons.hide()
 }
 
 function saveSettings(){
@@ -53,7 +59,7 @@ function saveSettings(){
     }
 
     $settingForm.hide()
-    $settingImg.show()
+    $pgn.show()
 
 }
 

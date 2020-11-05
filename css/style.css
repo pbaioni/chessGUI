@@ -106,6 +106,7 @@ input[type=text], select {
 
 #actionbuttons {
     display: none;
+    text-align: center;
 }
 .action-button button, .blue-button {
     background: #2ba6cb;
@@ -121,7 +122,7 @@ input[type=text], select {
     padding: 10px 10px;
     text-align: center;
     text-decoration: none;
-    width: 80%;
+    width: 60%;
 }
 
 #analysisCheckbox, #influenceCheckbox, #drawingCheckbox{

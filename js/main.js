@@ -241,16 +241,18 @@ function forward(){
 //start position button and function
 $('#startBtn').on('click', start)
 async function start () {
-    board.start()
-    game = new Chess()
-    setPgnLabel('PGN:')
-    displayComment('')
-    changePosition(null, null, game.fen())
+  hideActions()
+  board.start()
+  game = new Chess()
+  setPgnLabel('PGN:')
+  displayComment('')
+  changePosition(null, null, game.fen())
 }
 
 //flip board button and function
 $('#flipBtn').on('click', flip)
 function flip () {
+  hideActions()
   eraseDrawings()
   board.flip()
   boardFlipped = boardFlipped ? false : true;
@@ -260,6 +262,7 @@ function flip () {
 //button and function to show only the pawn structure on the board
 $('#onlyPawnsBtn').on('click', showPawnStructure)
 function showPawnStructure () {
+  hideActions()
   if(onlyPawns){
     board.position(game.fen())
     changePosition(null, null, game.fen())
@@ -277,6 +280,7 @@ function showPawnStructure () {
 //delete line button and function
 $('#deleteBtn').on('click', deleteFromHere)
 function deleteFromHere() {
+  hideActions()
   var line = window.prompt("Enter line to delete in uci format (ex: g1f3): ");
   if(line){
     deleteLine(game.fen(), line).then(response => changePosition(null, null, game.fen()));
@@ -285,6 +289,7 @@ function deleteFromHere() {
 
 $('#updateBtn').on('click', update)
 function update() {
+  hideActions()
   if(!analysisPending){
   var depth = window.prompt("Enter new depth (ex: 28): ");
     if(depth){
@@ -327,6 +332,7 @@ function update() {
 //import openings from games
 $('#importBtn').on('click', importGames)
 function importGames() {
+  hideActions()
   if(!analysisPending){
     var openingDepth = window.prompt("Enter the opening depth to import (ex: 4): ");
     if(openingDepth != null){

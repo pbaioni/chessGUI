@@ -27,43 +27,44 @@
         <nav class='rightnav'>
           <textarea id="comment" name="comment" oninput="autoSave();"></textarea>
           <div id="pgnLabel">PGN: </div>
-            <div id="rightfooter">
-              <div id="analysis">
-                <label id="evaluation"></label>
-                <div id="serverStatus">Waiting for<br>server connection</div>
-              </div>
-              <div id="actionsDiv">
-                <img id="settingImg" src=img/icons/setting.png onclick=showSettings() alt=”settingImage”></img>
-                <div id="settingForm">
-                  <label for="defaultDepth">Default stockfish analyse depth</label>
-                  <input type="text" id="defaultDepth" name="depth">
-                  <div><input type="checkbox" id="analysisCheckbox" name="autoanalysis" checked onchange="enableAnalysis(this)"/>
-                    <label for="autoanalysis">Enable analysis</label></div>
-                  <div><input type="checkbox" id="drawingCheckbox" name="showdrawings" checked onchange="enableDrawings(this)"/>
-                    <label for="showdrawings">Enable drawings</label></div>
-                  <div><input type="checkbox" id="influenceCheckbox" name="showinfluence" unchecked onchange="enableInfluence(this)"/>
-                    <label for="showinfluence">Show influence</label></div>
-                  <div class="action-button"><button id="settingBtn">Done!</button></div>
-              </div>
-              <img id="actionImg" src=img/icons/action.png onclick=showSettings() alt=”actionImage”></img>
-                <div id="actionbuttons" class="action-button">
-                  <div><button id="startBtn">Start Position</button></div>
-                  <div><button id="flipBtn">Flip Board</button></div>
-                  <div><button id="onlyPawnsBtn">Pawn Structure</button></div>
-                  <div><button id="deleteBtn">Delete Line</button></div>
-                  <div><button id="updateBtn">Update Line Depth</button></div>
-                  <div><button id="importBtn">Import Games</button></div>
-                </div>
-              </div>
+          <div id="settingForm">
+            <label for="defaultDepth">Default stockfish analyse depth</label>
+            <input type="text" id="defaultDepth" name="depth">
+            <div><input type="checkbox" id="analysisCheckbox" name="autoanalysis" checked onchange="enableAnalysis(this)"/>
+              <label for="autoanalysis">Enable analysis</label></div>
+            <div><input type="checkbox" id="drawingCheckbox" name="showdrawings" checked onchange="enableDrawings(this)"/>
+              <label for="showdrawings">Enable drawings</label></div>
+            <div><input type="checkbox" id="influenceCheckbox" name="showinfluence" unchecked onchange="enableInfluence(this)"/>
+              <label for="showinfluence">Show influence</label></div>
+            <div class="action-button"><button id="settingBtn">Done!</button></div>
+          </div>
+          <div id="actionbuttons" class="action-button">
+            <div><button id="startBtn">Start Position</button></div>
+            <div><button id="flipBtn">Flip Board</button></div>
+            <div><button id="onlyPawnsBtn">Pawn Structure</button></div>
+            <div><button id="deleteBtn">Delete Line</button></div>
+            <div><button id="updateBtn">Update Line Depth</button></div>
+            <div><button id="importBtn">Import Games</button></div>
+          </div>
+          <div id="rightfooter">
+            <div id="analysis">
+              <label id="evaluation"></label>
+              <div id="serverStatus">Waiting for<br>server connection</div>
             </div>
+            <div id="actionsDiv">
+              <img id="settingImg" src=img/icons/setting.png onclick=showSettings() alt=”settingImage”></img>
+            <img id="actionImg" src=img/icons/action.png onclick=showActions() alt=”actionImage”></img>
+            </div>
+          </div>
         </nav>
-    </section>
-  </div>
+      </section>
+    </div>
 
   <script src="js/graphics.js"></script>
   <script src="js/serverService.js"></script>
   <script src="js/domManager.js"></script>
   <script src="js/main.js"></script>
+  
   </body>
 </html>
 
