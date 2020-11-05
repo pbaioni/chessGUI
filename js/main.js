@@ -50,6 +50,12 @@ document.onkeydown = function(evt) {
     if(evt.key == 'ArrowLeft'){back()};
     if(evt.key == 'ArrowRight'){forward()};
     if(evt.ctrlKey & evt.key == 'Enter'){setComment()};
+    if(evt.ctrlKey & evt.key == 's'){start()};
+    if(evt.ctrlKey & evt.key == 'f'){flip()};
+    if(evt.ctrlKey & evt.key == 'p'){showPawnStructure() };
+    if(evt.ctrlKey & evt.key == 'd'){deleteFromHere()};
+    if(evt.ctrlKey & evt.key == 'u'){update()};
+    if(evt.ctrlKey & evt.key == 'i'){importGames()};
     if(evt.key == 'r'){drawingColor = '#ff0000'}
     if(evt.key == 'g'){drawingColor = '#00ff00'}
     if(evt.key == 'b'){drawingColor = '#0000ff'}
@@ -261,7 +267,7 @@ function flip () {
 
 //button and function to show only the pawn structure on the board
 $('#onlyPawnsBtn').on('click', showPawnStructure)
-function showPawnStructure () {
+function showPawnStructure() {
   hideActions()
   if(onlyPawns){
     board.position(game.fen())
