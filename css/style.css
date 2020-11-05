@@ -131,14 +131,18 @@ input[type=text], select {
     width: 60%;
 }
 
+#settingWrapper{
+    width: 100%;
+    margin: 10px;
+}
+
 #settingForm {
     display: none;
-    margin: 10px;
+    margin: 0 auto;
     width: 80%;
     border-radius: 5px;
     background-color: #f0f0f0;
     padding: 10px;
-    bottom: 0px;
 }
 
 #analysisCheckbox, #influenceCheckbox, #drawingCheckbox{

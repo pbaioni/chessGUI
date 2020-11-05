@@ -27,16 +27,18 @@
         <nav class='rightnav'>
           <textarea id="comment" name="comment" oninput="autoSave();"></textarea>
           <div id="pgnLabel">PGN: </div>
-          <div id="settingForm">
-            <label for="defaultDepth">Default stockfish analyse depth</label>
-            <input type="text" id="defaultDepth" name="depth">
-            <div><input type="checkbox" id="analysisCheckbox" name="autoanalysis" checked onchange="enableAnalysis(this)"/>
-              <label for="autoanalysis">Enable analysis</label></div>
-            <div><input type="checkbox" id="drawingCheckbox" name="showdrawings" checked onchange="enableDrawings(this)"/>
-              <label for="showdrawings">Enable drawings</label></div>
-            <div><input type="checkbox" id="influenceCheckbox" name="showinfluence" unchecked onchange="enableInfluence(this)"/>
-              <label for="showinfluence">Show influence</label></div>
-            <div class="action-button"><button id="settingBtn">Done!</button></div>
+          <div id="settingWrapper">
+            <div id="settingForm">
+              <label for="defaultDepth">Default stockfish analyse depth</label>
+              <input type="text" id="defaultDepth" name="depth">
+              <div><input type="checkbox" id="analysisCheckbox" name="autoanalysis" checked onchange="enableAnalysis(this)"/>
+                <label for="autoanalysis">Enable analysis</label></div>
+              <div><input type="checkbox" id="drawingCheckbox" name="showdrawings" checked onchange="enableDrawings(this)"/>
+                <label for="showdrawings">Enable drawings</label></div>
+              <div><input type="checkbox" id="influenceCheckbox" name="showinfluence" unchecked onchange="enableInfluence(this)"/>
+                <label for="showinfluence">Show influence</label></div>
+              <div class="action-button"><button id="settingBtn">Done!</button></div>
+            </div>
           </div>
           <div id="actionbuttons" class="action-button">
             <div><button id="startBtn">Start Position (Ctrl + S)</button></div>
