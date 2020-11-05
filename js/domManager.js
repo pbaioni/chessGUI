@@ -30,8 +30,8 @@ async function toggleCommentBackground(typing){
     if(typing){
         $comment.css("background-color", "lightyellow")
     }else{
-        $comment.css("background-color", "darkgreen")
-        await sleep(500)
+        $comment.css("background-color", "green")
+        await sleep(250)
         $comment.css("background-color", "#ddd")
     }
 }
