@@ -6,6 +6,7 @@ body {
 }
 
 .mainPage {
+    margin: 0 auto;
     height: 674px;
     width: 1150px;
 	background-color: black;
