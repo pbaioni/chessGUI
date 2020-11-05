@@ -36,31 +36,32 @@ function toggleOnlyPawnsBtn(onlyPawns){
 
 function showSettings(){
     if(!settingsShown){
+        hideActions()
         $pgn.hide()
         document.getElementById('defaultDepth').value = properties.defaultAnalysisDepth
         $settingForm.show()
         settingsShown = true;
     }else{
         saveSettings()
-        settingsShown = false;
     }
 
 }
 
 function showActions(){
     if(!actionsShown){
+        saveSettings()
         $pgn.hide()
         $actionButtons.show()
         actionsShown = true;
     }else{
         hideActions()
-        actionsShown = false;
     }
 }
 
 function hideActions(){
     $pgn.show()
     $actionButtons.hide()
+    actionsShown = false;
 }
 
 function saveSettings(){
@@ -74,6 +75,7 @@ function saveSettings(){
 
     $settingForm.hide()
     $pgn.show()
+    settingsShown = false;
 
 }
 
