@@ -58,7 +58,7 @@ article {
     border: 2px solid #888888;
     width: 16px;
     height: 640px;
-    margin: 15px 0px 10px 25px;
+    margin: 15px 0px 10px 40px;
 }
 #progressCanvas {
     position: absolute; 
@@ -78,7 +78,6 @@ nav {
 
 textarea {
     margin-top: 15px;
-    margin-left: 5px;
     width: 95%;
     height: 35%;
     padding: 5px;
@@ -106,7 +105,7 @@ input[type=text], select {
 }
 
 #pgnLabel {
-    margin: 10px;
+    margin-top: 10px;
     color: #cccccc;
 }
 
