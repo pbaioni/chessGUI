@@ -26,6 +26,16 @@ function displayComment(comment){
     $comment.val(comment)
 }
 
+async function toggleCommentBackground(typing){
+    if(typing){
+        $comment.css("background-color", "lightyellow")
+    }else{
+        $comment.css("background-color", "lightgreen")
+        await sleep(500)
+        $comment.css("background-color", "#ddd")
+    }
+}
+
 function toggleOnlyPawnsBtn(onlyPawns){
     if(onlyPawns){
         $onlyPawnsBtn.html('Pawn Structure')

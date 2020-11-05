@@ -382,17 +382,18 @@ function importGames() {
 }
 
 //comment button and function
-$('#commentBtn').on('click', setComment)
 async function setComment() {
   //stopping autosave in case of keyboard shortcut for saving comment
   clearTimeout(commentTimeout)
+  
   setPositionComment(game.fen(), $comment.val()).then(response => {
-    toggleCommentButton();
+    toggleCommentBackground(false);
   });
 }
 
 //autosave comments
 function autoSave(){
+  toggleCommentBackground(true)
   commentTimeout = clearTimeout(commentTimeout)
   commentTimeout = setTimeout(setComment, 2000)
 }

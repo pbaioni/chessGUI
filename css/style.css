@@ -94,17 +94,6 @@ textarea {
     background: #dddddd;
 }
 
-input[type=text], select {
-    width: 100%;
-    height: 10%;
-    padding: 10px 10px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
 #pgnLabel {
     margin-top: 10px;
     color: #cccccc;
@@ -145,6 +134,17 @@ input[type=text], select {
     border-radius: 5px;
     background-color: #f0f0f0;
     padding: 10px;
+}
+
+input[type=text], select {
+    width: 100%;
+    height: 10%;
+    padding: 10px 10px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
 #analysisCheckbox, #influenceCheckbox, #drawingCheckbox{
