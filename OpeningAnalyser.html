@@ -14,50 +14,48 @@
   <body>
     <div class="mainPage">
       <section>
-        <nav class='leftnav'>
-          <div id="leftbuttons" class="action-button">
-            <div><button id="startBtn">Start Position</button></div>
-            <div><button id="flipBtn">Flip Board</button></div>
-            <div><button id="onlyPawnsBtn">Pawn Structure</button></div>
-            <div><button id="deleteBtn">Delete Line</button></div>
-            <div><button id="updateBtn">Update Line Depth</button></div>
-            <div><button id="importBtn">Import Games</button></div>
-            <div><input type="checkbox" id="analysisCheckbox" name="autoanalysis" checked onchange="enableAnalysis(this)"/>
-              <label for="autoanalysis">Enable analysis</label></div>
-            <div><input type="checkbox" id="drawingCheckbox" name="showdrawings" checked onchange="enableDrawings(this)"/>
-              <label for="showdrawings">Drawings</label></div>
-            <div><input type="checkbox" id="influenceCheckbox" name="showinfluence" unchecked onchange="enableInfluence(this)"/>
-              <label for="showinfluence">Show influence</label></div>
-            <label id="evaluation"></label>
-            <div id="serverStatus">Waiting for<br>server connection</div>
-          </div>
-        </nav>
         <div id="evaluationBar" class="progressBar" ><canvas id="progressCanvas" width="16" height="640"></canvas></div>
         <article>
           <div id="board_wrapper">
-            <canvas id="arrowCanvas" width="640" height="640" ></canvas>
-            <canvas id="contourCanvas" width="640" height="640" ></canvas>
-            <canvas id="tempCanvas" width="640" height="640" ></canvas>
-            <canvas id="drawingCanvas" width="640" height="640" ></canvas>
+            <canvas id="arrowCanvas" width="644" height="644" ></canvas>
+            <canvas id="contourCanvas" width="644" height="644" ></canvas>
+            <canvas id="tempCanvas" width="644" height="644" ></canvas>
+            <canvas id="drawingCanvas" width="644" height="644" ></canvas>
             <div id="board" style="width: 644px; height: 644px;"></div>
-          </div>
-          <div id="footer">
-            <div id="pgnLabel">PGN: </div>
           </div>
         </article>
         <nav class='rightnav'>
           <textarea id="comment" name="comment" oninput="autoSave();"></textarea>
-          <div id="rightbuttons" class="action-button">
-            <div><button id="commentBtn">Save Comment</button></div>
-            <div id="settingDiv">
-              <img id="settingImg" src=img/icons/setting.png onclick=showSettings() alt=”image”></img>
-              <div id="settingForm">
+          <div id="pgnLabel">PGN: </div>
+            <div id="rightfooter">
+              <div id="analysis">
+                <label id="evaluation"></label>
+                <div id="serverStatus">Waiting for<br>server connection</div>
+              </div>
+              <div id="actionsDiv">
+                <img id="settingImg" src=img/icons/setting.png onclick=showSettings() alt=”settingImage”></img>
+                <div id="settingForm">
                   <label for="defaultDepth">Default stockfish analyse depth</label>
                   <input type="text" id="defaultDepth" name="depth">
-                  <div><button id="settingBtn">Set</button></div>
+                  <div><input type="checkbox" id="analysisCheckbox" name="autoanalysis" checked onchange="enableAnalysis(this)"/>
+                    <label for="autoanalysis">Enable analysis</label></div>
+                  <div><input type="checkbox" id="drawingCheckbox" name="showdrawings" checked onchange="enableDrawings(this)"/>
+                    <label for="showdrawings">Enable drawings</label></div>
+                  <div><input type="checkbox" id="influenceCheckbox" name="showinfluence" unchecked onchange="enableInfluence(this)"/>
+                    <label for="showinfluence">Show influence</label></div>
+                  <div class="action-button"><button id="settingBtn">Done!</button></div>
+              </div>
+              <img id="actionImg" src=img/icons/action.png onclick=showSettings() alt=”actionImage”></img>
+                <div id="actionbuttons" class="action-button">
+                  <div><button id="startBtn">Start Position</button></div>
+                  <div><button id="flipBtn">Flip Board</button></div>
+                  <div><button id="onlyPawnsBtn">Pawn Structure</button></div>
+                  <div><button id="deleteBtn">Delete Line</button></div>
+                  <div><button id="updateBtn">Update Line Depth</button></div>
+                  <div><button id="importBtn">Import Games</button></div>
+                </div>
               </div>
             </div>
-          </div>
         </nav>
     </section>
   </div>

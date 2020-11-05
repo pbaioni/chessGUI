@@ -6,14 +6,14 @@ body {
 }
 
 .mainPage {
-    height: 700px;
-    width: 1300px;
+    height: 674px;
+    width: 1150px;
 	background-color: black;
 }
 
 section {
     display: flex;
-    height: 680px;
+    height: 674px;
 }
 
 section:after {
@@ -22,60 +22,91 @@ section:after {
     clear: both;
 }
 
-nav {
-    float: left;
-    height: 100%;
-    padding: 5px;
-}
-
-.leftnav {
-    position: relative;
-    width: 200px;
-    padding-top: 12px;
-}
-
-.rightnav {
-    position: relative;
-    width: 400px;
-    padding-top: 12px;
-}
-
 article {
     float: left;
     text-align: center;
-    padding: 5px;
-    height: 100%;
-    width: 680px;
-}
-
-#footer{
-    position: relative;
-    top: 660px;
-    left: 15px;
-
+    margin: 10px 20px 10px 10px;
+    height: 654px;
+    width: 654px;
 }
 
 #board_wrapper{
     position: relative;
-    margin: 5px;
+    height: 654px;
+    width: 654px;
 }
 
 #board{
     position: absolute; 
-    top: 10px; 
-    left: 0px;
+    margin: 5px;
     z-index: 0;
 }
 
 #arrowCanvas, #contourCanvas, #drawingCanvas, #tempCanvas {
     position: absolute; 
-    top: 12px; 
+    margin: 5px;
+    top: 2px;
     left: 2px;
     opacity: 1;
     z-index: 1;
     pointer-events: none
 }
 
+.progressBar {
+    position: relative;
+    background: #000;
+    border: 2px solid #888888;
+    width: 16px;
+    height: 640px;
+    margin: 15px 0px 10px 25px;
+}
+#progressCanvas {
+    position: absolute; 
+    top: 0px; 
+    left: 0px;
+}
+
+nav {
+    height: 100%;
+}
+
+.rightnav {
+    position: relative;
+    width: 400px;
+    height: 100%;
+}
+
+textarea {
+    margin-top: 15px;
+    width: 100%;
+    height: 220px;
+    padding: 5px;
+    font-family: Verdana, sans-serif;
+    font-size: 12px;
+    font-style: italic;
+    color: black;
+    letter-spacing: 2px;
+    line-height: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px #999;
+    background: #dddddd;
+}
+
+input[type=text], select {
+    width: 100%;
+    height: 10%;
+    padding: 10px 10px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#actionbuttons {
+    display: none;
+}
 .action-button button, .blue-button {
     background: #2ba6cb;
     border-radius: 3px;
@@ -103,33 +134,15 @@ label {
     font-size: 16px;
 }
 
-.progressBar {
-    position: relative;
-    background: #000;
-    border: 2px solid #888888;
-    top: 22px;
-    width: 16px;
-    height: 640px;
-}
-#progressCanvas {
-    position: absolute; 
-    top: 0px; 
-    left: 0px;
-}
-
 #evaluation {
-    position: absolute;
-    bottom: 90px;
-    left: 10px;
+    bottom: 0px;
     color: #fff;
     display: inline-flex;
-    margin: 10px 10px 10px 10px;
-    outline: none;
     padding: 10px 10px;
     font-size: 16px;
     text-align: center;
     text-decoration: none;
-    width: 70%;
+    width: 80%;
     height: 20px;
 }
 
@@ -150,68 +163,49 @@ label {
 
 #serverStatus{
     position: absolute;
-    bottom: 25px;
-    left: 10px;
+    bottom: 0px;
     background: red;
     border-radius: 3px;
     border: 2px solid white;
     color: #fff;
-    display: inline-block;
     font-size: 14px;
     font-weight: 600;
-    margin: 10px 10px 10px 10px;
     outline: none;
     padding: 10px 10px;
     text-align: center;
     text-decoration: none;
-    width: 70%;
+    width: 80%;
     height: 40px;
 }
 
-textarea {
-    margin-top: 15px;
-    width: 100%;
-    height: 220px;
-    padding: 5px;
-    font-family: Verdana, sans-serif;
-    font-size: 12px;
-    font-style: italic;
-    color: black;
-    letter-spacing: 2px;
-    line-height: 14px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    box-shadow: 1px 1px 1px #999;
-    background: #dddddd;
-}
+  #actionsDiv {
+    width: 40%;
+    height: 100%;
+    position: relative;
+  }
 
-#commentBtn {
-    width: 150px;
-    margin-left: 0;
-}
-
-#settingImg{
-    float: left;
+  #settingImg{
+    position: absolute;
+    left: 100px;
+    float: right;
+    bottom: 0px;
     width: 40px;
     height: 40px; 
     background: black;
-    background-image: url(../img/icons/setting.png);
 }
 
-input[type=text], select {
-    width: 100%;
-    height: 10%;
-    padding: 10px 10px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  #settingForm {
-    display: none;
+#actionImg{
+    position: absolute;
+    left: 20px;
     float: left;
+    bottom: 0px;
+    width: 40px;
+    height: 40px; 
+    background: black;
+}
+
+#settingForm {
+    display: none;
     width: 80%;
     border-radius: 5px;
     background-color: #f0f0f0;
@@ -219,15 +213,25 @@ input[type=text], select {
     bottom: 0px;
   }
 
-  #settingDiv {
-    position: absolute;
-    bottom: 30px;
-  }
-
 #pgnLabel {
-    margin-top: 10px;
-    float: left;
+    margin: 10px;
     color: #cccccc;
+}
+
+#rightfooter {
+    position: absolute;
+    bottom: 0px;
+    display: inline-flex;
+    padding: 0px 0px 15px 0px;
+    width: 100%;
+    height: 100px;
+}
+
+#analysis {
+    position: relative;
+    text-align: left;
+    width: 60%;
+    height: 100%;
 }
 
 
