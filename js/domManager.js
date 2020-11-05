@@ -15,6 +15,9 @@ var $analysisCb = $('#analysisCheckbox')
 var $influenceCb = $('#influenceCheckbox')
 var $pgn = $('#pgnLabel')
 
+var actionsShown = false;
+var settingsShown = false;
+
 function setPgnLabel(label){
     $pgn.html(label)
 }
@@ -32,19 +35,30 @@ function toggleOnlyPawnsBtn(onlyPawns){
 }
 
 function showSettings(){
-    $pgn.hide()
-    document.getElementById('defaultDepth').value = properties.defaultAnalysisDepth
-    $settingForm.show()
+    if(!settingsShown){
+        $pgn.hide()
+        document.getElementById('defaultDepth').value = properties.defaultAnalysisDepth
+        $settingForm.show()
+        settingsShown = true;
+    }else{
+        saveSettings()
+        settingsShown = false;
+    }
+
 }
 
 function showActions(){
-    $rightFooter.hide()
-    $pgn.hide()
-    $actionButtons.show()
+    if(!actionsShown){
+        $pgn.hide()
+        $actionButtons.show()
+        actionsShown = true;
+    }else{
+        hideActions()
+        actionsShown = false;
+    }
 }
 
 function hideActions(){
-    $rightFooter.show()
     $pgn.show()
     $actionButtons.hide()
 }
