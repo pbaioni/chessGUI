@@ -105,7 +105,8 @@ textarea {
     text-align: center;
     margin: 10px;
 }
-.action-button button, .blue-button {
+
+.blue-button {
     background: #2ba6cb;
     border-radius: 3px;
     border: 1px solid #1e728c;
@@ -116,7 +117,7 @@ textarea {
     font-weight: 600;
     margin: 5px;
     outline: none;
-    padding: 5px;
+    padding: 6px;
     text-align: center;
     text-decoration: none;
     width: 60%;
