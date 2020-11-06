@@ -20,6 +20,7 @@ var isDrawing = false
 var drawStart
 var tempArrowWidth = 8
 var commentTimeout
+var currentAnalysis
 
 //chessboard configuration
 var config = {
@@ -56,6 +57,7 @@ document.onkeydown = function(evt) {
     if(evt.ctrlKey & evt.key == 'd'){deleteFromHere()};
     if(evt.ctrlKey & evt.key == 'u'){update()};
     if(evt.ctrlKey & evt.key == 'i'){importGames()};
+    if(evt.key == ' '){hitBestMove()};
     if(evt.key == 'r'){drawingColor = '#ff0000'}
     if(evt.key == 'g'){drawingColor = '#00ff00'}
     if(evt.key == 'b'){drawingColor = '#0000ff'}
@@ -460,6 +462,7 @@ function changePosition(previousFen, move, fen){
     serverWaiting()
     getAnalysis(previousFen, move, fen, analysisEnabled).then(analysis => {
       if(analysis){
+        currentAnalysis = analysis
         displayAnalysis(analysis)
         analysisPending = false; 
         serverReady();
@@ -503,6 +506,14 @@ function displayAnalysis(analysis){
       });
     }
     displayComment(analysis.comment);
+}
+
+function hitBestMove(){
+  var bestMove = currentAnalysis.bestMove
+  if(bestMove){
+    onDrop(bestMove.substring(0, 2), bestMove.substring(2, 4))
+    onSnapEnd()
+  }
 }
 
 function numEval(evaluation){
