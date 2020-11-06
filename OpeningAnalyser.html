@@ -14,7 +14,7 @@
   <body>
     <div class="mainPage">
       <section>
-        <div id="evaluationBar" class="progressBar" ><canvas id="progressCanvas" width="16" height="640"></canvas></div>
+        <div id="evaluationBar" class="progressBar"  title="Evaluation bar"><canvas id="progressCanvas" width="16" height="640"></canvas></div>
         <article>
           <div id="board_wrapper">
             <canvas id="arrowCanvas" width="644" height="644" ></canvas>
@@ -25,8 +25,8 @@
           </div>
         </article>
         <nav class='rightnav'>
-          <textarea id="comment" name="comment" oninput="autoSave();"></textarea>
-          <div id="pgnLabel">PGN: </div>
+          <textarea id="comment" name="comment"  title="Comment area" oninput="autoSave();"></textarea>
+          <div id="pgnLabel"  title="Pgn label">PGN: </div>
           <div id="settingWrapper">
             <div id="settingForm">
               <label for="defaultDepth">Default stockfish analyse depth</label>
@@ -50,12 +50,12 @@
           </div>
           <div id="rightfooter">
             <div id="analysis">
-              <label id="evaluation"></label>
-              <div id="serverStatus">Waiting for<br>server connection</div>
+              <label id="evaluation"  title="Position evaluation"></label>
+              <div id="serverStatus"  title="Server status">Waiting for<br>server connection</div>
             </div>
             <div id="actionsDiv">
-              <img id="settingImg" src=img/icons/setting.png onclick=showSettings() alt=”settingImage”></img>
-            <img id="actionImg" src=img/icons/action.png onclick=showActions() alt=”actionImage”></img>
+              <img id="settingImg" src=img/icons/setting.png onclick=showSettings() alt=”settingImage” title="Settings"></img>
+             <img id="actionImg" src=img/icons/action.png onclick=showActions() alt=”actionImage” title="Actions"></img>
             </div>
           </div>
         </nav>
