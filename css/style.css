@@ -72,15 +72,22 @@ nav {
 }
 
 .rightnav {
-    position: relative;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 400px;
     height: 100%;
 }
 
+#rightHeader {
+    width: 100%;
+    height: 50%;
+}
+
 textarea {
     margin-top: 15px;
-    width: 95%;
-    height: 35%;
+    width: 97%;
+    height: 70%;
     padding: 5px;
     font-family: Verdana, sans-serif;
     font-size: 12px;
@@ -95,15 +102,22 @@ textarea {
 }
 
 #pgnLabel {
+    height: 30%;
     margin-top: 10px;
     color: #cccccc;
 }
 
 #actionbuttons {
-    display: none;
-    width: 95%;
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100%;
+    height: 28%;
     text-align: center;
-    margin: 10px;
+}
+
+.buttonsRow {
+    display: flex;
+    flex-direction: row;
 }
 
 .blue-button {
@@ -111,38 +125,30 @@ textarea {
     border-radius: 3px;
     border: 1px solid #1e728c;
     color: #fff;
-    cursor: pointer;
-    display: inline-block;
     font-size: 14px;
     font-weight: 600;
     margin: 5px;
-    outline: none;
-    padding: 6px;
-    text-align: center;
-    text-decoration: none;
-    width: 60%;
-}
-
-#settingWrapper{
-    width: 95%;
-    margin: 10px;
+    padding: 8px;
+    width: 50%;
 }
 
 #settingForm {
-    display: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     margin: 0 auto;
     width: 80%;
+    height: 30%;
     border-radius: 5px;
     background-color: #f0f0f0;
-    padding: 10px;
+    padding: 8px;
 }
 
 input[type=text], select {
-    width: 100%;
+    width: 30%;
     height: 10%;
     padding: 10px 10px;
     margin: 8px 0;
-    display: inline-block;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
@@ -155,35 +161,33 @@ input[type=text], select {
 label {
     font-family:Verdana;
     color: #aaa;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 #rightfooter {
-    position: absolute;
-    bottom: 0px;
-    display: inline-flex;
+    display: flex;
     padding: 0px 0px 15px 0px;
     width: 100%;
-    height: 100px;
+    height: 15%;
 }
 
 #analysis {
-    position: relative;
-    text-align: left;
+    display: flex;
+    flex-direction: column;
     width: 60%;
     height: 100%;
 }
 
 #evaluation {
-    bottom: 0px;
     color: #fff;
-    display: inline-flex;
+    display: flex;
+    justify-content: space-between;
     padding: 10px 10px;
     font-size: 16px;
     text-align: center;
     text-decoration: none;
     width: 80%;
-    height: 20px;
+    height: 30%;
 }
 
 .bestmove{
@@ -202,8 +206,6 @@ label {
 }
 
 #serverStatus{
-    position: absolute;
-    bottom: 0px;
     background: red;
     border-radius: 3px;
     border: 2px solid white;
@@ -215,31 +217,25 @@ label {
     text-align: center;
     text-decoration: none;
     width: 80%;
-    height: 40px;
+    height: 70%;
 }
 
 #actionsDiv {
     width: 40%;
     height: 100%;
-    position: relative;
+    display: flex;
+    justify-content: space-evenly;
+    align-items:flex-end;
 }
 
 
 #actionImg{
-    position: absolute;
-    left: 20px;
-    float: left;
-    bottom: 0px;
     width: 40px;
     height: 40px; 
     background: black;
 }
 
 #settingImg{
-    position: absolute;
-    left: 100px;
-    float: right;
-    bottom: 0px;
     width: 40px;
     height: 40px; 
     background: black;

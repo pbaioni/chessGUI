@@ -25,10 +25,11 @@
           </div>
         </article>
         <nav class='rightnav'>
-          <textarea id="comment" name="comment"  title="Comment area" oninput="autoSave();"></textarea>
-          <div id="pgnLabel"  title="Pgn label">PGN: </div>
-          <div id="settingWrapper">
-            <div id="settingForm">
+          <div id="rightHeader">
+            <textarea id="comment" name="comment"  title="Comment area" oninput="autoSave();"></textarea>
+            <div id="pgnLabel"  title="Pgn label">PGN: </div>
+          </div>
+            <div id="settingForm" style="display: none;">
               <label for="defaultDepth">Default stockfish analyse depth</label>
               <input type="text" id="defaultDepth" name="depth">
               <div><input type="checkbox" id="analysisCheckbox" name="autoanalysis" checked onchange="enableAnalysis(this)"/>
@@ -37,16 +38,22 @@
                 <label for="showdrawings">Enable drawings</label></div>
               <div><input type="checkbox" id="influenceCheckbox" name="showinfluence" unchecked onchange="enableInfluence(this)"/>
                 <label for="showinfluence">Show influence</label></div>
-              <div><button id="settingBtn" class="blue-button">Done!</button></div>
+              <button id="settingBtn" class="blue-button">Done!</button>
             </div>
-          </div>
-          <div id="actionbuttons">
-            <div><button id="startBtn" class="blue-button">Start Position (Ctrl + S)</button></div>
-            <div><button id="flipBtn" class="blue-button">Flip Board (Ctrl + F)</button></div>
-            <div><button id="onlyPawnsBtn" class="blue-button">Pawn Structure  (Ctrl + P)</button></div>
-            <div><button id="deleteBtn" class="blue-button">Delete Line (Ctrl + D)</button></div>
-            <div><button id="updateBtn" class="blue-button">Update Line Depth (Ctrl + U)</button></div>
-            <div><button id="importBtn" class="blue-button">Import Games (Ctrl + I)</button></div>
+          <div id="actionbuttons" style="display: none;">
+            <div id="row1" class="buttonsRow">
+              <button id="onlyPawnsBtn" class="blue-button">Pawn Structure  (Ctrl + P)</button>
+              <button id="importBtn" class="blue-button">Import Games (Ctrl + I)</button>
+            </div>
+            <div id="row2" class="buttonsRow">
+              <button id="flipBtn" class="blue-button">Flip Board (Ctrl + F)</button>
+              <button id="updateBtn" class="blue-button">Update Depth (Ctrl + U)</button>
+            </div>
+            <div id="row3" class="buttonsRow">
+              <button id="startBtn" class="blue-button">Start Position (Ctrl + S)</button>
+              <button id="deleteBtn" class="blue-button">Delete Line (Ctrl + D)</button>
+            </div>
+
           </div>
           <div id="rightfooter">
             <div id="analysis">
@@ -54,8 +61,8 @@
               <div id="serverStatus"  title="Server status">Waiting for<br>server connection</div>
             </div>
             <div id="actionsDiv">
+              <img id="actionImg" src=img/icons/action.png onclick=showActions() alt=”actionImage” title="Actions"></img>
               <img id="settingImg" src=img/icons/setting.png onclick=showSettings() alt=”settingImage” title="Settings"></img>
-             <img id="actionImg" src=img/icons/action.png onclick=showActions() alt=”actionImage” title="Actions"></img>
             </div>
           </div>
         </nav>
