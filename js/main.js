@@ -8,19 +8,28 @@ var game = new Chess()
 //script variables
 var connected = false
 var firstConnection = true
+
 var analysisEnabled = true
-var influenceEnabled = false
-var drawingsEnabled = true
 var analysisPending = false
-var onlyPawns = false
-var boardFlipped = false
+var currentAnalysis
+var moveHistory = []
+var backedMoves = []
+
+var influenceEnabled = false
+
+var drawingsEnabled = true
 var mouseSquare
-var drawingColor = null
-var isDrawing = false
 var drawStart
 var tempArrowWidth = 8
+var drawingColor = null
+var isDrawing = false
+
+var onlyPawns = false
+
+var boardFlipped = false
+
 var commentTimeout
-var currentAnalysis
+
 
 //chessboard configuration
 var config = {
@@ -160,7 +169,14 @@ function onDrop (source, target) {
 
   //asking for position evaluation (server analysis)
     changePosition(previousFen, source+target, game.fen())
+    moveHistory.push(source + target)
 
+    if(source+target == backedMoves.pop()){
+      //DO NOTHING
+    }else{
+      //changing variant: clear backed moves
+      backedMoves = []
+    }
 }
 
 // update the board position after the piece snap
@@ -201,6 +217,13 @@ function getMousePos(canvas, evt) {
   };
 }
 
+function move(move){
+  if(move){
+    onDrop(move.substring(0, 2), move.substring(2, 4))
+    onSnapEnd()
+  }
+}
+
 function checkGameTermination () {
  
   var moveColor = 'White'
@@ -232,12 +255,24 @@ function back(){
     game.undo();
     onSnapEnd()
     changePosition(null, null, game.fen());
+    var backMove = moveHistory.pop()
+    if(backMove){
+      backedMoves.push(backMove)
+    }
+    console.log('moves: ' + moveHistory, 'back: ' + backedMoves)
   }
 }
 
 //on right arrow
 function forward(){
-  console.log('forward')
+  var forwardMove = backedMoves.pop()
+  if(forwardMove){
+
+    //restoring the move in backedMoves in order to be able to tell the difference between mouse and forward moves in onDrop method
+    backedMoves.push(forwardMove)
+
+    move(forwardMove)
+  }
 }
 
 //************************** */
@@ -252,6 +287,8 @@ async function start () {
   hideActions()
   board.start()
   game = new Chess()
+  moveHistory = []
+  backedMoves = []
   setPgnLabel('PGN:')
   displayComment('')
   changePosition(null, null, game.fen())
@@ -509,11 +546,8 @@ function displayAnalysis(analysis){
 }
 
 function hitBestMove(){
-  var bestMove = currentAnalysis.bestMove
-  if(bestMove){
-    onDrop(bestMove.substring(0, 2), bestMove.substring(2, 4))
-    onSnapEnd()
-  }
+
+    move(currentAnalysis.bestMove)
 }
 
 function numEval(evaluation){
