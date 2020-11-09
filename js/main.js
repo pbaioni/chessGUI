@@ -169,14 +169,15 @@ function onDrop (source, target) {
 
   //asking for position evaluation (server analysis)
     changePosition(previousFen, source+target, game.fen())
-    moveHistory.push(source + target)
 
-    if(source+target == backedMoves.pop()){
-      //DO NOTHING
-    }else{
-      //changing variant: clear backed moves
-      backedMoves = []
-    }
+  //updating move history
+  moveHistory.push(source + target)
+  if(source+target == backedMoves[backedMoves.length-1]){
+    backedMoves.pop()
+  }else{
+    //changing variant: clearing backed moves
+    backedMoves = []
+  }
 }
 
 // update the board position after the piece snap
@@ -255,24 +256,21 @@ function back(){
     game.undo();
     onSnapEnd()
     changePosition(null, null, game.fen());
-    var backMove = moveHistory.pop()
-    if(backMove){
-      backedMoves.push(backMove)
+
+    //updating move history
+    if(moveHistory[moveHistory.length-1]){
+      backedMoves.push(moveHistory.pop())
     }
-    console.log('moves: ' + moveHistory, 'back: ' + backedMoves)
   }
 }
 
 //on right arrow
 function forward(){
-  var forwardMove = backedMoves.pop()
-  if(forwardMove){
-
-    //restoring the move in backedMoves in order to be able to tell the difference between mouse and forward moves in onDrop method
-    backedMoves.push(forwardMove)
-
-    move(forwardMove)
-  }
+  if(!analysisPending){
+    if(backedMoves[backedMoves.length-1]){
+      move(backedMoves[backedMoves.length-1])
+    }
+  } 
 }
 
 //************************** */
