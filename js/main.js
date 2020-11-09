@@ -57,7 +57,7 @@ document.onkeydown = function(evt) {
     if(evt.ctrlKey & evt.key == 'd'){deleteFromHere()};
     if(evt.ctrlKey & evt.key == 'u'){update()};
     if(evt.ctrlKey & evt.key == 'i'){importGames()};
-    if(evt.key == ' '){hitBestMove()};
+    if(evt.ctrlKey & evt.key == ' '){hitBestMove()};
     if(evt.key == 'r'){drawingColor = '#ff0000'}
     if(evt.key == 'g'){drawingColor = '#00ff00'}
     if(evt.key == 'b'){drawingColor = '#0000ff'}
