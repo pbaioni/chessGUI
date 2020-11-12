@@ -283,6 +283,8 @@ $('#actionImg').on('click', function() {showForm('actionForm')})
 
 $('#settingImg').on('click', function() {showForm('settingForm')})
 
+$('#helpImg').on('click', function() {showForm('helpForm')})
+
 //start position button and function
 $('#startBtn').on('click', start)
 async function start () {

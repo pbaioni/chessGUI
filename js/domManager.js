@@ -16,6 +16,7 @@ var $pgn = $('#pgnLabel')
 
 var $settingForm = $('#settingForm')
 var $actionForm = $('#actionForm')
+var $helpForm = $('#helpForm')
 var $importForm = $('#importForm')
 var $deleteForm = $('#deleteForm')
 var $updateForm = $('#updateForm')
@@ -58,6 +59,7 @@ function hideForms(){
 
     $settingForm.hide()
     $actionForm.hide()
+    $helpForm.hide()
     $importForm.hide()
     $deleteForm.hide()
     $updateForm.hide()

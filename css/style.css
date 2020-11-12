@@ -229,13 +229,7 @@ label {
 }
 
 
-#actionImg{
-    width: 40px;
-    height: 40px; 
-    background: black;
-}
-
-#settingImg{
+#actionImg, #settingImg, #helpImg{
     width: 40px;
     height: 40px; 
     background: black;
