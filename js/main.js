@@ -57,24 +57,25 @@ var $board = $('#board')
 
 //BIND KEYBOARD EVENTS
 document.onkeydown = function(evt) {
-    if(evt.key == 'ArrowLeft'){back()};
-    if(evt.key == 'ArrowRight'){forward()};
-    if(evt.ctrlKey & evt.key == 'Enter'){setComment()};
-    if(evt.ctrlKey & evt.key == 's'){start()};
-    if(evt.ctrlKey & evt.key == 'f'){flip()};
-    if(evt.ctrlKey & evt.key == 'p'){showPawnStructure() };
-    if(evt.ctrlKey & evt.key == 'd'){deleteFromHere()};
-    if(evt.ctrlKey & evt.key == 'u'){update()};
-    if(evt.ctrlKey & evt.key == 'i'){importGames()};
-    if(evt.ctrlKey & evt.key == ' '){hitBestMove()};
-    if(evt.key == 'r'){drawingColor = '#ff0000'}
-    if(evt.key == 'g'){drawingColor = '#00ff00'}
-    if(evt.key == 'b'){drawingColor = '#0000ff'}
-    if(evt.key == 'y'){drawingColor = '#ffff00'}
-    if(evt.key == 'c'){drawingColor = '#00ffff'}
-    if(evt.key == 'w'){drawingColor = '#ffffff'}
-    if(evt.key == 'p'){drawingColor = '#9900dd'}
-    if(evt.key == 'k'){drawingColor = '#000000'}
+  if(evt.key == 'ArrowLeft'){back()};
+  if(evt.key == 'ArrowRight'){forward()};
+  if(evt.ctrlKey & evt.key == 'Enter'){setComment()};
+  if(evt.ctrlKey & evt.key == 's'){start()};
+  if(evt.ctrlKey & evt.key == 'f'){flip()};
+  if(evt.ctrlKey & evt.key == 'p'){showPawnStructure() };
+  if(evt.ctrlKey & evt.key == 'd'){showForm('deleteForm')};
+  if(evt.ctrlKey & evt.key == 'u'){showForm('updateForm')};
+  if(evt.ctrlKey & evt.key == 'i'){showForm('importForm')};
+  if(evt.key == 'Escape'){hideForms()};
+  if(evt.ctrlKey & evt.key == ' '){hitBestMove()};
+  if(evt.key == 'r'){drawingColor = '#ff0000'}
+  if(evt.key == 'g'){drawingColor = '#00ff00'}
+  if(evt.key == 'b'){drawingColor = '#0000ff'}
+  if(evt.key == 'y'){drawingColor = '#ffff00'}
+  if(evt.key == 'c'){drawingColor = '#00ffff'}
+  if(evt.key == 'w'){drawingColor = '#ffffff'}
+  if(evt.key == 'p'){drawingColor = '#9900dd'}
+  if(evt.key == 'k'){drawingColor = '#000000'}
 };
 
 document.onkeyup = function(evt) {
@@ -321,20 +322,21 @@ function showPawnStructure() {
 }
 
 //delete line button and function
-$('#deleteBtn').on('click', deleteFromHere)
+$('#deleteBtn').on('click', function() {showForm('deleteForm')})
+$('#launchDeleteBtn').on('click', deleteFromHere)
 function deleteFromHere() {
-  hideForms()
-  var line = window.prompt("Enter line to delete in uci format (ex: g1f3): ");
-  if(line){
-    deleteLine(game.fen(), line).then(response => changePosition(null, null, game.fen()));
+  var lineToDelete = getLineToDelete()
+  if(lineToDelete){
+    deleteLine(game.fen(), lineToDelete).then(response => changePosition(null, null, game.fen()));
   }
+  hideForm('deleteForm')
 }
 
-$('#updateBtn').on('click', update)
+$('#updateBtn').on('click', function() {showForm('updateForm')})
+$('#launchUpdateBtn').on('click', update)
 function update() {
-  hideForms()
   if(!analysisPending){
-  var depth = window.prompt("Enter new depth (ex: 28): ");
+  var depth = getUpdateDepth()
     if(depth){
       //running task requiring chess engine
       analysisPending = true
@@ -370,14 +372,39 @@ function update() {
     //recall analysis for current position
     changePosition(null, null, game.fen())
   }
+
+  hideForms()
+  
 }
 
 //import openings from games
-$('#importBtn').on('click', importGames)
+$('#importBtn').on('click', function() {showForm('importForm')})
+$('#launchImportBtn').on('click', importGames)
 function importGames() {
-  hideForms()
+
   if(!analysisPending){
-    showImport()
+    
+  //running task requiring chess engine
+  analysisPending = true
+
+  //avoiding conflicts
+  analysisEnabled  = false;
+
+  //managing GUI
+
+  disableAnalysisButtons()
+  toggleImportButton(true)
+  serverImporting()
+
+  //launch task
+  var importParameters = getImportParameters()
+  importPgn(importParameters.openingDepth, importParameters.depth).then(response => {serverReady(); analysisPending = false;
+    enableAnalysisButtons()
+    toggleImportButton(false)
+    serverReady()});
+
+  hideForms()
+
   }else{
     //stopping task
     stopTask()
@@ -393,34 +420,6 @@ function importGames() {
     //recall analysis for current position
     changePosition(null, null, game.fen())
   }
-}
-
-//set preferences button and function
-$('#launchImportBtn').on('click', showImport)
-
-function launchImport(importParameters){
-  
-  console.log(importParameters)
-
-  //running task requiring chess engine
-  analysisPending = true
-
-  //avoiding conflicts
-  analysisEnabled  = false;
-
-  //managing GUI
-
-  disableAnalysisButtons()
-  toggleImportButton(true)
-  serverImporting()
-
-  //getLichessGame(importParameters.gameId).then(data => console.log(data))
-
-  //launch task
-  importPgn(importParameters.openingDepth, importParameters.depth).then(response => {serverReady(); analysisPending = false;
-    enableAnalysisButtons()
-    toggleImportButton(false)
-    serverReady()});
 }
 
 //comment button and function

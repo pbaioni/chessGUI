@@ -7,18 +7,19 @@ var $onlyPawnsBtn = $('#onlyPawnsBtn')
 var $updateBtn = $('#updateBtn')
 var $importBtn = $('#importBtn')
 var $commentBtn = $('#commentBtn')
-var $settingForm = $('#settingForm')
-var $actionButtons = $('#actionbuttons')
+
 var $settingImg = $('#settingImg')
 var $rightFooter = $('#rightfooter')
 var $analysisCb = $('#analysisCheckbox')
 var $influenceCb = $('#influenceCheckbox')
 var $pgn = $('#pgnLabel')
-var $importForm = $('#importForm')
 
-var actionsShown = false;
-var settingsShown = false;
-var importShown = false;
+var $settingForm = $('#settingForm')
+var $actionForm = $('#actionForm')
+var $importForm = $('#importForm')
+var $deleteForm = $('#deleteForm')
+var $updateForm = $('#updateForm')
+var formShown = false;
 
 function setPgnLabel(label){
     $pgn.html(label)
@@ -46,14 +47,48 @@ function toggleOnlyPawnsBtn(onlyPawns){
     }
 }
 
-function showSettings(){
-    if(!settingsShown){
-        hideForms()
-        $pgn.hide()
-        document.getElementById('defaultDepth').value = properties.defaultAnalysisDepth
-        $settingForm.show()
-        settingsShown = true;
-    }else{
+function showForm(formId){
+
+    hideForms()
+    console.log('Showing form ' + formId)
+    $pgn.hide()
+    $('#'+formId).show()
+}
+
+function hideForm(formId){
+    console.log('Hiding form ' + formId)
+    $('#'+formId).hide()
+    $pgn.show()
+}
+
+function hideForms(){
+    console.log('Hiding all forms')
+    $settingForm.hide()
+    $actionForm.hide()
+    $importForm.hide()
+    $deleteForm.hide()
+    $updateForm.hide()
+}
+
+function getLineToDelete(){
+    var lineToDelete = document.getElementById('lineToDelete').value
+    return lineToDelete
+}
+
+function getUpdateDepth(){
+    var updateDepth = document.getElementById('updateDepth').value
+    return updateDepth
+}
+
+function getImportParameters(){
+    var importParameters = {}
+    importParameters.openingDepth = document.getElementById('openingDepth').value
+    importParameters.depth = document.getElementById('importDepth').value
+    return importParameters
+}
+
+function getSettings(){
+
         var depth = document.getElementById('defaultDepth').value
         var regex = new RegExp("^[0-9]+$");
     
@@ -64,48 +99,9 @@ function showSettings(){
         $settingForm.hide()
         $pgn.show()
         settingsShown = false;
-    }
+
 }
 
-function showActions(){
-    if(!actionsShown){
-        hideForms()
-        $pgn.hide()
-        $actionButtons.show()
-        actionsShown = true;
-    }else{
-        $pgn.show()
-        $actionButtons.hide()
-        actionsShown = false;
-    }
-}
-
-function showImport(){
-    if(!importShown){
-        hideForms()
-        $pgn.hide()
-        $importForm.show()
-        importShown = true;
-        console.log('show import')
-    }else{
-        var importParameters = {}
-        importParameters.openingDepth = document.getElementById('openingDepth').value
-        importParameters.depth = document.getElementById('importDepth').value
-        $pgn.show()
-        $importForm.hide()
-        importShown = false;
-        launchImport(importParameters)
-    }
-}
-
-function hideForms(){
-    $settingForm.hide()
-    settingsShown = false
-    $actionButtons.hide()
-    actionsShown = false
-    $importForm.hide()
-    importShown = false
-}
 
 function toggleUpdateButton(inUse){
     if(inUse){

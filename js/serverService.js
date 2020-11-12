@@ -37,9 +37,6 @@ async function deleteLine(fen, move){
     body: JSON.stringify(parameters),
   })
   .then(response => response.json())
-  .then(data => {
-    alert(data.content);
-  })
   .catch((error) => {
     console.error('Error:', error);
   });
@@ -168,21 +165,6 @@ async function storeDrawing(fen, type, path, color){
   .catch((error) => {
     console.error('Error:', error);
   });
-}
-
-async function getLichessGame(gameId){
-
-  const basicRightsToken = 'v7imI5B7gKT4RF2X';
-  const fullRightsToken = 'kSVC39fHKxAft7jL'
-  var parameters = gameId
-  await fetch('https://lichess.org/api/account', {
-    method: 'GET',
-      headers: {
-        'Authorization': 'Bearer ' + fullRightsToken
-      }
-    })
-    .then(res => res.json())
-    .then(console.log);
 }
 
 async function testLink(){

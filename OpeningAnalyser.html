@@ -41,13 +41,23 @@
             <button id="settingBtn" class="blue-button">Done!</button>
           </div>
           <div id="importForm" style="display: none;">
-            <label for="openingDepth">Opening depth (moves)</label>
+            <label for="openingDepth">Opening depth</label>
             <input type="text" id="openingDepth" name="openingDepth">
             <label for="importDepth">Analysis depth</label>
             <input type="text" id="importDepth" name="importDepth">
             <button id="launchImportBtn" class="blue-button">Import</button>
           </div>
-          <div id="actionbuttons" style="display: none;">
+          <div id="deleteForm" style="display: none;">
+            <label for="lineToDelete">Line to delete:</label>
+            <input type="text" id="lineToDelete" name="lineToDelete">
+            <button id="launchDeleteBtn" class="blue-button">Delete</button>
+          </div>
+          <div id="updateForm" style="display: none;">
+            <label for="updateDepth">New line depth:</label>
+            <input type="text" id="updateDepth" name="updateDepth">
+            <button id="launchUpdateBtn" class="blue-button">Update line</button>
+          </div>
+          <div id="actionForm" style="display: none;">
             <div id="row1" class="buttonsRow">
               <button id="onlyPawnsBtn" class="blue-button">Pawn Structure  (Ctrl + P)</button>
               <button id="importBtn" class="blue-button">Import Games (Ctrl + I)</button>
