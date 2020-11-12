@@ -417,7 +417,7 @@ function launchImport(importParameters){
   //getLichessGame(importParameters.gameId).then(data => console.log(data))
 
   //launch task
-  importPgn(importParameters.openingDepth, importParameters.analysisDepth).then(response => {serverReady(); analysisPending = false;
+  importPgn(importParameters.openingDepth, importParameters.depth).then(response => {serverReady(); analysisPending = false;
     enableAnalysisButtons()
     toggleImportButton(false)
     serverReady()});
