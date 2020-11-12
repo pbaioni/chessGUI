@@ -283,7 +283,6 @@ $('#actionImg').on('click', function() {showForm('actionForm')})
 
 $('#settingImg').on('click', function() {showForm('settingForm')})
 
-
 //start position button and function
 $('#startBtn').on('click', start)
 async function start () {
@@ -333,7 +332,7 @@ function deleteFromHere() {
   if(lineToDelete){
     deleteLine(game.fen(), lineToDelete).then(response => changePosition(null, null, game.fen()));
   }
-  hideForm('deleteForm')
+  hideForms()
 }
 
 $('#updateBtn').on('click', function() {showForm('updateForm')})

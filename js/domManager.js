@@ -50,24 +50,18 @@ function toggleOnlyPawnsBtn(onlyPawns){
 function showForm(formId){
 
     hideForms()
-    console.log('Showing form ' + formId)
     $pgn.hide()
     $('#'+formId).show()
 }
 
-function hideForm(formId){
-    console.log('Hiding form ' + formId)
-    $('#'+formId).hide()
-    $pgn.show()
-}
-
 function hideForms(){
-    console.log('Hiding all forms')
+
     $settingForm.hide()
     $actionForm.hide()
     $importForm.hide()
     $deleteForm.hide()
     $updateForm.hide()
+    $pgn.show()
 }
 
 function getLineToDelete(){
