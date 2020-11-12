@@ -170,6 +170,21 @@ async function storeDrawing(fen, type, path, color){
   });
 }
 
+async function getLichessGame(gameId){
+
+  const basicRightsToken = 'v7imI5B7gKT4RF2X';
+  const fullRightsToken = 'kSVC39fHKxAft7jL'
+  var parameters = gameId
+  await fetch('https://lichess.org/api/account', {
+    method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + fullRightsToken
+      }
+    })
+    .then(res => res.json())
+    .then(console.log);
+}
+
 async function testLink(){
   var url = urlBase;
   await fetch(url)

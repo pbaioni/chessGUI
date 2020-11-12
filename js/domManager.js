@@ -14,9 +14,11 @@ var $rightFooter = $('#rightfooter')
 var $analysisCb = $('#analysisCheckbox')
 var $influenceCb = $('#influenceCheckbox')
 var $pgn = $('#pgnLabel')
+var $importForm = $('#importForm')
 
 var actionsShown = false;
 var settingsShown = false;
+var importShown = false;
 
 function setPgnLabel(label){
     $pgn.html(label)
@@ -46,47 +48,63 @@ function toggleOnlyPawnsBtn(onlyPawns){
 
 function showSettings(){
     if(!settingsShown){
-        hideActions()
+        hideForms()
         $pgn.hide()
         document.getElementById('defaultDepth').value = properties.defaultAnalysisDepth
         $settingForm.show()
         settingsShown = true;
     }else{
-        saveSettings()
+        var depth = document.getElementById('defaultDepth').value
+        var regex = new RegExp("^[0-9]+$");
+    
+        if(regex.test(depth)){
+            properties.defaultAnalysisDepth = depth
+        }
+    
+        $settingForm.hide()
+        $pgn.show()
+        settingsShown = false;
     }
-
 }
 
 function showActions(){
     if(!actionsShown){
-        saveSettings()
+        hideForms()
         $pgn.hide()
         $actionButtons.show()
         actionsShown = true;
     }else{
-        hideActions()
+        $pgn.show()
+        $actionButtons.hide()
+        actionsShown = false;
     }
 }
 
-function hideActions(){
-    $pgn.show()
-    $actionButtons.hide()
-    actionsShown = false;
+function showImport(){
+    if(!importShown){
+        hideForms()
+        $pgn.hide()
+        $importForm.show()
+        importShown = true;
+        console.log('show import')
+    }else{
+        var importParameters = {}
+        importParameters.openingDepth = document.getElementById('openingDepth').value
+        importParameters.depth = document.getElementById('importDepth').value
+        $pgn.show()
+        $importForm.hide()
+        importShown = false;
+        launchImport(importParameters)
+    }
 }
 
-function saveSettings(){
-
-    var depth = document.getElementById('defaultDepth').value
-    var regex = new RegExp("^[0-9]+$");
-
-    if(regex.test(depth)){
-        properties.defaultAnalysisDepth = depth
-    }
-
+function hideForms(){
     $settingForm.hide()
-    $pgn.show()
-    settingsShown = false;
-
+    settingsShown = false
+    $actionButtons.hide()
+    actionsShown = false
+    $importForm.hide()
+    importShown = false
 }
 
 function toggleUpdateButton(inUse){

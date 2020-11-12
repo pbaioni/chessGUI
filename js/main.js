@@ -282,7 +282,7 @@ function forward(){
 //start position button and function
 $('#startBtn').on('click', start)
 async function start () {
-  hideActions()
+  hideForms()
   board.start()
   game = new Chess()
   moveHistory = []
@@ -295,7 +295,7 @@ async function start () {
 //flip board button and function
 $('#flipBtn').on('click', flip)
 function flip () {
-  hideActions()
+  hideForms()
   eraseDrawings()
   board.flip()
   boardFlipped = boardFlipped ? false : true;
@@ -305,7 +305,7 @@ function flip () {
 //button and function to show only the pawn structure on the board
 $('#onlyPawnsBtn').on('click', showPawnStructure)
 function showPawnStructure() {
-  hideActions()
+  hideForms()
   if(onlyPawns){
     board.position(game.fen())
     changePosition(null, null, game.fen())
@@ -323,7 +323,7 @@ function showPawnStructure() {
 //delete line button and function
 $('#deleteBtn').on('click', deleteFromHere)
 function deleteFromHere() {
-  hideActions()
+  hideForms()
   var line = window.prompt("Enter line to delete in uci format (ex: g1f3): ");
   if(line){
     deleteLine(game.fen(), line).then(response => changePosition(null, null, game.fen()));
@@ -332,7 +332,7 @@ function deleteFromHere() {
 
 $('#updateBtn').on('click', update)
 function update() {
-  hideActions()
+  hideForms()
   if(!analysisPending){
   var depth = window.prompt("Enter new depth (ex: 28): ");
     if(depth){
@@ -375,32 +375,9 @@ function update() {
 //import openings from games
 $('#importBtn').on('click', importGames)
 function importGames() {
-  hideActions()
+  hideForms()
   if(!analysisPending){
-    var openingDepth = window.prompt("Enter the opening depth to import (ex: 4): ");
-    if(openingDepth != null){
-      var analysisDepth = window.prompt("Enter the analysis depth for the import (ex: 24): ");
-      if(analysisDepth != null){
-
-        //running task requiring chess engine
-        analysisPending = true
-
-        //avoiding conflicts
-        analysisEnabled  = false;
-
-        //managing GUI
-    
-        disableAnalysisButtons()
-        toggleImportButton(true)
-        serverImporting()
-
-        //launch task
-        importPgn(openingDepth, analysisDepth).then(response => {serverReady(); analysisPending = false;
-          enableAnalysisButtons()
-          toggleImportButton(false)
-          serverReady()});
-      }
-    }
+    showImport()
   }else{
     //stopping task
     stopTask()
@@ -416,6 +393,34 @@ function importGames() {
     //recall analysis for current position
     changePosition(null, null, game.fen())
   }
+}
+
+//set preferences button and function
+$('#launchImportBtn').on('click', showImport)
+
+function launchImport(importParameters){
+  
+  console.log(importParameters)
+
+  //running task requiring chess engine
+  analysisPending = true
+
+  //avoiding conflicts
+  analysisEnabled  = false;
+
+  //managing GUI
+
+  disableAnalysisButtons()
+  toggleImportButton(true)
+  serverImporting()
+
+  //getLichessGame(importParameters.gameId).then(data => console.log(data))
+
+  //launch task
+  importPgn(importParameters.openingDepth, importParameters.analysisDepth).then(response => {serverReady(); analysisPending = false;
+    enableAnalysisButtons()
+    toggleImportButton(false)
+    serverReady()});
 }
 
 //comment button and function
@@ -436,7 +441,7 @@ function autoSave(){
 }
 
 //set preferences button and function
-$('#settingBtn').on('click', saveSettings)
+$('#settingBtn').on('click', showSettings)
 
 $('input#defaultDepth').keydown(function(evt) {
   if(evt.key == 'Enter') {

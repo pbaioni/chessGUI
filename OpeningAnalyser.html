@@ -29,17 +29,24 @@
             <textarea id="comment" name="comment"  title="Comment area" oninput="autoSave();"></textarea>
             <div id="pgnLabel"  title="Pgn label">PGN: </div>
           </div>
-            <div id="settingForm" style="display: none;">
-              <label for="defaultDepth">Default stockfish analyse depth</label>
-              <input type="text" id="defaultDepth" name="depth">
-              <div><input type="checkbox" id="analysisCheckbox" name="autoanalysis" checked onchange="enableAnalysis(this)"/>
-                <label for="autoanalysis">Enable analysis</label></div>
-              <div><input type="checkbox" id="drawingCheckbox" name="showdrawings" checked onchange="enableDrawings(this)"/>
-                <label for="showdrawings">Enable drawings</label></div>
-              <div><input type="checkbox" id="influenceCheckbox" name="showinfluence" unchecked onchange="enableInfluence(this)"/>
-                <label for="showinfluence">Show influence</label></div>
-              <button id="settingBtn" class="blue-button">Done!</button>
-            </div>
+          <div id="settingForm" style="display: none;">
+            <label for="defaultDepth">Default stockfish analyse depth</label>
+            <input type="text" id="defaultDepth" name="depth">
+            <div><input type="checkbox" id="analysisCheckbox" name="autoanalysis" checked onchange="enableAnalysis(this)"/>
+              <label for="autoanalysis">Enable analysis</label></div>
+            <div><input type="checkbox" id="drawingCheckbox" name="showdrawings" checked onchange="enableDrawings(this)"/>
+              <label for="showdrawings">Enable drawings</label></div>
+            <div><input type="checkbox" id="influenceCheckbox" name="showinfluence" unchecked onchange="enableInfluence(this)"/>
+              <label for="showinfluence">Show influence</label></div>
+            <button id="settingBtn" class="blue-button">Done!</button>
+          </div>
+          <div id="importForm" style="display: none;">
+            <label for="openingDepth">Opening depth (moves)</label>
+            <input type="text" id="openingDepth" name="openingDepth">
+            <label for="importDepth">Analysis depth</label>
+            <input type="text" id="importDepth" name="importDepth">
+            <button id="launchImportBtn" class="blue-button">Import</button>
+          </div>
           <div id="actionbuttons" style="display: none;">
             <div id="row1" class="buttonsRow">
               <button id="onlyPawnsBtn" class="blue-button">Pawn Structure  (Ctrl + P)</button>

@@ -132,7 +132,7 @@ textarea {
     width: 50%;
 }
 
-#settingForm {
+#settingForm, #importForm {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
