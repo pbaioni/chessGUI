@@ -279,6 +279,10 @@ function forward(){
 //************************** */
 
 //BUTTONS
+$('#actionImg').on('click', function() {showForm('actionForm')})
+
+$('#settingImg').on('click', function() {showForm('settingForm')})
+
 
 //start position button and function
 $('#startBtn').on('click', start)
@@ -374,7 +378,7 @@ function update() {
   }
 
   hideForms()
-  
+
 }
 
 //import openings from games
