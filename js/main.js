@@ -442,9 +442,6 @@ function autoSave(){
   commentTimeout = setTimeout(setComment, 2000)
 }
 
-//set preferences button and function
-$('#settingBtn').on('click', showSettings)
-
 $('input#defaultDepth').keydown(function(evt) {
   if(evt.key == 'Enter') {
     saveSettings()
