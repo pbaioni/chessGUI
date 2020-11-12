@@ -132,6 +132,16 @@ textarea {
     width: 50%;
 }
 
+#helpForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.top{
+    justify-self: self-start;
+}
+
 #settingForm, #importForm, #deleteForm, #updateForm {
     display: flex;
     flex-direction: column;
