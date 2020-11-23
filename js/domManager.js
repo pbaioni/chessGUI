@@ -54,8 +54,6 @@ $helpImg.on('click', function() {showForm('helpForm')})
 $settingBtn.on('click', function() {getSettings()})
 
 
-
-
 // ### manage comments and pgn ### 
 
 function displayComment(comment) {
