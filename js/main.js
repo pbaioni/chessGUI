@@ -285,11 +285,6 @@ function forward(){
 //************************** */
 
 //BUTTONS
-$('#actionImg').on('click', function() {showForm('actionForm')})
-
-$('#settingImg').on('click', function() {showForm('settingForm')})
-
-$('#helpImg').on('click', function() {showForm('helpForm')})
 
 //start position button and function
 $('#startBtn').on('click', start)
@@ -450,11 +445,6 @@ function autoSave(){
   commentTimeout = setTimeout(setComment, 2000)
 }
 
-$('input#defaultDepth').keydown(function(evt) {
-  if(evt.key == 'Enter') {
-    saveSettings()
-  }
-});
 
 //CHECKBOXES
 

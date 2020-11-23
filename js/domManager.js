@@ -17,10 +17,17 @@ var $onlyPawnsBtn = $('#onlyPawnsBtn')
 var $updateBtn = $('#updateBtn')
 var $importBtn = $('#importBtn')
 
+//action images
+var $actionImg = $('#actionImg')
+var $settingImg = $('#settingImg')
+var $helpImg = $('#helpImg')
+
 //settings
 var $settingImg = $('#settingImg')
+var $defaultDepth = $('#defaultDepth')
 var $analysisCb = $('#analysisCheckbox')
 var $influenceCb = $('#influenceCheckbox')
+var $settingBtn = $('#settingBtn')
 
 //forms
 var $settingForm = $('#settingForm')
@@ -31,6 +38,22 @@ var $deleteForm = $('#deleteForm')
 var $updateForm = $('#updateForm')
 
 var formShown = 'none';
+
+//define clickable items behaviour
+$defaultDepth.val(properties.defaultAnalysisDepth)
+$defaultDepth.keydown(function(evt) {
+  if(evt.key == 'Enter') {
+    getSettings()
+  }
+});
+
+$actionImg.on('click', function() {showForm('actionForm')})
+$settingImg.on('click', function() {showForm('settingForm')})
+$helpImg.on('click', function() {showForm('helpForm')})
+
+$settingBtn.on('click', function() {getSettings()})
+
+
 
 
 // ### manage comments and pgn ### 
@@ -114,9 +137,7 @@ function getSettings() {
 		properties.defaultAnalysisDepth = depth
 	}
 
-	$settingForm.hide()
-	$pgn.show()
-	settingsShown = false;
+	hideForms()
 
 }
 
