@@ -6,17 +6,22 @@ var board = null
 var game = new Chess()
 
 //script variables
+
+//connection
 var connected = false
 var firstConnection = true
 
+//analysis
 var analysisEnabled = true
 var analysisPending = false
 var currentAnalysis
 var moveHistory = []
 var backedMoves = []
 
+//influence
 var influenceEnabled = false
 
+//drawings
 var drawingsEnabled = true
 var mouseSquare
 var drawStart
@@ -24,10 +29,11 @@ var tempArrowWidth = 8
 var drawingColor = null
 var isDrawing = false
 
+//board
 var onlyPawns = false
-
 var boardFlipped = false
 
+//comment
 var commentTimeout
 
 
