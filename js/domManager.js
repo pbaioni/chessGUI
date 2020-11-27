@@ -59,9 +59,27 @@ $openingDepth.val(properties.defaultOpeningDepth)
 $updateDepth.val(properties.defaultUpdateDepth)
 
 //define clickable items behaviour
-$defaultDepth.keydown(function(evt) {
+$settingForm.keydown(function(evt) {
   if(evt.key == 'Enter') {
     getSettings()
+  }
+});
+
+$deleteForm.keydown(function(evt) {
+  if(evt.key == 'Enter') {
+    deleteFromHere()
+  }
+});
+
+$updateForm.keydown(function(evt) {
+  if(evt.key == 'Enter') {
+    update()
+  }
+});
+
+$importForm.keydown(function(evt) {
+  if(evt.key == 'Enter') {
+    importGames()
   }
 });
 
@@ -109,6 +127,7 @@ function showForm(formId) {
 		hideForms()
 		$pgn.hide()
 		$('#' + formId).show()
+		setFocus(formId)
 		formShown = formId
 	}
 }
@@ -119,6 +138,16 @@ function hideForms() {
 		$('#' + formShown).hide()
 		$pgn.show()
 		formShown = 'none'
+	}
+}
+
+function setFocus(formId) {
+
+	switch(formId){
+		case 'settingForm': $defaultDepth.focus(); break;
+		case 'deleteForm': $lineToDelete.focus(); break;
+		case 'updateForm': $updateDepth.focus(); break;
+		case 'importForm': $openingDepth.focus(); break;
 	}
 }
 
