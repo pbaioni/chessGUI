@@ -29,6 +29,16 @@ var $analysisCb = $('#analysisCheckbox')
 var $influenceCb = $('#influenceCheckbox')
 var $settingBtn = $('#settingBtn')
 
+//import
+var $openingDepth = $('#openingDepth')
+var $importDepth = $('#importDepth')
+
+//delete
+var $lineToDelete = $('#lineToDelete')
+
+//update
+var $updateDepth = $('#updateDepth')
+
 //forms
 var $settingForm = $('#settingForm')
 var $actionForm = $('#actionForm')
@@ -39,8 +49,13 @@ var $updateForm = $('#updateForm')
 
 var formShown = 'none';
 
-//define clickable items behaviour
+//define input default values
 $defaultDepth.val(properties.defaultAnalysisDepth)
+$importDepth.val(properties.defaultAnalysisDepth)
+$openingDepth.val(properties.defaultOpeningDepth)
+$updateDepth.val(properties.defaultUpdateDepth)
+
+//define clickable items behaviour
 $defaultDepth.keydown(function(evt) {
   if(evt.key == 'Enter') {
     getSettings()
@@ -99,11 +114,15 @@ function hideForms() {
 }
 
 
-// ### recover forms data ### 
+// ### forms data ### 
 
 function getLineToDelete() {
 	var lineToDelete = document.getElementById('lineToDelete').value
 	return lineToDelete
+}
+
+function setLineToDelete(lineToDelete) {
+	$lineToDelete.val(lineToDelete)
 }
 
 function getUpdateDepth() {

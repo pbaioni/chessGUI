@@ -2,6 +2,12 @@ properties = {
   //the default depth for stockfish analysis
   defaultAnalysisDepth: 16,
 
+  //the default update analysis depth
+  defaultUpdateDepth: 24,
+
+  //the default opening depth for import
+  defaultOpeningDepth: 10,
+
   //the port number used to communicate with the server
   serverPort: 9099,
 
