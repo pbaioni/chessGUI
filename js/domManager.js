@@ -30,6 +30,7 @@ var $influenceCb = $('#influenceCheckbox')
 var $settingBtn = $('#settingBtn')
 
 //import
+var $launchImportBtn = $('#launchImportBtn')
 var $openingDepth = $('#openingDepth')
 var $importDepth = $('#importDepth')
 
@@ -70,6 +71,9 @@ $helpImg.on('click', function() {showForm('helpForm')})
 
 $updateBtn.on('click', function() { showForm('updateForm') })
 $launchUpdateBtn.click(function() {update()})
+
+$importBtn.on('click', function() { showForm('importForm') })
+$launchImportBtn.click(function() {importGames()})
 
 $settingBtn.on('click', function() {getSettings()})
 
@@ -194,9 +198,13 @@ function toggleImportButton(inUse) {
 		$importBtn.attr('disabled', false)
 		$importBtn.css("background-color", 'orange')
 		$importBtn.html('Stop Import')
+		$importBtn.off('click')
+		$importBtn.on('click', function() { update() })
 	} else {
 		$importBtn.css("background-color", '#2ba6cb')
 		$importBtn.html('Import Games')
+		$importBtn.off('click')
+		$importBtn.on('click', function() { showForm('importForm') })
 	}
 }
 

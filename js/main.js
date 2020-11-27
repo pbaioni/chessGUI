@@ -373,8 +373,6 @@ function update() {
 }
 
 //import openings from games
-$('#importBtn').on('click', function() { showForm('importForm') })
-$('#launchImportBtn').on('click', importGames)
 function importGames() {
 
 	if (!analysisPending) {
@@ -405,17 +403,6 @@ function importGames() {
 	} else {
 		//stopping task
 		stopTask()
-
-		//setting analysis variables
-		analysisPending = false;
-
-		//managing GUI
-		enableAnalysisButtons()
-		toggleImportButton(false)
-		serverReady()
-
-		//recall analysis for current position
-		changePosition(null, null, game.fen())
 	}
 }
 
