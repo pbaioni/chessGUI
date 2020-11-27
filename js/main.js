@@ -340,8 +340,6 @@ function deleteFromHere() {
 	hideForms()
 }
 
-$('#updateBtn').on('click', function() { showForm('updateForm') })
-$('#launchUpdateBtn').on('click', update)
 function update() {
 	if (!analysisPending) {
 		var depth = getUpdateDepth()
@@ -368,17 +366,6 @@ function update() {
 	} else {
 		//stopping task
 		stopTask()
-
-		//setting analysis variables
-		analysisPending = false;
-
-		//managing GUI
-		enableAnalysisButtons()
-		toggleUpdateButton(false)
-		serverReady()
-
-		//recall analysis for current position
-		changePosition(null, null, game.fen())
 	}
 
 	hideForms()

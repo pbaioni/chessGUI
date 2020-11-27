@@ -37,6 +37,7 @@ var $importDepth = $('#importDepth')
 var $lineToDelete = $('#lineToDelete')
 
 //update
+var $launchUpdateBtn = $('#launchUpdateBtn')
 var $updateDepth = $('#updateDepth')
 
 //forms
@@ -48,6 +49,7 @@ var $deleteForm = $('#deleteForm')
 var $updateForm = $('#updateForm')
 
 var formShown = 'none';
+
 
 //define input default values
 $defaultDepth.val(properties.defaultAnalysisDepth)
@@ -65,6 +67,9 @@ $defaultDepth.keydown(function(evt) {
 $actionImg.on('click', function() {showForm('actionForm')})
 $settingImg.on('click', function() {showForm('settingForm')})
 $helpImg.on('click', function() {showForm('helpForm')})
+
+$updateBtn.on('click', function() { showForm('updateForm') })
+$launchUpdateBtn.click(function() {update()})
 
 $settingBtn.on('click', function() {getSettings()})
 
@@ -174,9 +179,13 @@ function toggleUpdateButton(inUse) {
 		$updateBtn.attr('disabled', false)
 		$updateBtn.css("background-color", 'orange')
 		$updateBtn.html('Stop Update')
+		$updateBtn.off('click')
+		$updateBtn.on('click', function() { update() })
 	} else {
 		$updateBtn.css("background-color", '#2ba6cb')
 		$updateBtn.html('Update Line Depth')
+		$updateBtn.off('click')
+		$updateBtn.on('click', function() {showForm('updateForm')})
 	}
 }
 
